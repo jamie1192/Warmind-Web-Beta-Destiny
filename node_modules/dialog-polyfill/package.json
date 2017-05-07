@@ -1,0 +1,45 @@
+{
+  "name": "dialog-polyfill",
+  "version": "0.4.7",
+  "description": "Polyfill for the dialog element",
+  "main": "dialog-polyfill.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoogleChrome/dialog-polyfill.git"
+  },
+  "author": {
+    "name": "The Chromium Authors"
+  },
+  "license": "BSD",
+  "homepage": "https://github.com/GoogleChrome/dialog-polyfill",
+  "gitHead": "b6e6c66fa59504b2a14f824074a51c0e6bb40d7e",
+  "bugs": {
+    "url": "https://github.com/GoogleChrome/dialog-polyfill/issues"
+  },
+  "_id": "dialog-polyfill@0.4.7",
+  "scripts": {},
+  "_shasum": "e9995d519f1df349597193198c184ea9402fdbf5",
+  "_from": "dialog-polyfill@latest",
+  "_npmVersion": "4.1.2",
+  "_nodeVersion": "7.5.0",
+  "_npmUser": {
+    "name": "samthor",
+    "email": "sam.thorogood@gmail.com"
+  },
+  "dist": {
+    "shasum": "e9995d519f1df349597193198c184ea9402fdbf5",
+    "tarball": "https://registry.npmjs.org/dialog-polyfill/-/dialog-polyfill-0.4.7.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "samthor",
+      "email": "sam.thorogood@gmail.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/dialog-polyfill-0.4.7.tgz_1487049487767_0.8879762650467455"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/dialog-polyfill/-/dialog-polyfill-0.4.7.tgz"
+}

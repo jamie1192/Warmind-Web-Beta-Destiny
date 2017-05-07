@@ -1,0 +1,579 @@
+    
+    html, body {
+        font-family: 'Roboto', 'Helvetica', sans-serif;
+        background:#181d25;
+        /*min-width: 520px;*/
+        width: 100%;
+    }
+    
+    .headerLoggedUser{
+        margin-left:12px;
+    }
+
+  .buttonError{
+      background: red;
+  }
+  .postColour{
+      background: #2a333e;
+  }
+  
+  .whiteText{
+      color: white;
+  }
+  
+  .divider{
+      background: grey;
+      height: 2px;
+  }
+  
+  .postActivity{
+      /*border: 1px solid black;*/
+      margin: 0 auto;
+      width: 70%;
+      height: 30px;
+      position: relative;
+      top: 120px;
+      color: #ffce1f;
+  }
+  
+  .postDescription{
+      /*border: 1px solid black;*/
+      margin: 0 auto;
+      width: 80%;
+      height: 70px;
+      position: relative;
+      top: 140px;
+      color: white;
+      font-size: 12px;
+  }
+  
+  .getStatsLoading{
+      position: absolute;
+      bottom: 0;
+      right: 170px;
+      margin-bottom: 12px;
+      display:none;
+      color: #ffce1f;
+  }
+  .stats-row{
+       /*position: absolute;*/
+       /*bottom: 0;*/
+       clear:both;
+       width:475px;
+       
+   }
+   
+   .trialsStatsRow{
+       width: inherit;
+   }
+  
+  #getStats{
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-bottom: 10px;
+      margin-right: 10px;
+  }
+  
+  .getTrialsStatsError{
+      background-color: #f44336;
+  }
+  
+  .page-content{
+      
+      margin-top:20px;
+  }
+  
+  .innerContainer{
+      height:204px;
+      width: inherit;
+      position: absolute;
+  }
+  
+  .postContainer{
+     margin: 0 auto;
+     /*position: relative;*/
+      
+      width:475px;
+      clear:both;
+  }
+  
+  .postCard{
+      /*position: absolute;*/
+      /*border: 1px solid;*/
+      width:475px;
+      height: 300px;
+      
+      background: #2a333e;
+  }
+  
+  .postDialog{
+      width: 450px ;
+  }
+  
+  .rightSide{
+      height: 96px;
+      width: 80px;
+      float: right;
+  }
+  
+   .emblemContainer{
+    position: absolute;
+    top: 0;
+    /*left: 0;*/
+     width:475px;
+    height: 96px;
+    
+   }
+   
+   .loginDialog {
+    height: 300px;
+}
+   
+   .emblemIcon, .emblemBackground{
+    position: absolute;
+    left:0;
+    top: 0;
+    /*border-radius: 3px;*/
+   }
+   
+   .playerUsername{
+    position: absolute;
+    left: 106px;
+    top: 20px;
+    font-size: 20px;
+    color: white;
+    font-family: RobotoDraft,Roboto;
+   }
+   
+   
+   .playerCurrentClass{
+       position: absolute;
+       left: 106px;
+       bottom: 0px;
+       height: 48px;
+       width: 60px;
+       text-align: left;
+       font-family: RobotoDraft, Roboto;
+       color: white;
+       font-size: 14px;
+   }
+   
+   .playerLightLevel{
+    position: absolute;
+    top: 0;
+    height: 28px;
+    /*right: 20;*/
+    width: inherit;
+    font-size: 22px;
+    font-family: Roboto;
+    text-align: left;
+    margin-top: 20px;
+    color: rgb(255, 215, 0);
+   }
+   
+   /*#lightLevelIcon{*/
+   /* text-align: left;*/
+   /*}*/
+   
+   .playerGrimoire{
+    height: 28px;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 20px;
+    width: inherit;
+    font-family: Roboto;
+    color: white;
+    text-align: center;
+   }
+   
+   #grimoireIcon{
+    position: absolute;
+    left: 0;
+    max-height: 16px;
+   }
+   
+   .emblemIcon{
+   z-index: 10;
+   }
+   
+   .emblemBackground img{
+    border-radius: 4px;
+   }
+   
+   .emblemIcon img{
+    border-radius: 4px;
+   }
+   
+   .darkColour{
+       background: #12161b;
+   }
+   
+   
+ /*Menu test paste below*/
+ .iconTestBox{
+     /*width: 90%;*/
+     /*height: 48px;*/
+     /*border: 1px solid red;*/
+     text-align: center;
+ }
+ 
+ .iconTestBox img{
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    margin-left: 10px;
+    margin-right: 10px;
+ }
+ 
+ .iconTestBox:after{
+    content: '';
+    display: inline-block;
+    width: 100%;
+ }
+
+.demo-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+}
+
+.titanEmblemIcon{
+    left: 0;
+}
+
+.hunterEmblemIcon{
+    
+}
+
+.warlockEmblemIcon{
+    right: 0;
+}
+
+.demo-layout .mdl-layout__header .mdl-layout__drawer-button {
+  color: rgba(0, 0, 0, 0.54);
+}
+.mdl-layout__drawer .avatar {
+  margin-bottom: 16px;
+}
+.demo-drawer {
+  border: none;
+}
+/* iOS Safari specific workaround */
+.demo-drawer .mdl-menu__container {
+  z-index: -1;
+}
+.demo-drawer .demo-navigation {
+  z-index: -2;
+}
+/* END iOS Safari specific workaround */
+.demo-drawer .mdl-menu .mdl-menu__item {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.demo-drawer-header {
+  box-sizing: border-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 16px;
+  height: 151px;
+}
+.demo-avatar-dropdown {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+.demo-navigation {
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.demo-layout .demo-navigation .mdl-navigation__link {
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: rgba(255, 255, 255, 0.56);
+  font-weight: 500;
+}
+.demo-layout .demo-navigation .mdl-navigation__link:hover {
+  /*background-color: #00BCD4;*/
+  /*color: #37474F;*/
+  /*color: #ffce1f;*/
+}
+.demo-navigation .mdl-navigation__link .material-icons {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.56);
+  margin-right: 32px;
+}
+
+.demo-content {
+  max-width: 1080px;
+}
+
+
+.drawerStyling{
+    background: #12161b;
+    color: white;
+}
+
+.navStyling{
+    background: #181d25;
+    color:white;
+}
+
+/*.navStyling>a>li{*/
+/*    color:white;*/
+/*}*/
+
+.goldColour th{
+    color:#ffce1f;
+}
+.drawerHeaderBackground{
+    height: inherit;
+    width:inherit;
+    /*background-image:url('/assets/rasputin2.jpg');*/
+}
+/*.linkHover:hover {*/
+/*    background-color: none; */
+/*    color: #ffce1f;*/
+/*}*/
+
+/*.mdl-color-text--white:hover{*/
+/* color: #ffce1f;*/
+/*}*/
+/*.mdl-layout__drawer .mdl-navigation .mdl-navigation__link{*/
+/*    color: white;*/
+/*}*/
+
+/*.mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover {*/
+/*     background-color: none; */
+/*    color: #ffce1f !important;*/
+/*}*/
+a.mdl-navigation__link:hover{
+    background-color: none; 
+    color: #ffce1f;
+}
+
+/*.mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover {*/
+    /*background-color: #e0e0e0 !important;*/
+/*}*/
+/*.demo-navigation .mdl-navigation__link:hover .material-icons {*/
+/*      background-color: none;*/
+/*      color: #ffce1f;*/
+/*    }*/
+/*.mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover {*/
+/* background-color: none !important; */
+/*}*/
+
+.linkStyling{
+    color: white;
+}
+
+.loginCard{
+    margin: 0 auto;
+    position: absolute;
+}
+
+.homeBackground{
+    background-color: rgb(24, 29, 37);
+}
+
+.cardBackgroundColor{
+    background-color: rgb(42, 51, 62);
+}
+
+.errorCode{
+    color: #d50000;
+    position: absolute;
+    font-size: 12px;
+    margin-top: 3px;
+    visibility: visible;
+    display: block;
+}
+
+.mdl-layout {
+	align-items: center;
+  justify-content: center;
+}
+
+.mdl-textfield-custom{
+    position: relative;
+    font-size: 16px;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 95%;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px 0;
+}
+
+/*mdl select*/
+
+    .mdl-select {
+        position: relative;
+        font-size: 16px;
+        /*display: inline-block;*/
+        box-sizing: border-box;
+        width: 95%;
+        max-width: 100%;
+        margin: 0;
+        padding: 20px 0;
+    }
+
+    .mdl-select__input {
+        border: none;
+        border-bottom: 1px solid rgba(0,0,0, 0.12);
+        display: inline-block;
+        font-size: 16px;
+        margin: 0;
+        padding: 4px 0;
+        width: 100%;
+        background: 16px;
+        text-align: left;
+        color: inherit;
+    }
+
+        .mdl-select.is-focused .mdl-select__input {	outline: none; }
+        .mdl-select.is-invalid .mdl-select__input { 
+          border-color: rgb(222, 50, 38);
+            box-shadow: none;
+          }
+
+        .mdl-select.is-disabled .mdl-select__input {
+          background-color: transparent;
+          border-bottom: 1px dotted rgba(0,0,0, 0.12);
+        }
+
+        .mdl-select__label {
+          bottom: 0;
+          color: rgba(0,0,0, 0.26);
+          font-size: 16px;
+          left: 0;
+          right: 0;
+          pointer-events: none;
+          position: absolute;
+          top: 24px;
+          width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-align: left; 
+        }
+
+        .mdl-select.is-dirty .mdl-select__label { visibility: hidden; }
+
+        .mdl-select--floating-label .mdl-textfield__label {
+          -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+          -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mdl-select--floating-label.is-focused .mdl-select__label,
+        .mdl-select--floating-label.is-dirty .mdl-select__label {
+          color: rgb(63,81,181);
+          font-size: 12px;
+          top: 4px;
+          visibility: visible;
+        }
+
+        .mdl-select--floating-label.is-focused .mdl-select__expandable-holder .mdl-select__label,
+        .mdl-select--floating-label.is-dirty .mdl-select__expandable-holder .mdl-select__label {
+          top: -16px;
+        }
+
+        .mdl-select--floating-label.is-invalid .mdl-select__label {
+          color: rgb(222, 50, 38);
+          font-size: 12px;
+        }
+
+        .mdl-select__label:after {
+          background-color: rgb(63,81,181);
+          bottom: 20px;
+          content: '';
+          height: 2px;
+          left: 45%;
+          position: absolute;
+          -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+          -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          visibility: hidden;
+          width: 10px;
+        }
+
+        .mdl-select.is-focused .mdl-select__label:after {
+          left: 0;
+          visibility: visible;
+          width: 100%; 
+        }
+
+        .mdl-select.is-invalid .mdl-select__label:after {
+          background-color: rgb(222, 50, 38); 
+        }
+
+        .mdl-select__error {
+          color: rgb(222, 50, 38);
+          position: absolute;
+          font-size: 12px;
+          margin-top: 3px;
+          visibility: hidden;
+        }
+
+        .mdl-select.is-invalid .mdl-select__error {
+          visibility: visible;
+        }
+
+        .mdl-select__expandable-holder {
+          display: inline-block;
+          position: relative;
+          margin-left: 32px;
+          -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+          -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+          display: inline-block;
+          max-width: 0.1px; 
+        }
+
+        .mdl-select.is-focused .mdl-select__expandable-holder, .mdl-select.is-dirty .mdl-select__expandable-holder {
+          max-width: 600px; 
+        }
+
+        .mdl-select__expandable-holder .mdl-select__label:after {
+          bottom: 0;
+        }
+
+/*end mdl select*/
+
+.mdl-dialog__title-custom{
+    padding: 24px 24px 24px;
+    /* margin: 0; */
+    font-size: 2.5rem;
+    color: white;
+}

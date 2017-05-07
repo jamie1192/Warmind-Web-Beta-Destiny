@@ -1,0 +1,27 @@
+[20-Apr-2017 07:32:57 UTC] PHP Catchable fatal error:  Object of class stdClass could not be converted to string in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 87
+[20-Apr-2017 07:32:57 UTC] PHP Stack trace:
+[20-Apr-2017 07:32:57 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[20-Apr-2017 07:35:19 UTC] PHP Catchable fatal error:  Object of class stdClass could not be converted to string in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 87
+[20-Apr-2017 07:35:19 UTC] PHP Stack trace:
+[20-Apr-2017 07:35:19 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[20-Apr-2017 08:01:43 UTC] PHP Catchable fatal error:  Object of class stdClass could not be converted to string in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 87
+[20-Apr-2017 08:01:43 UTC] PHP Stack trace:
+[20-Apr-2017 08:01:43 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[02-May-2017 01:41:33 UTC] PHP Warning:  include(key.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 3
+[02-May-2017 01:41:33 UTC] PHP Stack trace:
+[02-May-2017 01:41:33 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[02-May-2017 01:41:33 UTC] PHP Warning:  include(): Failed opening 'key.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 3
+[02-May-2017 01:41:33 UTC] PHP Stack trace:
+[02-May-2017 01:41:33 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[02-May-2017 01:41:42 UTC] PHP Warning:  include(key.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 3
+[02-May-2017 01:41:42 UTC] PHP Stack trace:
+[02-May-2017 01:41:42 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[02-May-2017 01:41:42 UTC] PHP Warning:  include(): Failed opening 'key.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 3
+[02-May-2017 01:41:42 UTC] PHP Stack trace:
+[02-May-2017 01:41:42 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[02-May-2017 01:42:43 UTC] PHP Warning:  include(./key.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 3
+[02-May-2017 01:42:43 UTC] PHP Stack trace:
+[02-May-2017 01:42:43 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[02-May-2017 01:42:43 UTC] PHP Warning:  include(): Failed opening './key.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 3
+[02-May-2017 01:42:43 UTC] PHP Stack trace:
+[02-May-2017 01:42:43 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0

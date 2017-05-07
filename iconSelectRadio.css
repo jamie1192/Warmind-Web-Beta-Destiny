@@ -1,0 +1,104 @@
+.emblemLabels {
+    width: 100%;
+    text-align: center;
+    
+}
+.emblemLabels label{
+    /*width: 134px;*/
+    /*height: 20px;*/
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    /*margin-left: 30px;*/
+    /*margin-right: 30px;*/
+}
+
+.emblemLabels:after{
+    content: '';
+    display: inline-block;
+    width: 100%;
+}
+.lfgEmblemContainer{
+    text-align: center;
+    height: 50px;
+}
+
+/*#titanLabel{*/
+/*    left: 0;*/
+/*    position: absolute;*/
+/*}*/
+
+#hunterLabel{
+    margin-left: 64px;
+    margin-right: 62px;
+}
+
+/*#warlockLabel{*/
+/*    right: 0;*/
+/*    position: absolute;*/
+/*}*/
+
+.lfgEmblemContainer label{
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    margin-left: 30px;
+    margin-right: 30px;
+    
+}
+
+.lfgEmblemContainer:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+}
+
+.cc-selector input{
+    margin:0;padding:0;
+    -webkit-appearance:none;
+       -moz-appearance:none;
+            appearance:none;
+}
+ /*.visa{background-image:url(http://i.imgur.com/lXzJ1eB.png);} */
+/*.visaImg{*/
+/*  height:40px;*/
+/*  width: 40px;*/
+/*}*/
+/*.mastercard{background-image:url(http://i.imgur.com/SJbRQF7.png);}*/
+
+.emblemIcons{
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+}
+
+.cc-selector input:active +.drinkcard-cc{opacity: .9;}
+.cc-selector input:checked +.drinkcard-cc{
+    -webkit-filter: none;
+       -moz-filter: none;
+            filter: none;
+            /*border: 2px solid red;*/
+}
+.drinkcard-cc{
+    cursor:pointer;
+    background-size:contain;
+    background-repeat:no-repeat;
+    display:inline-block;
+    width:48px;height:48px;
+    -webkit-transition: all 100ms ease-in;
+       -moz-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+    -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+       -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+            filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+.drinkcard-cc:hover{
+    -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+       -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+            filter: brightness(1.2) grayscale(.5) opacity(.9);
+}
+
+/* Extras */
+a:visited{color:#888}
+a{color:#444;text-decoration:none;}
+p{margin-bottom:.3em;}
