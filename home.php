@@ -175,9 +175,9 @@ $getEmblems = curl_init();
         $hunterEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['hunterSlot']]->emblemPath;
         $warlockEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['warlockSlot']]->emblemPath;
         
-        $_SESSION["titanArray"]= $titanEmblem;
-        $_SESSION["hunterArray"] = $hunterEmblem;
-        $_SESSION["warlockArray"] = $warlockEmblem;
+        $_SESSION["titanEmblemIconPath"]= $titanEmblem;
+        $_SESSION["hunterEmblemIconPath"] = $hunterEmblem;
+        $_SESSION["warlockEmblemIconPath"] = $warlockEmblem;
         
         
 //      }
