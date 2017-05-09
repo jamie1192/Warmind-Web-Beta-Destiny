@@ -16,8 +16,8 @@
     //     echo "To log out, go to <a href=\"logout.php\">Log Out</a> page";
     // }
     
-    
-     include("key.php");
+    include("head.php");
+    include("key.php");
      
      $jew = "jeewwbacca";
      $tim = "tanky_tim12";
@@ -400,8 +400,8 @@ $getEmblems = curl_init();
                         </form>
                     </div>
                 <div class="mdl-dialog__actions">
-                    <button type="button" class="mdl-button">Agree</button>
-                    <button type="button" class="mdl-button close">Disagree</button>
+                    <button type="button" class="mdl-button">Submit</button>
+                    <button type="button" class="mdl-button close">Cancel</button>
                 </div>
             </dialog>
     

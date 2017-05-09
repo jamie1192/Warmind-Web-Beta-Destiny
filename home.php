@@ -694,9 +694,9 @@ $getEmblems = curl_init();
         </main>
     </div>
   
-  <script>
+  <script type="text/javascript">
     
-    //Login dialog
+    
     var dialog = document.querySelector('dialog');
     var showDialogButton = document.querySelector('#login-dialog');
 
@@ -711,7 +711,7 @@ $getEmblems = curl_init();
         dialog.close();
     });
     
-    //end login dialog
+    
     
     
     $(".postContainer").on("click", clickHandler);

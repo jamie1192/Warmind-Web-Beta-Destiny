@@ -13,18 +13,18 @@
     $activeHunterSlot = $_SESSION['user']['hunterSlot'];
     $activeWarlock = $_SESSION['user']['warlockSlot'];
     
-    $titanEmblemIcon = $_SESSION["titanEmblemIconPath"];
-    $hunterEmblemIcon = $_SESSION["hunterEmblemIconPath"];
-    $warlockEmblemIcon = $_SESSION["warlockEmblemIconPath"];
-    $titanEmblem = $_SESSION["titanEmblemBackground"];
-    $hunterEmblem = $_SESSION["hunterEmblemBackground"];
-    $warlockEmblem = $_SESSION["warlockEmblemBackground"];
+    $titanEmblemIcon = $_SESSION['user']['titanEmblem'];
+    $hunterEmblemIcon = $_SESSION['user']['hunterEmblem'];
+    $warlockEmblemIcon = $_SESSION['user']['warlockEmblem'];
+    $titanEmblem = $_SESSION['user']['titanBackground'];
+    $hunterEmblem = $_SESSION['user']['hunterBackground'];
+    $warlockEmblem = $_SESSION['user']['warlockBackground'];
     $bungieURL = "https://bungie.net";
     
-    $titanLightLevel = $_SESSION["titanLightLevel"];
-    $hunterLightLevel = $_SESSION["hunterLightLevel"];
-    $warlockLightLevel = $_SESSION["warlockLightLevel"];
-    $grimoire = $_SESSION["grimoire"];
+    $titanLightLevel = $_SESSION['user']["titanLightLevel"];
+    $hunterLightLevel = $_SESSION['user']['hunterLightLevel'];
+    $warlockLightLevel = $_SESSION['user']['warlockLightLevel'];
+    $grimoire = $_SESSION['user']['grimoire'];
     
     
     //Submit post to database
@@ -43,16 +43,19 @@
             $emblemIconPath = $titanEmblemIcon;
             $emblemBackgroundPath = $titanEmblem;
             $lightLevel = $titanLightLevel;
+            $selectedCharacter = "Titan";
         }
         else if($characterSelection == 1){
             $emblemIconPath = $hunterEmblemIcon;
             $emblemBackgroundPath = $hunterEmblem;
             $lightLevel = $hunterLightLevel;
+            $selectedCharacter = "Hunter";
         }
         else if($characterSelection == 2){
             $emblemIconPath = $warlockEmblemIcon;
             $emblemBackgroundPath = $titanEmblem;
             $lightLevel = $warlockLightLevel;
+            $selectedCharacter = "Warlock"
         }
         else{
             //error
@@ -64,11 +67,13 @@
         if(count($errors)==0){
             $activitySelection = filter_var($activitySelection, FILTER_SANITIZE_STRING);
             $description = filter_var($description, FILTER_SANITIZE_STRING);
+            $emblemIconPath = filter_var($emblemIconPath, FILTER_SANITIZE_URL);
+            $emblemBackgroundPath = filter_var($emblemBackgroundPath, FILTER_SANITIZE_URL);
             
             //
             $query = "INSERT INTO posts (uid, username, selectedCharacter, consoleID, activity, description, emblemIcon, emblemBackground, lightLevel, 
-                    grimoireScore, hasMic, postTime) VALUES ('$sessionID', '$sessionUsername', '$characterSelection', '$sessionConsoleID','$activitySelection',
-                    '$description', '$emblemIconPath','$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() )";
+                    grimoireScore, hasMic, postTime) VALUES ('$sessionID', '$sessionUsername', '$selectedCharacter', '$sessionConsoleID','$activitySelection',
+                    '$description', '$bungieURL$emblemIconPath','$bungieURL$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() )";
             if(!$connection->query($query)){
                 $errors["database"] = "Database error!";
             }
