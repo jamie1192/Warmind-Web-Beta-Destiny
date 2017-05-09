@@ -1,6 +1,6 @@
 <?php
 
-    include("database.php");
+    include("./../database.php");
     include("./../key.php");
     
     session_start();
@@ -21,7 +21,7 @@
     $warlockEmblem = $_SESSION['user']['warlockBackground'];
     $bungieURL = "https://bungie.net";
     
-    $titanLightLevel = $_SESSION['user']["titanLightLevel"];
+    $titanLightLevel = $_SESSION['user']['titanLightLevel'];
     $hunterLightLevel = $_SESSION['user']['hunterLightLevel'];
     $warlockLightLevel = $_SESSION['user']['warlockLightLevel'];
     $grimoire = $_SESSION['user']['grimoire'];
@@ -29,6 +29,11 @@
     
     //Submit post to database
     if($_SERVER["REQUEST_METHOD"]=="POST"){
+        
+        // echo htmlspecialchars($_POST['sample5']);
+        print_r($_POST);
+        
+        
         
         $errors = array();
         
@@ -55,13 +60,13 @@
             $emblemIconPath = $warlockEmblemIcon;
             $emblemBackgroundPath = $titanEmblem;
             $lightLevel = $warlockLightLevel;
-            $selectedCharacter = "Warlock"
+            $selectedCharacter = "Warlock";
         }
         else{
             //error
         }
     
-    
+        $errors["database"] = "Database error!";
         
         //if no errors
         if(count($errors)==0){

@@ -25,3 +25,15 @@
 [02-May-2017 01:42:43 UTC] PHP Warning:  include(): Failed opening './key.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 3
 [02-May-2017 01:42:43 UTC] PHP Stack trace:
 [02-May-2017 01:42:43 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[09-May-2017 11:57:31 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/ubuntu/workspace/ajax/submitNewPost.php on line 59
+[09-May-2017 11:57:44 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/ubuntu/workspace/ajax/submitNewPost.php on line 59
+[09-May-2017 12:08:03 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/ubuntu/workspace/ajax/submitNewPost.php on line 59
+[09-May-2017 12:08:54 UTC] PHP Warning:  include(database.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/submitNewPost.php on line 3
+[09-May-2017 12:08:54 UTC] PHP Stack trace:
+[09-May-2017 12:08:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/submitNewPost.php:0
+[09-May-2017 12:08:54 UTC] PHP Warning:  include(): Failed opening 'database.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/submitNewPost.php on line 3
+[09-May-2017 12:08:54 UTC] PHP Stack trace:
+[09-May-2017 12:08:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/submitNewPost.php:0
+[09-May-2017 12:08:54 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/ubuntu/workspace/ajax/submitNewPost.php on line 77
+[09-May-2017 12:08:54 UTC] PHP Stack trace:
+[09-May-2017 12:08:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/submitNewPost.php:0

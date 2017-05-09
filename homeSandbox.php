@@ -318,17 +318,17 @@ $getEmblems = curl_init();
                         <form id="submitPostForm" method="post" action="#">
                             <div class="class-selector lfgEmblemContainer">
                                 
-                                <input id="titan" type="radio" name="characterClass" value="0" checked/>
+                                <input id="titan" type="radio" name="characterClass" value="Titan" checked/>
                                 <label class="classEmblems" for="titan">
                                     <img class="emblemIcons" src=<?php echo "$bungieURL$titanEmblem";?>>
                                 </label>
                                 
-                                <input id="hunter" type="radio" name="characterClass" value="1" />
+                                <input id="hunter" type="radio" name="characterClass" value="Hunter" />
                                 <label class="classEmblems"for="hunter">
                                     <img class="emblemIcons" src=<?php echo "$bungieURL$hunterEmblem";?>>
                                 </label>
                                 
-                                <input id="warlock" type="radio" name="characterClass" value="2" />
+                                <input id="warlock" type="radio" name="characterClass" value="Warlock" />
                                 <label class="classEmblems"for="warlock">
                                     <img class="emblemIcons" src=<?php echo "$bungieURL$warlockEmblem";?>>
                                 </label>
@@ -348,7 +348,7 @@ $getEmblems = curl_init();
                             </div>
 
                             <div class="mdl-select mdl-js-select mdl-select--floating-label">
-                                <select class="mdl-select__input" id="professsion" name="professsion">
+                                <select class="mdl-select__input" id="activitySelection" name="activitySelection">
                                     <option value=""></option>
                                     <option value="option1">option 1</option>
                                     <option value="option2">option 2</option>
@@ -356,14 +356,14 @@ $getEmblems = curl_init();
                                     <option value="option4">option 4</option>
                                     <option value="option5">option 5</option>
                                 </select>
-                                <label class="mdl-select__label" for="professsion">Select an Activity</label>
+                                <label class="mdl-select__label" for="activitySelection">Select an Activity</label>
                             </div>
                         <!--</form>-->
     
         
                             <div class="mdl-textfield mdl-textfield-custom mdl-js-textfield">
-                                <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" ></textarea>
-                                <label class="mdl-textfield__label" for="sample5">Description</label>
+                                <textarea class="mdl-textfield__input" type="text" rows= "5" id="description" name="description" ></textarea>
+                                <label class="mdl-textfield__label" for="description">Description</label>
                             </div>
                         <!--</form>-->
                     </div>
@@ -632,7 +632,7 @@ $getEmblems = curl_init();
     
     //end login dialog
     
-    
+    //get player stats on LFG post
     $(".postContainer").on("click", clickHandler);
     
     function clickHandler(e){
@@ -714,6 +714,25 @@ $getEmblems = curl_init();
     }
   
   
+    $("#submitPostForm").submit(function(e){
+        
+        var submitPHP = "ajax/submitNewPost.php";
+        
+        $.ajax({
+            type:"POST",
+            url: submitPHP,
+            data: $("#submitPostForm").serialize(),
+            
+            success: function(data){
+                alert(data);
+                //success message or something
+                //hide loading animation
+                //close dialog
+            }
+        });
+        
+        e.preventDefault();
+    });
     //   $(document).ready(function(){
     //       //add listener for button click
     //       $("#playerStatsForm").on("submit", function(e){
