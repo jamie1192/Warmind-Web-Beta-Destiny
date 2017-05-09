@@ -29,6 +29,7 @@
      $xboxName = "The1 and only35";
      $xboxName2 = "DrearFlounder88";
      
+
     $sessionUsername = $_SESSION['user']['username'];
     $sessionConsoleID = $_SESSION['user']['consoleID'];
     $sessionMembershipID = $_SESSION['user']['membershipID'];
@@ -55,6 +56,7 @@
     $titanBackground = $_SESSION['user']['titanBackground'];
     $hunterBackground = $_SESSION['user']['hunterBackground'];
     $warlockBackground = $_SESSION['user']['warlockBackground'];
+
      
      $titan = 0;
      $hunter = 1;
@@ -94,7 +96,9 @@
  //curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Stats/GetMembershipIdByDisplayName/'.$wheels.'/');
  
  //case insensitive PSN name search- THIS SPITS OUT AN ARRAY
+
  curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$psn.'/'.$jew.'/');
+
 //  curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Stats/GetMembershipIdByDisplayName/'.$cosmic.'/');
  curl_setopt($getMembershipId, CURLOPT_RETURNTRANSFER, true);
  curl_setopt($getMembershipId, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
@@ -126,8 +130,7 @@
  //echo $result;
  // $membershipID = $json->Response;
  //$counter = 0;
-//  echo $result;
- 
+
  $slot0 = $json->Response->data->characters[0]->characterBase->classType; //wheels = 1, jew = 0
 //  echo "<p>slot 0, json: ", $slot0;
  $slot1 = $json->Response->data->characters[1]->characterBase->classType; //wheels = 0, jew = 1
@@ -165,8 +168,10 @@
 //  echo "<p>Grimoire: ", $grimoire;
  $bungieURL = "https://bungie.net";
  
+
  
 //  GET EMBLEMS FOR LOGGED IN USER
+
 $getEmblems = curl_init();
  curl_setopt($getEmblems, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/'.$sessionConsoleID.'/Account/'.$sessionMembershipID.'/Summary/');
  curl_setopt($getEmblems, CURLOPT_RETURNTRANSFER, true);
@@ -180,6 +185,7 @@ $getEmblems = curl_init();
  
  // $urlMissing2 = "https://bungie.net";
  
+
  $emblemPath = $getEmblemsResult->Response->data->characters[$characterArraySlot]->emblemPath;
  
  //TODO fix the if(isset) so doesn't JSON request every page load 
@@ -230,12 +236,14 @@ $getEmblems = curl_init();
              $warlockSlot = 2;
          }
          
+
  
 //  if(isset($_SESSION['user'])){
 //      echo "just the tip ;)";
 //      if (!isset($_SESSION["titanArray"])) {
     
         //  echo "<p>we got inside ;)";
+
         //Emblems
         // $titanEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['titanSlot']]->emblemPath;
         // $hunterEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['hunterSlot']]->emblemPath;
@@ -275,6 +283,7 @@ $getEmblems = curl_init();
         
         
         //to here
+
 //      }
 //  }
  

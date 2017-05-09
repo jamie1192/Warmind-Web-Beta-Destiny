@@ -2,7 +2,9 @@
     
     include("database.php");
     include("head.php");
+
     include("key.php");
+
     
     session_start();
     
@@ -18,7 +20,11 @@
         
         //get user account using the email
         //   , consoleID, membershipID, titanID, hunterID, warlockID,
+
         $query = "SELECT uid, username, password, consoleID, membershipID, titanID, hunterID, warlockID FROM accounts WHERE username='$username'";
+
+        // $query = "SELECT uid, username, password, consoleID, membershipID, titanID, titanSlot, hunterID, hunterSlot, warlockID, warlockSlot FROM accounts WHERE username='$username'";
+
         //   echo $query;
         if(!$connection->query($query)){
                     $errors["database"] = "Database error!";
@@ -30,6 +36,7 @@
             $stored_pw = $userdata["password"];
             $stored_username = $userdata["username"];
             $id = $userdata["uid"];
+
             $consoleID = $userdata["consoleID"];
             $activeMembershipID = $userdata["membershipID"];
             $activeTitanID = $userdata["titanID"];
@@ -42,6 +49,7 @@
             //   if($username != $stored_username){
             //       $errors["username"] = "Username does not exist on Bungie servers.";
             //   }
+
             
         //JSON requests
         $ch = curl_init();
@@ -126,18 +134,22 @@
          //ends here
             //end JSON
             
-            
+
             $password = $_POST["password"];
             if(password_verify($password, $stored_pw)){
                 //get user data etc
                 session_start();
                 // $_SESSION['user'] = array('id' => '...', name => '...', ...);
+
                 // $_SESSION['user'] = array('uid' => $id, 'username' => $username, 'consoleID' => $console, 'membershipID' => $activeMembershipID, 'titanID' => $activeTitanID, 'titanSlot' =>$activeTitanSlot, 'titanEmblem', 'hunterID' => $activeHunterID, 'hunterSlot' => $activeHunterSlot, 'hunterEmblem', 'warlockID' => $activeWarlockID, 'warlockSlot' => $activeWarlockSlot, 'warlockEmblem');
                 $_SESSION['user'] = array('uid' => $id, 'username' => $stored_username, 'consoleID' => $consoleID, 'membershipID' => $activeMembershipID, 
                     'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground' => $titanBackground, 'hunterID' => $activeHunterID, 
                     'hunterSlot' => $hunterSlot, 
                     'hunterEmblem' => $hunterEmblem, 'hunterBackground' => $hunterBackground, 'warlockID' => $activeWarlockID, 'warlockSlot' => $warlockSlot, 
                     'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'lightLevel' => $lightLevel, 'grimoire' => $grimoire);
+
+               
+
                 // $_SESSION["uid"] = $id;
                 // $_SESSION["username"] = $username;
                 // $_SESSION["consoleID"] = $console;

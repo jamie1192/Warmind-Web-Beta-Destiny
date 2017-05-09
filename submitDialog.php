@@ -3,18 +3,17 @@
     include("head.php");
     session_start();
     
+
     $titanEmblemPath = $_SESSION["titanEmblemIconPath"];
     // echo $titanEmblemPath;
     $hunterEmblemPath = $_SESSION["hunterEmblemIconPath"];
     $warlockEmblemPath = $_SESSION["warlockEmblemIconPath"];
+
 //  array_push($_SESSION['hunterEmblem'],$hunterEmblem);
 //  array_push($_SESSION['warlockEmblem'],$warlockEmblem);
     $bungieURL = "https://bungie.net";
     
-    
-    
-    
-    
+
 ?>
 
 <!doctype html>
@@ -115,8 +114,10 @@
                         </form>
                     </div>
                 <div class="mdl-dialog__actions">
+
                     <button type="button" class="mdl-button">Submit</button>
                     <button type="button" class="mdl-button close">Cancel</button>
+
                 </div>
             </dialog>
     
@@ -125,6 +126,7 @@
     var dialog = document.querySelector('dialog');
     var showDialogButton = document.querySelector('#show-dialog');
     if (! dialog.showModal) {
+
         dialogPolyfill.registerDialog(dialog);
     }
     showDialogButton.addEventListener('click', function() {
@@ -132,6 +134,7 @@
     });
     dialog.querySelector('.close').addEventListener('click', function() {
         dialog.close();
+
     });
     
     

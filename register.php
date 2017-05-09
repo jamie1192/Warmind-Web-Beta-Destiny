@@ -35,7 +35,9 @@
          $getMembershipResults = curl_exec($getMembershipId);
          $getMembershipResponse = json_decode($getMembershipResults);
          
+
         //  echo "Error status: ", $getMembershipResults;
+
         //  echo "Error Response: ", $getMembershipResponse;
          
          
@@ -99,6 +101,7 @@
          
         //  echo "Warlock slot: ", $warlockSlot;
          
+
         $titanID = $json->Response->data->characters[$titanSlot]->characterBase->characterId;
         $hunterID = $json->Response->data->characters[$hunterSlot]->characterBase->characterId;
         $warlockID = $json->Response->data->characters[$warlockSlot]->characterBase->characterId;
@@ -152,6 +155,7 @@
                     'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'lightLevel' => $lightLevel, 'grimoire' => $grimoire);
                 header("location:home.php");
                 exit();
+
                 if(!$connection->query($query)){
                     $errors["database"] = "Database error!";
                 }
@@ -187,7 +191,9 @@
                                 <div class="form-group <?php echo $username_error_class; ?> mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="form-control mdl-textfield__input" name="username" value="<?php echo $username; ?>">
                                     <label class="mdl-textfield__label" for="username">PSN Name/Xbox Gamertag</label>
+
                                     <span class = "errorCode mdl-textfield__error"> <?php echo $username_error; ?></span>
+
                                 </div>
                                 
                                 <!--Password field-->
