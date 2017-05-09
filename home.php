@@ -29,16 +29,32 @@
      $xboxName = "The1 and only35";
      $xboxName2 = "DrearFlounder88";
      
-     $sessionUsername = $_SESSION['user']['username'];
-     $sessionConsoleID = $_SESSION['user']['consoleID'];
-     $sessionMembershipID = $_SESSION['user']['membershipID'];
+    $sessionUsername = $_SESSION['user']['username'];
+    $sessionConsoleID = $_SESSION['user']['consoleID'];
+    $sessionMembershipID = $_SESSION['user']['membershipID'];
      
-    //  echo "session output consoleID: ", $sessionConsoleID;
-    //  echo "session membershipID: ", $sessionMembershipID;
+    // echo "session output consoleID: ", $sessionConsoleID;
+    // echo "session membershipID: ", $sessionMembershipID;
      
-     $sessionTitanSlot = $_SESSION['user']['titanSlot'];
-     $sessionHunterSlot = $_SESSION['user']['hunterSlot'];
-     $sessionWarlockSlot = $_SESSION['user']['warlockSlot'];
+    $sessionTitanSlot = $_SESSION['user']['titanSlot'];
+    $sessionHunterSlot = $_SESSION['user']['hunterSlot'];
+    $sessionWarlockSlot = $_SESSION['user']['warlockSlot'];
+     
+    echo $_SESSION['user']['titanSlot']; 
+    echo $_SESSION['user']['hunterSlot'];
+    echo $_SESSION['user']['warlockSlot'];
+     
+    $titanEmblem = $_SESSION['user']['titanEmblem']; 
+    $hunterEmblem = $_SESSION['user']['hunterEmblem'];
+    $warlockEmblem = $_SESSION['user']['warlockEmblem'];
+    
+    // echo "Titan: ", $titanEmblem;
+    // echo "<P>Hunter: ", $hunterEmblem;
+    // echo "<p> Warlock: ", $warlockEmblem;
+    
+    $titanBackground = $_SESSION['user']['titanBackground'];
+    $hunterBackground = $_SESSION['user']['hunterBackground'];
+    $warlockBackground = $_SESSION['user']['warlockBackground'];
      
      $titan = 0;
      $hunter = 1;
@@ -78,7 +94,7 @@
  //curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Stats/GetMembershipIdByDisplayName/'.$wheels.'/');
  
  //case insensitive PSN name search- THIS SPITS OUT AN ARRAY
- curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$psn.'/'.$pip.'/');
+ curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$psn.'/'.$jew.'/');
 //  curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Stats/GetMembershipIdByDisplayName/'.$cosmic.'/');
  curl_setopt($getMembershipId, CURLOPT_RETURNTRANSFER, true);
  curl_setopt($getMembershipId, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
@@ -110,6 +126,8 @@
  //echo $result;
  // $membershipID = $json->Response;
  //$counter = 0;
+//  echo $result;
+ 
  $slot0 = $json->Response->data->characters[0]->characterBase->classType; //wheels = 1, jew = 0
 //  echo "<p>slot 0, json: ", $slot0;
  $slot1 = $json->Response->data->characters[1]->characterBase->classType; //wheels = 0, jew = 1
@@ -147,8 +165,8 @@
 //  echo "<p>Grimoire: ", $grimoire;
  $bungieURL = "https://bungie.net";
  
+ 
 //  GET EMBLEMS FOR LOGGED IN USER
-
 $getEmblems = curl_init();
  curl_setopt($getEmblems, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/'.$sessionConsoleID.'/Account/'.$sessionMembershipID.'/Summary/');
  curl_setopt($getEmblems, CURLOPT_RETURNTRANSFER, true);
@@ -162,24 +180,101 @@ $getEmblems = curl_init();
  
  // $urlMissing2 = "https://bungie.net";
  
- $emblemPath = $json->Response->data->characters[$characterArraySlot]->emblemPath;
+ $emblemPath = $getEmblemsResult->Response->data->characters[$characterArraySlot]->emblemPath;
  
  //TODO fix the if(isset) so doesn't JSON request every page load 
+ //GET ALL THE SESSION DATA
+ //INSERT CHARACTER SELECTION ALGORITHM TO GET ALL 3 CHARACTER ID's
+         $slot0 = $getEmblemsResult->Response->data->characters[0]->characterBase->classType; //wheels = 1, jew = 0
+        //  echo "<p>slot 0, json: ", $slot0;
+         $slot1 = $getEmblemsResult->Response->data->characters[1]->characterBase->classType; //wheels = 0, jew = 1
+        //  echo "<p>slot 1, json: ", $slot1;
+         $slot2 = $getEmblemsResult->Response->data->characters[2]->characterBase->classType; //wheels = 2, jew = 2
+        //  echo "<p>slot 2, json: ", $slot2;
+         
+         
+         //get Titan Slot
+         if($titan == $slot0){
+             $titanSlot = 0;
+         }
+         elseif($titan == $slot1){
+             $titanSlot = 1;
+         }
+         elseif($titan == $slot2){
+             $titanSlot = 2;
+         }
+         
+        //  echo "<p>Titan slot: ", $titanSlot;
+         
+        //  get Hunter slot
+        if($hunter == $slot0){
+             $hunterSlot = 0;
+         }
+         elseif($hunter == $slot1){
+             $hunterSlot = 1;
+         }
+         elseif($hunter == $slot2){
+             $hunterSlot = 2;
+         }
+         
+        //  echo "Hunter slot: ", $hunterSlot;
+         
+         //get warlock slot
+         if($warlock == $slot0){
+             $warlockSlot = 0;
+         }
+         elseif($warlock == $slot1){
+             $warlockSlot = 1;
+         }
+         elseif($warlock == $slot2){
+             $warlockSlot = 2;
+         }
+         
  
 //  if(isset($_SESSION['user'])){
 //      echo "just the tip ;)";
 //      if (!isset($_SESSION["titanArray"])) {
     
         //  echo "<p>we got inside ;)";
-        $titanEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['titanSlot']]->emblemPath;
-        $hunterEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['hunterSlot']]->emblemPath;
-        $warlockEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['warlockSlot']]->emblemPath;
+        //Emblems
+        // $titanEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['titanSlot']]->emblemPath;
+        // $hunterEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['hunterSlot']]->emblemPath;
+        // $warlockEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['warlockSlot']]->emblemPath;
         
-        $_SESSION["titanEmblemIconPath"]= $titanEmblem;
-        $_SESSION["hunterEmblemIconPath"] = $hunterEmblem;
-        $_SESSION["warlockEmblemIconPath"] = $warlockEmblem;
+        //commenting out here
+        // $titanEmblem = $getEmblemsResult->Response->data->characters[$titanSlot]->emblemPath;
+        // $hunterEmblem = $getEmblemsResult->Response->data->characters[$hunterSlot]->emblemPath;
+        // $warlockEmblem = $getEmblemsResult->Response->data->characters[$warlockSlot]->emblemPath;
         
         
+        // $titanBackground = $getEmblemsResult->Response->data->characters[$titanSlot]->backgroundPath;
+        // $hunterBackground = $getEmblemsResult->Response->data->characters[$hunterSlot]->backgroundPath;
+        // $warlockBackground = $getEmblemsResult->Response->data->characters[$warlockSlot]->backgroundPath;
+        
+        // $_SESSION["titanEmblemIconPath"]= $titanEmblem;
+        // $_SESSION["hunterEmblemIconPath"] = $hunterEmblem;
+        // $_SESSION["warlockEmblemIconPath"] = $warlockEmblem;
+        
+        // echo "slot test :",$_SESSION['user']['titanSlot'];
+        
+        // $_SESSION["titanEmblemBackground"] = $titanEmblemBackground;
+        // $_SESSION["hunterEmblemBackground"] = $hunterEmblemBackground;
+        // $_SESSION["warlockEmblemBackground"] = $warlockEmblemBackground;
+        
+        // //Light Level
+        // $lightLevel = $json->Response->data->characters[$characterArraySlot]->characterBase->powerLevel;
+        // $titanLightLevel = $getEmblemsResult->Response->data->characters[$_SESSION['user']['titanSlot']]->characterBase->powerLevel;
+        // $hunterLightLevel = $getEmblemsResult->Response->data->characters[$_SESSION['user']['hunterSlot']]->characterBase->powerLevel;
+        // $warlockLightLevel = $getEmblemsResult->Response->data->characters[$_SESSION['user']['warlockSlot']]->characterBase->powerLevel;
+        // $grimoire = $getEmblemsResult->Response->data->characters[$_SESSION['user']['titanSlot']]->characterBase->grimoireScore;
+        
+        // $_SESSION["titanLightLevel"] = $titanLightLevel;
+        // $_SESSION["hunterLightLevel"] = $hunterLightLevel;
+        // $_SESSION["warlockLightLevel"] = $warlockLightLevel;
+        // $_SESSION["grimoire"] = $grimoire;
+        
+        
+        //to here
 //      }
 //  }
  

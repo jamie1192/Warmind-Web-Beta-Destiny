@@ -35,7 +35,7 @@
          $getMembershipResults = curl_exec($getMembershipId);
          $getMembershipResponse = json_decode($getMembershipResults);
          
-        //  echo "Error status: ", $getMembershipResults[0];
+        //  echo "Error status: ", $getMembershipResults;
         //  echo "Error Response: ", $getMembershipResponse;
          
          
@@ -99,27 +99,59 @@
          
         //  echo "Warlock slot: ", $warlockSlot;
          
-         $titanID = $json->Response->data->characters[$titanSlot]->characterBase->characterId;
-         $hunterID = $json->Response->data->characters[$hunterSlot]->characterBase->characterId;
-         $warlockID = $json->Response->data->characters[$warlockSlot]->characterBase->characterId;
+        $titanID = $json->Response->data->characters[$titanSlot]->characterBase->characterId;
+        $hunterID = $json->Response->data->characters[$hunterSlot]->characterBase->characterId;
+        $warlockID = $json->Response->data->characters[$warlockSlot]->characterBase->characterId;
+         
+         //emblems
+        $titanEmblem = $json->Response->data->characters[$titanSlot]->emblemPath;
+        $hunterEmblem = $json->Response->data->characters[$hunterSlot]->emblemPath;
+        $warlockEmblem = $json->Response->data->characters[$warlockSlot]->emblemPath;
+        
+        
+        $titanBackground = $json->Response->data->characters[$titanSlot]->backgroundPath;
+        $hunterBackground = $json->Response->data->characters[$hunterSlot]->backgroundPath;
+        $warlockBackground = $json->Response->data->characters[$warlockSlot]->backgroundPath;
+         
+         //ends here
+         
+         //light level, grimoire
+        $titanLightLevel = $getEmblemsResult->Response->data->characters[$titanSlot]->characterBase->powerLevel;
+        $hunterLightLevel = $getEmblemsResult->Response->data->characters[$hunterSlot]->characterBase->powerLevel;
+        $warlockLightLevel = $getEmblemsResult->Response->data->characters[$warlock]->characterBase->powerLevel;
+        $grimoire = $getEmblemsResult->Response->data->characters[$titanSlot]->characterBase->grimoireScore;
+
+         //ends here
              
              
-            if($getMembershipResponse->Response == null){
+            if(count($getMembershipResponse->Response)==null){
                 $errors["username"] = "Username does not exist on Bungie servers.";
             }
         
-            elseif(strlen($_POST["password"]) < 8){
+            if(strlen($_POST["password"]) < 8){
                 $errors["password"] = "Password should be 8 characters or more.";
             }
             
-            elseif($_POST["password"] != $_POST["confirmPassword"]){
+            if($_POST["password"] != $_POST["confirmPassword"]){
                 $errors["password"] = "Password mismatch.";
             }
+            
+            // print_r($errors);
             
             if(count($errors)==0){
                 $username = filter_var($username, FILTER_SANITIZE_STRING);
                 $hashed = password_hash($password, PASSWORD_DEFAULT);
-                $query = "INSERT INTO accounts (username, password, consoleID, membershipID, titanID, titanSlot, hunterID, hunterSlot, warlockID, warlockSlot, creation_date, last_update, last_login) VALUES ('$displayName', '$hashed','$consoleID','$membershipID','$titanID', '$titanSlot', '$hunterID', '$hunterSlot', '$warlockID', '$warlockSlot', NOW(),NOW(),NOW())";
+                $query = "INSERT INTO accounts (username, password, consoleID, membershipID, titanID, hunterID, warlockID, 
+                    creation_date, last_update, last_login) 
+                    VALUES ('$displayName', '$hashed','$consoleID','$membershipID','$titanID', '$hunterID', '$warlockID', NOW(),NOW(),NOW())";
+                
+                $_SESSION['user'] = array('uid' => $id, 'username' => $displayName, 'consoleID' => $consoleID, 'membershipID' => $membershipID, 
+                    'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground', 'hunterID' => $activeHunterID, 
+                    'hunterSlot' => $activeHunterSlot, 
+                    'hunterEmblem' => $hunterEmblem, 'hunterBackground' => $hunterBackground, 'warlockID' => $activeWarlockID, 'warlockSlot' => $activeWarlockSlot, 
+                    'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'lightLevel' => $lightLevel, 'grimoire' => $grimoire);
+                header("location:home.php");
+                exit();
                 if(!$connection->query($query)){
                     $errors["database"] = "Database error!";
                 }
@@ -155,7 +187,7 @@
                                 <div class="form-group <?php echo $username_error_class; ?> mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="form-control mdl-textfield__input" name="username" value="<?php echo $username; ?>">
                                     <label class="mdl-textfield__label" for="username">PSN Name/Xbox Gamertag</label>
-                                    <span class = "errorCode mdl-textfield__error"> <?php $username_error; ?></span>
+                                    <span class = "errorCode mdl-textfield__error"> <?php echo $username_error; ?></span>
                                 </div>
                                 
                                 <!--Password field-->
