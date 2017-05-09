@@ -31,7 +31,8 @@
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         
         // echo htmlspecialchars($_POST['sample5']);
-        print_r($_POST);
+        // echo $_POST['description'];
+        // print_r($_POST);
         
         
         
@@ -41,32 +42,35 @@
         $description = $_POST['description'];
         
         //TODO FILL THIS IN
-        $characterSelection = $_POST[''];
-        $hasMicrophone = $_POST[''];
+        $characterSelection = $_POST['characterClass'];
+        // $hasMicrophone = $_POST[''];
         
-        if($characterSelection == 0){
+        //Character assignment and checking
+        if($characterSelection == "Titan"){
             $emblemIconPath = $titanEmblemIcon;
             $emblemBackgroundPath = $titanEmblem;
             $lightLevel = $titanLightLevel;
-            $selectedCharacter = "Titan";
+            // $selectedCharacter = "Titan";
         }
-        else if($characterSelection == 1){
+        else if($characterSelection == "Hunter"){
             $emblemIconPath = $hunterEmblemIcon;
             $emblemBackgroundPath = $hunterEmblem;
             $lightLevel = $hunterLightLevel;
-            $selectedCharacter = "Hunter";
+            // $selectedCharacter = "Hunter";
         }
-        else if($characterSelection == 2){
+        else if($characterSelection == "Warlock"){
             $emblemIconPath = $warlockEmblemIcon;
             $emblemBackgroundPath = $titanEmblem;
             $lightLevel = $warlockLightLevel;
-            $selectedCharacter = "Warlock";
+            // $selectedCharacter = "Warlock";
         }
         else{
-            //error
+            $errors["character"] = "Character not found.";
         }
     
-        $errors["database"] = "Database error!";
+        // echo $lightLevel;
+        // echo "<p> ",$characterSelection;
+        // $errors["database"] = "Database error!";
         
         //if no errors
         if(count($errors)==0){
@@ -77,7 +81,7 @@
             
             //
             $query = "INSERT INTO posts (uid, username, selectedCharacter, consoleID, activity, description, emblemIcon, emblemBackground, lightLevel, 
-                    grimoireScore, hasMic, postTime) VALUES ('$sessionID', '$sessionUsername', '$selectedCharacter', '$sessionConsoleID','$activitySelection',
+                    grimoireScore, hasMic, postTime) VALUES ('$sessionID', '$sessionUsername', '$characterSelection', '$sessionConsoleID','$activitySelection',
                     '$description', '$bungieURL$emblemIconPath','$bungieURL$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() )";
             if(!$connection->query($query)){
                 $errors["database"] = "Database error!";

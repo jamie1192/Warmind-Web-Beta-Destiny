@@ -148,11 +148,17 @@
                     creation_date, last_update, last_login) 
                     VALUES ('$displayName', '$hashed','$consoleID','$membershipID','$titanID', '$hunterID', '$warlockID', NOW(),NOW(),NOW())";
                 
-                $_SESSION['user'] = array('uid' => $id, 'username' => $displayName, 'consoleID' => $consoleID, 'membershipID' => $membershipID, 
-                    'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground', 'hunterID' => $activeHunterID, 
-                    'hunterSlot' => $activeHunterSlot, 
-                    'hunterEmblem' => $hunterEmblem, 'hunterBackground' => $hunterBackground, 'warlockID' => $activeWarlockID, 'warlockSlot' => $activeWarlockSlot, 
-                    'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'lightLevel' => $lightLevel, 'grimoire' => $grimoire);
+                // $_SESSION['user'] = array('uid' => $id, 'username' => $displayName, 'consoleID' => $consoleID, 'membershipID' => $membershipID, 
+                //     'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground', 'hunterID' => $activeHunterID, 
+                //     'hunterSlot' => $activeHunterSlot, 
+                //     'hunterEmblem' => $hunterEmblem, 'hunterBackground' => $hunterBackground, 'warlockID' => $activeWarlockID, 'warlockSlot' => $activeWarlockSlot, 
+                //     'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'lightLevel' => $lightLevel, 'grimoire' => $grimoire);
+                $_SESSION['user'] = array('uid' => $id, 'username' => $stored_username, 'consoleID' => $consoleID, 'membershipID' => $activeMembershipID, 
+                    'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground' => $titanBackground, 
+                    'titanLightLevel' => $titanLightLevel, 'hunterID' => $activeHunterID, 'hunterSlot' => $hunterSlot, 'hunterEmblem' => $hunterEmblem, 
+                    'hunterBackground' => $hunterBackground, 'hunterLightLevel' => $hunterLightLevel, 'warlockID' => $activeWarlockID, 'warlockSlot' => $warlockSlot, 
+                    'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'warlockLightLevel' => $warlockLightLevel, 'grimoire' => $grimoire);
+                
                 header("location:home.php");
                 exit();
 

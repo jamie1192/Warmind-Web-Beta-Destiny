@@ -143,10 +143,10 @@
 
                 // $_SESSION['user'] = array('uid' => $id, 'username' => $username, 'consoleID' => $console, 'membershipID' => $activeMembershipID, 'titanID' => $activeTitanID, 'titanSlot' =>$activeTitanSlot, 'titanEmblem', 'hunterID' => $activeHunterID, 'hunterSlot' => $activeHunterSlot, 'hunterEmblem', 'warlockID' => $activeWarlockID, 'warlockSlot' => $activeWarlockSlot, 'warlockEmblem');
                 $_SESSION['user'] = array('uid' => $id, 'username' => $stored_username, 'consoleID' => $consoleID, 'membershipID' => $activeMembershipID, 
-                    'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground' => $titanBackground, 'hunterID' => $activeHunterID, 
-                    'hunterSlot' => $hunterSlot, 
-                    'hunterEmblem' => $hunterEmblem, 'hunterBackground' => $hunterBackground, 'warlockID' => $activeWarlockID, 'warlockSlot' => $warlockSlot, 
-                    'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'lightLevel' => $lightLevel, 'grimoire' => $grimoire);
+                    'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground' => $titanBackground, 
+                    'titanLightLevel' => $titanLightLevel, 'hunterID' => $activeHunterID, 'hunterSlot' => $hunterSlot, 'hunterEmblem' => $hunterEmblem, 
+                    'hunterBackground' => $hunterBackground, 'hunterLightLevel' => $hunterLightLevel, 'warlockID' => $activeWarlockID, 'warlockSlot' => $warlockSlot, 
+                    'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'warlockLightLevel' => $warlockLightLevel, 'grimoire' => $grimoire);
 
                
 

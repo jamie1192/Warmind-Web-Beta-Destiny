@@ -37,3 +37,6 @@
 [09-May-2017 12:08:54 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/ubuntu/workspace/ajax/submitNewPost.php on line 77
 [09-May-2017 12:08:54 UTC] PHP Stack trace:
 [09-May-2017 12:08:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/submitNewPost.php:0
+[09-May-2017 13:23:43 UTC] PHP Fatal error:  Function name must be a string in /home/ubuntu/workspace/ajax/submitNewPost.php on line 34
+[09-May-2017 13:23:43 UTC] PHP Stack trace:
+[09-May-2017 13:23:43 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/submitNewPost.php:0

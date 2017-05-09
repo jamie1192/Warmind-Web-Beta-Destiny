@@ -320,17 +320,17 @@ $getEmblems = curl_init();
                                 
                                 <input id="titan" type="radio" name="characterClass" value="Titan" checked/>
                                 <label class="classEmblems" for="titan">
-                                    <img class="emblemIcons" src=<?php echo "$bungieURL$titanEmblem";?>>
+                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$titanEmblem");?>>
                                 </label>
                                 
                                 <input id="hunter" type="radio" name="characterClass" value="Hunter" />
                                 <label class="classEmblems"for="hunter">
-                                    <img class="emblemIcons" src=<?php echo "$bungieURL$hunterEmblem";?>>
+                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$hunterEmblem");?>>
                                 </label>
                                 
                                 <input id="warlock" type="radio" name="characterClass" value="Warlock" />
                                 <label class="classEmblems"for="warlock">
-                                    <img class="emblemIcons" src=<?php echo "$bungieURL$warlockEmblem";?>>
+                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$warlockEmblem");?>>
                                 </label>
                                 
                             </div>
@@ -531,10 +531,10 @@ $getEmblems = curl_init();
         <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
             <div class="emblemContainer">
                 <div class="emblemIcon">
-                    <img src="<?= $completeEmblemIcon; ?>"></img>
+                    <img src="<?= htmlspecialchars($completeEmblemIcon); ?>"></img>
                 </div>
                 <div class="emblemBackground">
-                    <img src="<?= $completeEmblemBackground; ?>"></img>
+                    <img src="<?= htmlspecialchars($completeEmblemBackground); ?>"></img>
                 </div>
                 <div class="playerUsername"><?= $displayName; ?></div>
                 <div class="playerCurrentClass"><?= $activeCharacter; ?></div>
@@ -573,7 +573,7 @@ $getEmblems = curl_init();
                 </thead>
                     <tbody>
                          <!--Row 1 -->
-                        <tr>
+                        <tr class="whiteText">
                             <td class="playerKD"></td>
                             <td class="playerAverageLifespan"></td>
                             <td class="playerWinLossRatio"></td>
@@ -620,7 +620,7 @@ $getEmblems = curl_init();
 
     var dialog = document.querySelector('dialog');
     var showDialogButton = document.querySelector('#submit-dialog');
-    if (! dialog.showModal) {
+    if (!dialog.showModal) {
       dialogPolyfill.registerDialog(dialog);
     }
     showDialogButton.addEventListener('click', function() {
