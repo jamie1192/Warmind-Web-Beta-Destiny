@@ -53,7 +53,7 @@
     width: 100%;
 }
 
-.cc-selector input{
+.class-selector input{
     margin:0;padding:0;
     -webkit-appearance:none;
        -moz-appearance:none;
@@ -72,14 +72,22 @@
     border-radius: 24px;
 }
 
-.cc-selector input:active +.drinkcard-cc{opacity: .9;}
-.cc-selector input:checked +.drinkcard-cc{
+.class-selector input:active +.classEmblems{opacity: .9;}
+.class-selector input:checked +.classEmblems{
     -webkit-filter: none;
        -moz-filter: none;
             filter: none;
             /*border: 2px solid red;*/
 }
-.drinkcard-cc{
+
+.class-selector label:active +.classEmblems{opacity: .9;}
+.class-selector label:checked +.classEmblems{
+    -webkit-filter: none;
+       -moz-filter: none;
+            filter: none;
+}
+
+.classEmblems{
     cursor:pointer;
     background-size:contain;
     background-repeat:no-repeat;
@@ -92,7 +100,7 @@
        -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
             filter: brightness(1.8) grayscale(1) opacity(.7);
 }
-.drinkcard-cc:hover{
+.classEmblems:hover{
     -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
        -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
             filter: brightness(1.2) grayscale(.5) opacity(.9);

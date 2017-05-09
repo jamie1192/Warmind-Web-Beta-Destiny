@@ -315,70 +315,38 @@ $getEmblems = curl_init();
                         color: white;">Submit LFG Post</div>
                     <div class="mdl-dialog__content">
                        
-                        <form id="submitPostForm" action="#">
-      <!-- Right aligned menu below button -->
-
-                        <!--<div class="mdl-dialog__actions mdl-dialog__action--full-width">-->
-                        <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">-->
-                        <!--        <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>-->
-                        <!--    <span class="mdl-radio__label">Titan</span>-->
-                        <!--    </label>-->
-                        <!--<div class="mdl-layout-spacer"></div>-->
-                        <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">-->
-                        <!--        <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2">-->
-                        <!--    <span class="mdl-radio__label">Hunter</span>-->
-                        <!--    </label>-->
-                        <!--<div class="mdl-layout-spacer"></div>-->
-                        <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-3">-->
-                        <!--        <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="3">-->
-                        <!--    <span class="mdl-radio__label">Warlock</span>-->
-                        <!--    </label>-->
-                        
-                        <!--</div>-->
-                        <!--<form>-->
-    <!--<p>Previously:</p>-->
-    <!--<div>-->
-    <!--    <input id="a1" type="radio" name="a" value="visa" />-->
-    <!--    <label for="a1">Visa</label><br/>-->
-    <!--    <input id="a2" type="radio" name="a" value="mastercard" />-->
-    <!--    <label for="a2">Mastercard</label>-->
-    <!--</div>-->
-    <!--<p>Now, with CSS3: </p>-->
-                            <div class="cc-selector lfgEmblemContainer">
-                                <input id="titan" type="radio" name="credit-card" value="0" checked/>
-                                <label class="drinkcard-cc visa" for="titan">
+                        <form id="submitPostForm" method="post" action="#">
+                            <div class="class-selector lfgEmblemContainer">
+                                
+                                <input id="titan" type="radio" name="characterClass" value="0" checked/>
+                                <label class="classEmblems" for="titan">
                                     <img class="emblemIcons" src=<?php echo "$bungieURL$titanEmblem";?>>
                                 </label>
                                 
-                                <input id="hunter" type="radio" name="credit-card" value="1" />
-                                <label class="drinkcard-cc mastercard"for="hunter">
+                                <input id="hunter" type="radio" name="characterClass" value="1" />
+                                <label class="classEmblems"for="hunter">
                                     <img class="emblemIcons" src=<?php echo "$bungieURL$hunterEmblem";?>>
                                 </label>
-                                <input id="warlock" type="radio" name="credit-card" value="2" />
-                                <label class="drinkcard-cc mastercard"for="warlock">
+                                
+                                <input id="warlock" type="radio" name="characterClass" value="2" />
+                                <label class="classEmblems"for="warlock">
                                     <img class="emblemIcons" src=<?php echo "$bungieURL$warlockEmblem";?>>
                                 </label>
+                                
                             </div>
                             
-                            <div class="emblemLabels">
+                            <div class="class-selector emblemLabels">
                                 <!--<div>-->
-                                <label id="titanLabel" class="drinkcard-cc " for="titan">Titan</label>
+                                <label id="titanLabel" class="classEmblems" for="titan">Titan</label>
                                 <!--</div>-->
                                 <!--<div>-->
-                                <label id="hunterLabel" class="drinkcard-cc " for="hunter">Hunter</label>
+                                <label id="hunterLabel" class="classEmblems" for="hunter">Hunter</label>
                                 <!--</div>-->
                                 <!--<div>-->
-                                <label id="warlockLabel" class="drinkcard-cc " for="warlock">Warlock</label>
+                                <label id="warlockLabel" class="classEmblems" for="warlock">Warlock</label>
                                 <!--</div>-->
                             </div>
-<!--</form>-->
-                        <!--<div class="mdl-layout-spacer"></div>-->
-                            <!--<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-3">-->
-                            <!--    <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="3">-->
-                            <!--<span class="mdl-radio__label">Warlock</span>-->
-                            <!--</label>-->
-                        <!--</div>-->
-                        <!--<form action="#">-->
+
                             <div class="mdl-select mdl-js-select mdl-select--floating-label">
                                 <select class="mdl-select__input" id="professsion" name="professsion">
                                     <option value=""></option>
@@ -397,12 +365,13 @@ $getEmblems = curl_init();
                                 <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" ></textarea>
                                 <label class="mdl-textfield__label" for="sample5">Description</label>
                             </div>
-                        </form>
+                        <!--</form>-->
                     </div>
                 <div class="mdl-dialog__actions">
-                    <button type="button" class="mdl-button">Submit</button>
+                    <button type="submit" name="submit" class="mdl-button">Submit</button>
                     <button type="button" class="mdl-button close">Cancel</button>
                 </div>
+            </form>
             </dialog>
     
           
