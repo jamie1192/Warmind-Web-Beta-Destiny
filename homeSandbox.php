@@ -368,8 +368,9 @@ $getEmblems = curl_init();
                         <!--</form>-->
                     </div>
                 <div class="mdl-dialog__actions">
-                    <button type="submit" name="submit" class="mdl-button">Submit</button>
-                    <button type="button" class="mdl-button close">Cancel</button>
+                        <button type="submit" id="submitLFGpost" name="submit" class="mdl-button">Submit</button>
+                    <div class="mdl-spinner mdl-js-spinner is-active submitPostSpinner" id="submitPostLoading"></div>
+                    <button type="button" id="cancelLFGpost" class="mdl-button close">Cancel</button>
                 </div>
             </form>
             </dialog>
@@ -716,7 +717,16 @@ $getEmblems = curl_init();
   
     $("#submitPostForm").submit(function(e){
         
+        $('#submitPostLoading').show();
+        // <button id='btnAddProfile' type='button'>Add</button>
+        $("#submitLFGpost").html('Submitting');
+        
         var submitPHP = "ajax/submitNewPost.php";
+        
+        
+        //disable buttons on submit
+        $("#submitLFGpost").attr("disabled", "disabled");
+        $("#cancelLFGpost").remove();
         
         $.ajax({
             type:"POST",
@@ -725,10 +735,13 @@ $getEmblems = curl_init();
             
             success: function(data){
                 alert(data);
+                $('#submitPostLoading').show();
+                dialog.close();
                 //success message or something
                 //hide loading animation
                 //close dialog
             }
+            
         });
         
         e.preventDefault();
