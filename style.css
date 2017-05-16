@@ -6,6 +6,10 @@
         width: 100%;
     }
     
+    .mdl-button--raised[disabled][disabled], .mdl-button--raised.mdl-button--disabled.mdl-button--disabled{
+        background-color: #aa8f00;
+    }
+    
     .headerLoggedUser{
         margin-left:12px;
     }
@@ -76,6 +80,14 @@
    }
   
   #getStats{
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-bottom: 10px;
+      margin-right: 10px;
+  }
+  
+  #hideStats{
       position: absolute;
       bottom: 0;
       right: 0;

@@ -105,7 +105,7 @@
  $getMembershipResults = curl_exec($getMembershipId);
  $getMembershipResponse = json_decode($getMembershipResults);
  
- echo $getMembershipResults;
+//  echo $getMembershipResults;
  
  //
  $membershipID = $getMembershipResponse->Response[0]->membershipId;

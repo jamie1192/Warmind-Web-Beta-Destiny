@@ -88,7 +88,7 @@
  
  //
  $membershipID = $getMembershipResponse->Response[0]->membershipId;
- $displayName = $getMembershipResponse->Response[0]->displayName;;
+ $displayName = $getMembershipResponse->Response[0]->displayName;
 //  echo "xbox wut: ", $getMembershipResults;
  
 //  echo "First membership ID: ", $membershipID;
@@ -521,14 +521,71 @@ $getEmblems = curl_init();
             <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
                 <div class="page-content">
                     <div class="tab1container"><!--Tab 1-->
-
+                    <div class="mdl-grid">
 <!--LFG POST STARTS HERE-->
           
 <!--LFG POST STARTS HERE-->
 <!--<div class="mdl-grid">-->
   <!--<div class="mdl-cell mdl-cell--1-col">1</div>-->
   <!--<div class="mdl-cell mdl-cell--6-col">6</div>-->
-    <div class="postContainer">
+    <div class="postContainer mdl-cell mdl-cell--6-col">
+        <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
+            <div class="emblemContainer">
+                <div class="emblemIcon">
+                    <img src="<?= htmlspecialchars($completeEmblemIcon); ?>"></img>
+                </div>
+                <div class="emblemBackground">
+                    <img src="<?= htmlspecialchars($completeEmblemBackground); ?>"></img>
+                </div>
+                <div class="playerUsername"><?= $displayName; ?></div>
+                <div class="playerCurrentClass"><?= $activeCharacter; ?></div>
+                <div class="rightSide">
+                    <div class="playerLightLevel"><span id="lightLevelIcon">&#10022  </span><?= $lightLevel; ?></div>
+                    <div class="playerGrimoire"><?= $grimoire; ?>
+                        <img id="grimoireIcon" src="./assets/grimoireIcon.png"></img>
+                    </div>
+                </div>
+            </div>
+            <div class="mdl-spinner mdl-js-spinner is-active getStatsLoading" id="statsLoading"></div>
+                <!--<div class="innerContainer">-->
+            <div class="postActivity"><span class="postActivityText">Trials of Osiris</span>
+                <div class="divider"></div>
+            </div>
+           
+            <div class="postDescription"><span class="postDescriptionText">LF 1 more, must have K/D above 1.5, have mic and be over the age of 18.</span></div>
+                    <!--<form id="playerStatsForm"> -->
+                        <!--<input type="hidden" name="getStatsButton" value=" //$displayName; ?>">-->
+                            <button id="getStats" data-name="<?=$displayName;?>" data-character="<?=$activeCharacter;?>" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent ">Get Player Stats</button>
+                        <!--</input>-->
+                    <!--</form>-->
+                <!--</div>    -->
+        </div>
+        
+        
+        <div class="stats-row whiteText"></div>
+        <template id="playerStats">
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">
+                <thead>
+                    <tr class="goldColour">
+                        <th>K/D Ratio</th>
+                        <th>Average Lifespan</th>
+                        <th>Win/Loss Ratio</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                         <!--Row 1 -->
+                        <tr class="whiteText">
+                            <td class="playerKD"></td>
+                            <td class="playerAverageLifespan"></td>
+                            <td class="playerWinLossRatio"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+            
+    </div>
+    
+    <div class="postContainer mdl-cell mdl-cell--6-col">
         <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
             <div class="emblemContainer">
                 <div class="emblemIcon">
@@ -592,7 +649,7 @@ $getEmblems = curl_init();
 <!--SECOND LFG POST ENDS HERE-->
 
   <!--TrialsReport star icon : ✦ -->
-  
+  </div>
   </div>
                 </div>
             </section>
@@ -615,6 +672,9 @@ $getEmblems = curl_init();
   
   <script>
     
+    //hide submit loader
+    $('#submitPostLoading').hide();
+    
     //Login dialog
     // var dialog = document.querySelector('dialog');
     // var showDialogButton = document.querySelector('#login-dialog');
@@ -634,17 +694,26 @@ $getEmblems = curl_init();
     //end login dialog
     
     //get player stats on LFG post
-    $(".postContainer").on("click", clickHandler);
-    
+    // $(".postContainer").on("click", clickHandler);
+    $("#getStats").on("click", clickHandler);
+    var clicks = 0;
     function clickHandler(e){
+        
+        
+        
+    if(clicks == 0){
         e.target;
+        var clickedBtn = this;
         var getName = $(e.target).parents(".mdl-button").data("name");
         var getCharacter = $(e.target).parents(".mdl-button").data("character");
         var datasource = "ajax/getPlayerStats.php";
         
         if(getName != null){
             $('#statsLoading').show();
+            // $(clickedBtn).prop("disabled", true);
+            $(clickedBtn).html('Retrieving Stats..');
         }
+        
         
         console.log("e target: ", e.target);
         console.log("playerName: ", getName);
@@ -691,7 +760,10 @@ $getEmblems = curl_init();
                     console.log("ERROR");
                 }
                 else{
-                    $("#getStats").html('Hide Stats');
+                    clicks++;
+                    console.log(clicks);
+                    // $(this).prop("disabled", false);
+                    $(clickedBtn).html('Hide Stats');
                     
                     var template = $("#playerStats").html().trim();
                     var clone = $(template);
@@ -712,9 +784,29 @@ $getEmblems = curl_init();
                 
               })
             //   timeout: 3000;
+        
+        // $("#hideStats").unbind("click", hideStatsClick);
+    
+        // function hideStatsClick(f){
+        //     console.log("Hide Test", f);
+        //     f.target;
+        
+    }else{
+        $(e.target).parent().siblings(".stats-row").remove();
+        clicks--;
+        $("#getStats").html('Get Player Stats');
     }
+        
+    }
+    
+    
+    //Hide shown stats
+    //$("#btn2").unbind("click").click(function () {
+    
+    
+    
   
-  
+    //Submit LFG Post
     $("#submitPostForm").submit(function(e){
         
         $('#submitPostLoading').show();
