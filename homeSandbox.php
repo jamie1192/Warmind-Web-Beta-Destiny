@@ -493,7 +493,7 @@ $getEmblems = curl_init();
                                 <div class="divider"></div>
                             </div>
                             <div class="postDescription"><span class="postDescriptionText"></span></div>
-                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent getStats" type="button">Get Player Stats</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent getStats" type="button">Get Player Stats</button>
                         </div>
                         
                         <div class="stats-row whiteText"></div>
@@ -716,8 +716,8 @@ $getEmblems = curl_init();
     //end login dialog
     
     //get player stats on LFG post
-    // $(".postContainer").on("click", clickHandler);
-    $(".getStats").on("click", clickHandler);
+    $(".postContainerTemplate").on("click", clickHandler);
+    // $(".getStats").on("click", clickHandler);
     var clicks = 0;
     function clickHandler(e){
         
@@ -725,7 +725,8 @@ $getEmblems = curl_init();
         
     if(clicks == 0){
         e.target;
-        var clickedBtn = this;
+        var clickedBtn;
+        
         var getName = $(e.target).parents(".mdl-button").data("name");
         // var getCharacter = $(e.target).parents(".mdl-button").data("character");
         var getCharacter = $(e.target).parents(".mdl-button").data("character");
@@ -734,7 +735,9 @@ $getEmblems = curl_init();
         if(getName != null){
             $(e.target).parents(".mdl-button").siblings('.statsLoading').show();
             // $(clickedBtn).prop("disabled", true);
-            $(clickedBtn).html('Retrieving Stats..');
+            // $(clickedBtn).parents(".mdl-button").html('Retrieving Stats..');
+            clickedBtn =  $(e.target).parents(".getStats");
+            $(e.target).parents(".getStats").html("Retrieving Stats..");
         }
         
         
@@ -786,7 +789,7 @@ $getEmblems = curl_init();
                     clicks++;
                     console.log(clicks);
                     // $(this).prop("disabled", false);
-                    $(clickedBtn).html('Hide Stats');
+                    // $(clickedBtn).html('Hide Stats');
                     
                     var template = $("#playerStats").html().trim();
                     var clone = $(template);
@@ -803,24 +806,29 @@ $getEmblems = curl_init();
                     $(clone).find(".playerAverageLifespan").html(averageLifespan);
                     $(clone).find(".playerWinLossRatio").html(winLossRatio);
                     // $(".stats-row").append(clone);
-                    $(".stats-row").append(clone);
-                    // $(e.target).parent().siblings(".stats-row").append(clone);
+                    // $(".stats-row").append(clone);
+                    // $(e.target).parent(".mdl-button").parent(".postCard").siblings(".stats-row").append(clone);
+                    console.log("btn :", clickedBtn);
+                    clickedBtn.parent(".postCard").siblings(".stats-row").append(clone);
                     //$(e.target).parents(".mdl-button").siblings('.statsLoading').show();
                 }
                 
-              })
+              });
             //   timeout: 3000;
         
-        // $("#hideStats").unbind("click", hideStatsClick);
+        $(".getStats").unbind("click", hideStatsClick);
     
-        // function hideStatsClick(f){
-        //     console.log("Hide Test", f);
-        //     f.target;
+        function hideStatsClick(e){
+            console.log("Hide Test", e);
+            e.target;
+        }
         
     }else{
         // $(e.target).parents(".mdl-button").parents(".postDescription").parents(".postCard").siblings(".stats-row").remove();
-        $(e.target).parent().siblings(".stats-row").attr("display", "none");
+        // $(e.target).parent().siblings(".stats-row").attr("display", "none");
+        $(e.target).parent(".mdl-button").parent(".postCard").siblings(".stats-row").attr("display", "none");
         clicks--;
+        console.log("click- :", clicks);
         $(".getStats").html('Get Player Stats');
     }
         
@@ -865,69 +873,7 @@ $getEmblems = curl_init();
         
         e.preventDefault();
     });
-    //   $(document).ready(function(){
-    //       //add listener for button click
-    //       $("#playerStatsForm").on("submit", function(e){
-    //           e.preventDefault();
-    //           $('#statsLoading').show();
-              
-    //           //TODO how to get more than one value from LFG post (need character)
-    //           var playerName = {name:$("#playerStatsForm input").val(), characterName:$};
-    //           var datasource = "ajax/getPlayerStats.php";
-    //           $.ajax({
-    //               data:playerName, 
-    //               datatype: 'json',
-    //               url:datasource,
-    //               type: 'POST',
-    //               encode: true
-    //           })
-    //           .done(function(data){
-    //               console.log(data);
-    //             //if there is data
-    //             $('#statsLoading').hide();
-                
-    //             var jsonResponse = JSON.parse(data);
-    //             // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
-    //             if(typeof jsonResponse.Response.trialsOfOsiris.allTime === "undefined"){
-    //                 console.log("ERROR");
-    //                 $("#getStats").html('Error: No stats found');
-    //                 $("#getStats").removeClass("mdl-button--accent");
-    //                 $("#getStats").addClass("getTrialsStatsError");
-                    
-    //             }
-    //             else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio === "undefined"){
-    //                 console.log("ERROR");
-    //             }
-    //             //ELSEIF if response != 1, throw error if trial stats not found
-    //             else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan === "undefined"){
-    //                 console.log("ERROR");
-    //             }
-    //             else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio === "undefined"){
-    //                 console.log("ERROR");
-    //             }
-    //             else{
-    //                 var template = $("#playerStats").html().trim();
-    //                 var clone = $(template);
-    //                 //fill the data
-    //                 //console.log(data.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
-    //                 var playerKD = jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue;
-    //                 var averageLifespan = jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan.basic.displayValue;
-    //                 var winLossRatio = jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio.basic.displayValue;
-    //                 console.log("playerKD: ", playerKD);
-    //                 console.log("Avg Lifespan: ", averageLifespan);
-    //                 console.log("Respone code: ", jsonResponse.Response);
-                    
-    //                 $(clone).find(".playerKD").html(playerKD);
-    //                 $(clone).find(".playerAverageLifespan").html(averageLifespan);
-    //                 $(clone).find(".playerWinLossRatio").html(winLossRatio);
-    //                 $(".stats-row").append(clone);
-    //             }
-                
-    //           })
-              
-              
-    //       })
-    //   })
+    
       
   </script>
   
