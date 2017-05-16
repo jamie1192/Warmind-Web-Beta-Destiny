@@ -474,17 +474,17 @@ $getEmblems = curl_init();
                         <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
                             <div class="emblemContainer">
                                 <div class="emblemIcon">
-                                    <img class="emblemIconImg" src=""></img>
+                                    <img class="emblemIconImg">
                                 </div>
                                 <div class="emblemBackground">
-                                    <img class="emblemBackgroundImg" src=""></img>
+                                    <img class="emblemBackgroundImg" src="">
                                 </div>
                                 <div class="playerUsername"></div>
                                 <div class="playerCurrentClass"></div>
                                 <div class="rightSide">
                                     <div class="playerLightLevel"></div>
-                                    <div class="playerGrimoire">
-                                        <img class="grimoireImage" src="">
+                                    <div class="playerGrimoire"><span class="playerGrimoireOutput"></span>
+                                        <img class="grimoireImage">
                                     </div>
                                 </div>
                             </div>
@@ -661,13 +661,16 @@ $getEmblems = curl_init();
                         $(clone).find(".playerCurrentClass").html(selectedCharacter);
                         //console icon insert
                         //   $(clone).find(".console").html(consoleChoice);
-                        $(clone).find(".postActivity").html(activity);
+                        $(clone).find(".postActivityText").html(activity);
                         $(clone).find(".postDescription").html(description);
                         $(clone).find(".emblemIconImg").attr("src", emblemIcon);
                         $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
                         $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
-                        $(clone).find(".playerGrimoire").html(grimoireScore);
+                        
                         $(clone).find(".grimoireImage").attr("src", grimoireImg);
+                        $(clone).find(".playerGrimoireOutput").html(grimoireScore);
+                        
+                        console.log(grimoireImg);
                         $(clone).find(".getStats").attr("data-name", username);
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         
