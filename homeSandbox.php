@@ -493,7 +493,7 @@ $getEmblems = curl_init();
                                 <div class="divider"></div>
                             </div>
                             <div class="postDescription"><span class="postDescriptionText"></span></div>
-                                <button class="getStats">Get Player Stats</button>
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent getStats" type="button">Get Player Stats</button>
                         </div>
                         
                         <div class="stats-row whiteText"></div>
@@ -549,7 +549,7 @@ $getEmblems = curl_init();
             </div>
            
             <div class="postDescription"><span class="postDescriptionText">LF 1 more, must have K/D above 1.5, have mic and be over the age of 18.</span></div>
-                <button class="getStats" data-name="<?=$displayName;?>" data-character="<?=$activeCharacter;?>" >Get Player Stats</button>
+                <button class="getStats mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" data-name="<?=$displayName;?>" data-character="<?=$activeCharacter;?>" >Get Player Stats</button>
         </div>
         
         
@@ -640,8 +640,10 @@ $getEmblems = curl_init();
                         var lightLevel = data[i].lightLevel;
                         var grimoireScore = data[i].grimoireScore;
                         var hasMic = data[i].hasMic;
+                        
                         var lightLevelIcon = "&#10022  ";
                         var grimoireImg = "./assets/grimoireIcon.png";
+                        var buttonText = " Get Player Stats";
                         //TODO postTime = data[i].postTime;
                         
                         //TODO consoleID -> icon
@@ -662,7 +664,7 @@ $getEmblems = curl_init();
                         //console icon insert
                         //   $(clone).find(".console").html(consoleChoice);
                         $(clone).find(".postActivityText").html(activity);
-                        $(clone).find(".postDescription").html(description);
+                        // $(clone).find(".postDescription").html(description);
                         $(clone).find(".emblemIconImg").attr("src", emblemIcon);
                         $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
                         $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
@@ -670,8 +672,8 @@ $getEmblems = curl_init();
                         $(clone).find(".grimoireImage").attr("src", grimoireImg);
                         $(clone).find(".playerGrimoireOutput").html(grimoireScore);
                         
-                        console.log(grimoireImg);
                         $(clone).find(".getStats").attr("data-name", username);
+                        // $(clone).find(".getStats").attr("value", buttonText);
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         
                         //   $(clone).find(".hasMic").html();
@@ -680,7 +682,15 @@ $getEmblems = curl_init();
                     }
                 }
             });
+            // componentHandler.upgradeDom();
           });
+          
+        setInterval("upgradeMDL();", 100);
+        function upgradeMDL() {
+            componentHandler.upgradeDom();
+        //componentHandler.upgradeDom();
+        //componentHandler.upgradeAllRegistered();
+      }
         // });
     
     
@@ -716,7 +726,8 @@ $getEmblems = curl_init();
     if(clicks == 0){
         e.target;
         var clickedBtn = this;
-        var getName = $(e.target).data("name");
+        var getName = $(e.target).parents(".mdl-button").data("name");
+        // var getCharacter = $(e.target).parents(".mdl-button").data("character");
         var getCharacter = $(e.target).parents(".mdl-button").data("character");
         var datasource = "ajax/getPlayerStats.php";
         
@@ -756,9 +767,9 @@ $getEmblems = curl_init();
                 // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
                 if(typeof jsonResponse.Response.trialsOfOsiris.allTime === "undefined"){
                     console.log("ERROR");
-                    $("#getStats").html('Error: No stats found');
-                    $("#getStats").removeClass("mdl-button--accent");
-                    $("#getStats").addClass("getTrialsStatsError");
+                    $(".getStats").html('Error: No stats found');
+                    $(".getStats").removeClass("mdl-button--accent");
+                    $(".getStats").addClass("getTrialsStatsError");
                     
                 }
                 else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio === "undefined"){
