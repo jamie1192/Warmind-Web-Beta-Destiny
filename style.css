@@ -79,7 +79,7 @@
        width: inherit;
    }
   
-  #getStats{
+  .getStats{
       position: absolute;
       bottom: 0;
       right: 0;
@@ -118,11 +118,20 @@
       clear:both;
   }
   
+  .postContainerTemplate{
+      margin: 0 auto;
+     /*position: relative;*/
+      
+      width:515px;
+      clear:both;
+  }
+  
   .postCard{
       /*position: absolute;*/
       /*border: 1px solid;*/
       width:475px;
       height: 300px;
+      margin: 20px;
       
       background: #2a333e;
   }
@@ -207,7 +216,7 @@
     text-align: center;
    }
    
-   #grimoireIcon{
+   .grimoireImage{
     position: absolute;
     left: 0;
     max-height: 16px;

@@ -1,4 +1,4 @@
-<?php include ("database.php");
+<?php include ("../database.php");
   if($_SERVER["REQUEST_METHOD"]=="POST"){
       $posts = array();
       //get posts from database

@@ -40,3 +40,66 @@
 [09-May-2017 13:23:43 UTC] PHP Fatal error:  Function name must be a string in /home/ubuntu/workspace/ajax/submitNewPost.php on line 34
 [09-May-2017 13:23:43 UTC] PHP Stack trace:
 [09-May-2017 13:23:43 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/submitNewPost.php:0
+[16-May-2017 03:53:54 UTC] PHP Warning:  include(database.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 03:53:54 UTC] PHP Stack trace:
+[16-May-2017 03:53:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 03:53:54 UTC] PHP Warning:  include(): Failed opening 'database.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 03:53:54 UTC] PHP Stack trace:
+[16-May-2017 03:53:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 03:53:54 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/ubuntu/workspace/ajax/getPostsData.php on line 7
+[16-May-2017 03:53:54 UTC] PHP Stack trace:
+[16-May-2017 03:53:54 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 03:55:44 UTC] PHP Warning:  include(database.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 03:55:44 UTC] PHP Stack trace:
+[16-May-2017 03:55:44 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 03:55:44 UTC] PHP Warning:  include(): Failed opening 'database.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 03:55:44 UTC] PHP Stack trace:
+[16-May-2017 03:55:44 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 03:55:44 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/ubuntu/workspace/ajax/getPostsData.php on line 7
+[16-May-2017 03:55:44 UTC] PHP Stack trace:
+[16-May-2017 03:55:44 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 03:57:06 UTC] PHP Warning:  include(database.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 03:57:06 UTC] PHP Stack trace:
+[16-May-2017 03:57:06 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 03:57:06 UTC] PHP Warning:  include(): Failed opening 'database.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 03:57:06 UTC] PHP Stack trace:
+[16-May-2017 03:57:06 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 03:57:06 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/ubuntu/workspace/ajax/getPostsData.php on line 7
+[16-May-2017 03:57:06 UTC] PHP Stack trace:
+[16-May-2017 03:57:06 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:02:36 UTC] PHP Warning:  include(database.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 04:02:36 UTC] PHP Stack trace:
+[16-May-2017 04:02:36 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:02:36 UTC] PHP Warning:  include(): Failed opening 'database.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 04:02:36 UTC] PHP Stack trace:
+[16-May-2017 04:02:36 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:02:36 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/ubuntu/workspace/ajax/getPostsData.php on line 7
+[16-May-2017 04:02:36 UTC] PHP Stack trace:
+[16-May-2017 04:02:36 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:06:52 UTC] PHP Warning:  include(database.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 04:06:52 UTC] PHP Stack trace:
+[16-May-2017 04:06:52 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:06:52 UTC] PHP Warning:  include(): Failed opening 'database.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 04:06:52 UTC] PHP Stack trace:
+[16-May-2017 04:06:52 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:06:52 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/ubuntu/workspace/ajax/getPostsData.php on line 7
+[16-May-2017 04:06:52 UTC] PHP Stack trace:
+[16-May-2017 04:06:52 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:09:18 UTC] PHP Warning:  include(database.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 04:09:18 UTC] PHP Stack trace:
+[16-May-2017 04:09:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:09:18 UTC] PHP Warning:  include(): Failed opening 'database.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 04:09:18 UTC] PHP Stack trace:
+[16-May-2017 04:09:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:09:18 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/ubuntu/workspace/ajax/getPostsData.php on line 7
+[16-May-2017 04:09:18 UTC] PHP Stack trace:
+[16-May-2017 04:09:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:10:51 UTC] PHP Warning:  include(database.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 04:10:51 UTC] PHP Stack trace:
+[16-May-2017 04:10:51 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:10:51 UTC] PHP Warning:  include(): Failed opening 'database.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/ajax/getPostsData.php on line 1
+[16-May-2017 04:10:51 UTC] PHP Stack trace:
+[16-May-2017 04:10:51 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
+[16-May-2017 04:10:51 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/ubuntu/workspace/ajax/getPostsData.php on line 7
+[16-May-2017 04:10:51 UTC] PHP Stack trace:
+[16-May-2017 04:10:51 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0

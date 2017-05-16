@@ -388,62 +388,7 @@ $getEmblems = curl_init();
                 <!-- Header Buttons -->
                 <nav class="mdl-navigation">
                     <button id="submit-dialog" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Submit</button>
-                    <!--<a class="mdl-button close mdl-js-button mdl-js-ripple-effect mdl-button--accent " href="submitDialog.php">Submit</a>-->
-                    <!--                            Start of MDL dialog new Login-->
-<!--                    <dialog class="mdl-dialog loginDialog">-->
-<!--                        <h1 class="mdl-dialog__title mdl-color-text--primary">Existing User Login</h1>-->
-                        <!--                                <div class="mdl-dialog__content">-->
-
-                        <!--                                Floating labels-->
-<!--                        <form action="#">-->
-<!--                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">-->
-<!--                                <input class="mdl-textfield__input" type="text" id="username">-->
-<!--                                <label class="mdl-textfield__label" for="username">Username</label>-->
-<!--                            </div>-->
-<!--                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">-->
-<!--                                <input class="mdl-textfield__input" type="password" id="password">-->
-<!--                                <label class="mdl-textfield__label" for="password">Password</label>-->
-
-<!--                            </div>-->
-<!--                            <span class="mdl-textfield__error">Incorrect email or password!</span>-->
-
-                            <!--                                    Cancel Button-->
-<!--                            <div class="mdl-dialog__actions mdl-dialog__actions--full-width">-->
-<!--                                <button class="mdl-button close mdl-js-button mdl-js-ripple-effect mdl-dialog__actions--full-width">-->
-<!--  Cancel-->
-<!--</button>-->
-
-                                <!--                                    Login Button-->
-<!--                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-dialog__actions--full-width">-->
-<!--  Login-->
-<!--</button>-->
-<!--                            </div>-->
-<!--                        </form>-->
-                        <!--                                </div>-->
-<!--                    </dialog>-->
-                    <!--<script>-->
-                    <!--    var dialog = document.querySelector('dialog');-->
-                    <!--    var showDialogButton = document.querySelector('#login-dialog');-->
-
-
-                    <!--    if (!dialog.showModal) {-->
-                    <!--        dialogPolyfill.registerDialog(dialog);-->
-                    <!--    }-->
-                    <!--    showDialogButton.addEventListener('click', function() {-->
-                    <!--        dialog.showModal();-->
-                    <!--    });-->
-                    <!--    dialog.querySelector('.close').addEventListener('click', function() {-->
-                    <!--        dialog.close();-->
-                    <!--    });-->
-                    <!--</script>-->
-                    <!--                            End of dialog-->
-
-                    <!--                            jQuery for button-->
-
-
-                    <!--                            end jQuery -->
-
-
+                  
 
                 </nav>
             </div>
@@ -522,6 +467,59 @@ $getEmblems = curl_init();
                 <div class="page-content">
                     <div class="tab1container"><!--Tab 1-->
                     <div class="mdl-grid">
+                       
+                    <!--template    -->
+                    <div class="postContainerTemplate mdl-cell mdl-cell--6-col"></div>
+                    <template id="playerPosts">
+                        <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
+                            <div class="emblemContainer">
+                                <div class="emblemIcon">
+                                    <img class="emblemIconImg" src=""></img>
+                                </div>
+                                <div class="emblemBackground">
+                                    <img class="emblemBackgroundImg" src=""></img>
+                                </div>
+                                <div class="playerUsername"></div>
+                                <div class="playerCurrentClass"></div>
+                                <div class="rightSide">
+                                    <div class="playerLightLevel"></div>
+                                    <div class="playerGrimoire">
+                                        <img class="grimoireImage" src="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mdl-spinner mdl-js-spinner is-active getStatsLoading statsLoading"></div>
+                            <div class="postActivity"><span class="postActivityText"></span>
+                                <div class="divider"></div>
+                            </div>
+                            <div class="postDescription"><span class="postDescriptionText"></span></div>
+                                <button class="getStats">Get Player Stats</button>
+                        </div>
+                        
+                        <div class="stats-row whiteText"></div>
+                            <template id="playerStats">
+                                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">
+                                    <thead>
+                                        <tr class="goldColour">
+                                            <th>K/D Ratio</th>
+                                            <th>Average Lifespan</th>
+                                            <th>Win/Loss Ratio</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody>
+                                             <!--Row 1 -->
+                                            <tr class="whiteText">
+                                                <td class="playerKD"></td>
+                                                <td class="playerAverageLifespan"></td>
+                                                <td class="playerWinLossRatio"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            </template>
+                        
+                    </template>
+                        
+                        
 <!--LFG POST STARTS HERE-->
           
 <!--LFG POST STARTS HERE-->
@@ -542,27 +540,22 @@ $getEmblems = curl_init();
                 <div class="rightSide">
                     <div class="playerLightLevel"><span id="lightLevelIcon">&#10022  </span><?= $lightLevel; ?></div>
                     <div class="playerGrimoire"><?= $grimoire; ?>
-                        <img id="grimoireIcon" src="./assets/grimoireIcon.png"></img>
+                        <img class="grimoireImage" src="./assets/grimoireIcon.png"></img>
                     </div>
                 </div>
             </div>
-            <div class="mdl-spinner mdl-js-spinner is-active getStatsLoading" id="statsLoading"></div>
+            <div class="mdl-spinner mdl-js-spinner is-active getStatsLoading statsLoading"></div>
                 <!--<div class="innerContainer">-->
             <div class="postActivity"><span class="postActivityText">Trials of Osiris</span>
                 <div class="divider"></div>
             </div>
            
             <div class="postDescription"><span class="postDescriptionText">LF 1 more, must have K/D above 1.5, have mic and be over the age of 18.</span></div>
-                    <!--<form id="playerStatsForm"> -->
-                        <!--<input type="hidden" name="getStatsButton" value=" //$displayName; ?>">-->
-                            <button id="getStats" data-name="<?=$displayName;?>" data-character="<?=$activeCharacter;?>" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent ">Get Player Stats</button>
-                        <!--</input>-->
-                    <!--</form>-->
-                <!--</div>    -->
+                <button class="getStats" data-name="<?=$displayName;?>" data-character="<?=$activeCharacter;?>" >Get Player Stats</button>
         </div>
         
         
-        <div class="stats-row whiteText"></div>
+        <div class="stats-row whiteText <?= $displayName; ?>"></div>
         <template id="playerStats">
                 <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">
                 <thead>
@@ -581,66 +574,11 @@ $getEmblems = curl_init();
                         </tr>
                     </tbody>
                 </table>
-            </template>
+        </template>
             
     </div>
     
-    <div class="postContainer mdl-cell mdl-cell--6-col">
-        <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
-            <div class="emblemContainer">
-                <div class="emblemIcon">
-                    <img src="<?= htmlspecialchars($completeEmblemIcon); ?>"></img>
-                </div>
-                <div class="emblemBackground">
-                    <img src="<?= htmlspecialchars($completeEmblemBackground); ?>"></img>
-                </div>
-                <div class="playerUsername"><?= $displayName; ?></div>
-                <div class="playerCurrentClass"><?= $activeCharacter; ?></div>
-                <div class="rightSide">
-                    <div class="playerLightLevel"><span id="lightLevelIcon">&#10022  </span><?= $lightLevel; ?></div>
-                    <div class="playerGrimoire"><?= $grimoire; ?>
-                        <img id="grimoireIcon" src="./assets/grimoireIcon.png"></img>
-                    </div>
-                </div>
-            </div>
-            <div class="mdl-spinner mdl-js-spinner is-active getStatsLoading" id="statsLoading"></div>
-                <!--<div class="innerContainer">-->
-            <div class="postActivity"><span class="postActivityText">Trials of Osiris</span>
-                <div class="divider"></div>
-            </div>
-           
-            <div class="postDescription"><span class="postDescriptionText">LF 1 more, must have K/D above 1.5, have mic and be over the age of 18.</span></div>
-                    <!--<form id="playerStatsForm"> -->
-                        <!--<input type="hidden" name="getStatsButton" value=" //$displayName; ?>">-->
-                            <button id="getStats" data-name="<?=$displayName;?>" data-character="<?=$activeCharacter;?>" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent ">Get Player Stats</button>
-                        <!--</input>-->
-                    <!--</form>-->
-                <!--</div>    -->
-        </div>
-        
-        
-        <div class="stats-row whiteText"></div>
-        <template id="playerStats">
-                <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">
-                <thead>
-                    <tr class="goldColour">
-                        <th>K/D Ratio</th>
-                        <th>Average Lifespan</th>
-                        <th>Win/Loss Ratio</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                         <!--Row 1 -->
-                        <tr class="whiteText">
-                            <td class="playerKD"></td>
-                            <td class="playerAverageLifespan"></td>
-                            <td class="playerWinLossRatio"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </template>
-            
-    </div>
+    
     <!--<div class="mdl-cell mdl-cell--6-col">6</div>-->
     
 <!--FIRST LFG POST ENDS HERE-->
@@ -672,6 +610,79 @@ $getEmblems = curl_init();
   
   <script>
     
+    //load posts from DB
+    $(document).ready(function(){
+          console.log("hello");
+            var datasource = "ajax/getPostsData.php";
+            //make an ajax request
+            $.ajax({
+                url:datasource,
+                dataType:'json',
+                type:'POST',
+                encode:true
+            })
+            .done(function(data){
+                console.log(data);
+                //if there is data
+                if(data.length > 0){
+                    var len = data.length;
+                    console.log(len);
+                    
+                    for(i=0;i<len;i++){
+                        var template = $("#playerPosts").html().trim();
+                        var clone = $(template);
+                        //fill the data
+                        var username = data[i].username;
+                        var selectedCharacter = data[i].selectedCharacter;
+                        var consoleID = data[i].consoleID;
+                        var activity = data[i].activity;
+                        var description = data[i].description;
+                        var emblemIcon = data[i].emblemIcon;
+                        var emblemBackground = data[i].emblemBackground;
+                        var lightLevel = data[i].lightLevel;
+                        var grimoireScore = data[i].grimoireScore;
+                        var hasMic = data[i].hasMic;
+                        var lightLevelIcon = "&#10022  ";
+                        var grimoireImg = "./assets/grimoireIcon.png";
+                        //TODO postTime = data[i].postTime;
+                        
+                        //TODO consoleID -> icon
+                        if(consoleID == 1){
+                          consoleChoice = ""; //xbox icon
+                        }
+                        else if(consoleID == 2){
+                          consoleChoice = ""; //PS icon
+                        }
+                        
+                        if(hasMic){
+                          //var mic = "mic icon path"
+                        }
+                
+                
+                        $(clone).find(".playerUsername").html(username);
+                        $(clone).find(".playerCurrentClass").html(selectedCharacter);
+                        //console icon insert
+                        //   $(clone).find(".console").html(consoleChoice);
+                        $(clone).find(".postActivity").html(activity);
+                        $(clone).find(".postDescription").html(description);
+                        $(clone).find(".emblemIconImg").attr("src", emblemIcon);
+                        $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
+                        $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
+                        $(clone).find(".playerGrimoire").html(grimoireScore);
+                        $(clone).find(".grimoireImage").attr("src", grimoireImg);
+                        $(clone).find(".getStats").attr("data-name", username);
+                        $(clone).find(".getStats").attr("data-character", selectedCharacter);
+                        
+                        //   $(clone).find(".hasMic").html();
+                        
+                        $(".postContainerTemplate").append(clone);
+                    }
+                }
+            });
+          });
+        // });
+    
+    
     //hide submit loader
     $('#submitPostLoading').hide();
     
@@ -695,7 +706,7 @@ $getEmblems = curl_init();
     
     //get player stats on LFG post
     // $(".postContainer").on("click", clickHandler);
-    $("#getStats").on("click", clickHandler);
+    $(".getStats").on("click", clickHandler);
     var clicks = 0;
     function clickHandler(e){
         
@@ -704,12 +715,12 @@ $getEmblems = curl_init();
     if(clicks == 0){
         e.target;
         var clickedBtn = this;
-        var getName = $(e.target).parents(".mdl-button").data("name");
+        var getName = $(e.target).data("name");
         var getCharacter = $(e.target).parents(".mdl-button").data("character");
         var datasource = "ajax/getPlayerStats.php";
         
         if(getName != null){
-            $('#statsLoading').show();
+            $(e.target).parents(".mdl-button").siblings('.statsLoading').show();
             // $(clickedBtn).prop("disabled", true);
             $(clickedBtn).html('Retrieving Stats..');
         }
@@ -738,7 +749,7 @@ $getEmblems = curl_init();
                 //if there is data
                 //TODO removeChild after clicking hide stats
                 
-                $('#statsLoading').hide();
+                $('.statsLoading').hide();
                 
                 var jsonResponse = JSON.parse(data);
                 // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
@@ -774,12 +785,15 @@ $getEmblems = curl_init();
                     var winLossRatio = jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio.basic.displayValue;
                     console.log("playerKD: ", playerKD);
                     console.log("Avg Lifespan: ", averageLifespan);
-                    console.log("Respone code: ", jsonResponse.Response);
+                    console.log("Response code: ", jsonResponse.Response);
                     
                     $(clone).find(".playerKD").html(playerKD);
                     $(clone).find(".playerAverageLifespan").html(averageLifespan);
                     $(clone).find(".playerWinLossRatio").html(winLossRatio);
+                    // $(".stats-row").append(clone);
                     $(".stats-row").append(clone);
+                    // $(e.target).parent().siblings(".stats-row").append(clone);
+                    //$(e.target).parents(".mdl-button").siblings('.statsLoading').show();
                 }
                 
               })
@@ -792,9 +806,10 @@ $getEmblems = curl_init();
         //     f.target;
         
     }else{
-        $(e.target).parent().siblings(".stats-row").remove();
+        // $(e.target).parents(".mdl-button").parents(".postDescription").parents(".postCard").siblings(".stats-row").remove();
+        $(e.target).parent().siblings(".stats-row").attr("display", "none");
         clicks--;
-        $("#getStats").html('Get Player Stats');
+        $(".getStats").html('Get Player Stats');
     }
         
     }
