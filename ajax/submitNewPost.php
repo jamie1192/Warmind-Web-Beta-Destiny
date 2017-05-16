@@ -60,7 +60,7 @@
         }
         else if($characterSelection == "Warlock"){
             $emblemIconPath = $warlockEmblemIcon;
-            $emblemBackgroundPath = $titanEmblem;
+            $emblemBackgroundPath = $warlockEmblem;
             $lightLevel = $warlockLightLevel;
             // $selectedCharacter = "Warlock";
         }

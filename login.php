@@ -128,7 +128,7 @@
          //light level, grimoire
         $titanLightLevel = $json->Response->data->characters[$titanSlot]->characterBase->powerLevel;
         $hunterLightLevel = $json->Response->data->characters[$hunterSlot]->characterBase->powerLevel;
-        $warlockLightLevel = $json->Response->data->characters[$warlock]->characterBase->powerLevel;
+        $warlockLightLevel = $json->Response->data->characters[$warlockSlot]->characterBase->powerLevel;
         $grimoire = $json->Response->data->characters[$titanSlot]->characterBase->grimoireScore;
 
          //ends here
@@ -159,7 +159,7 @@
                 // $_SESSION["warlockID"] = $activeWarlockID;
                 
                 //redirect to accounts.php page
-                header("location:home.php");
+                header("location:homeSandbox.php");
             }
             else{
                 $errors["password"]="Incorrect username or password.";

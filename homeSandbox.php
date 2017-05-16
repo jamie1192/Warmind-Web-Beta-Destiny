@@ -78,7 +78,7 @@
  //curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Stats/GetMembershipIdByDisplayName/'.$wheels.'/');
  
  //case insensitive PSN name search- THIS SPITS OUT AN ARRAY
- curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$psn.'/'.$pip.'/');
+ curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$psn.'/'.$tim.'/');
 //  curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Stats/GetMembershipIdByDisplayName/'.$cosmic.'/');
  curl_setopt($getMembershipId, CURLOPT_RETURNTRANSFER, true);
  curl_setopt($getMembershipId, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
@@ -523,9 +523,7 @@ $getEmblems = curl_init();
 <!--LFG POST STARTS HERE-->
           
 <!--LFG POST STARTS HERE-->
-<!--<div class="mdl-grid">-->
-  <!--<div class="mdl-cell mdl-cell--1-col">1</div>-->
-  <!--<div class="mdl-cell mdl-cell--6-col">6</div>-->
+
     <div class="postContainer mdl-cell mdl-cell--6-col">
         <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
             <div class="emblemContainer">
