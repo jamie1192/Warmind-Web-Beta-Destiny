@@ -475,7 +475,7 @@ $getEmblems = curl_init();
                         <!--template    -->
                             <div class="postContainerTemplate mdl-grid">
                             <template id="playerPosts">
-                                <div class="posts mdl-cell mdl-cell--6-col">
+                                <div class="posts mdl-cell mdl-cell--3-offset-phone mdl-cell--6-col mdl-cell--3-offset-phone">
                                     <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
                                         <div class="emblemContainer">
                                             <div class="emblemIcon">
@@ -576,17 +576,17 @@ $getEmblems = curl_init();
         </template>
     </div>
     
-    end hardcoded post
+    <!--end hardcoded post-->
     
     
     <div class="mdl-cell mdl-cell--6-col">6</div>
     
-FIRST LFG POST ENDS HERE
+<!--FIRST LFG POST ENDS HERE-->
     
    
-SECOND LFG POST ENDS HERE
+<!--SECOND LFG POST ENDS HERE-->
 
-  TrialsReport star icon : ✦ 
+<!--  TrialsReport star icon : ✦ -->
   </div>
   
                             
@@ -685,6 +685,7 @@ SECOND LFG POST ENDS HERE
                         $(clone).find(".playerGrimoireOutput").html(grimoireScore);
                         
                         $(clone).find(".getStats").attr("data-name", username);
+                        
                         // $(clone).find(".getStats").attr("value", buttonText);
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         
@@ -700,6 +701,9 @@ SECOND LFG POST ENDS HERE
     
     //load posts from DB
     $(document).ready(function(){
+        $("button").click(function(){
+        alert("button");
+    });
         loadPosts();
     });
           
@@ -734,25 +738,27 @@ SECOND LFG POST ENDS HERE
     //end login dialog
     
     //get player stats on LFG post
-    $(".postContainerTemplate").on("click", clickHandler);
+    $('.postContainerTemplate').on("click", ".getStats", clickHandler);
+    // document('.getStats').addEventListener('click', function(clickHandler) {
     // var clickedButton = document.getElementsByClassName(".getStats");
     // $(clickedButton).on("click", clickHandler);
     // $(".btn").on("click", clickHandler);
     var clicks = 0;
     function clickHandler(e){
-        
-    console.log("Data exists log: ", $(e.target).attr("data-exists"));
+    
+        console.log(e);
+    // console.log("Data exists log: ", $(e.target).attr("data-exists"));
         
     if($(e.target).attr("data-exists") == undefined){
         e.target;
-        var clickedBtn;
+        // var clickedBtn;
         
         var getName = $(e.target).data("name");
         // var getCharacter = $(e.target).parents(".mdl-button").data("character");
         var getCharacter = $(e.target).data("character");
         var datasource = "ajax/getPlayerStats.php";
         
-        if(getName != null){
+        if(getName != undefined){
             $(e.target).siblings('.statsLoading').show();
             // $(clickedBtn).prop("disabled", true);
             // $(clickedBtn).parents(".mdl-button").html('Retrieving Stats..');
@@ -761,7 +767,7 @@ SECOND LFG POST ENDS HERE
             $(e.target).attr("data-exists", "1");
         }
         else{
-            $(e.target).html("Error getting stats!");
+            // $(e.target).html("Error getting stats!");
         }
         
         
@@ -865,36 +871,37 @@ SECOND LFG POST ENDS HERE
     //     clicks--;
     //     console.log("click- :", clicks);
     //     $(".getStats").html('Get Player Stats');
-    }else if($(e.target).attr("data-exists") == 0){
+    }else if($(e.target).attr("data-exists") == "0"){
         $(e.target).html("Hide Stats");
         $(e.target).parents(".postCard").siblings(".stats-row").css("display", "");
         $(e.target).attr("data-exists", "1");
     }
-        
+      
+      e.preventDefault();  
     }
     
     
     //Hide shown stats
     //$("#btn2").unbind("click").click(function () {
     
-    function showLoading() {
-        console.log("showLoading fired");
-        // remove existing loaders
-        $('.loading-container').remove();
-        $('<div id="orrsLoader" class="loading-container"><div><div class="mdl-spinner mdl-js-spinner is-active"></div></div></div>').appendTo("body");
+//     function showLoading() {
+//         console.log("showLoading fired");
+//         // remove existing loaders
+//         $('.loading-container').remove();
+//         $('<div id="orrsLoader" class="loading-container"><div><div class="mdl-spinner mdl-js-spinner is-active"></div></div></div>').appendTo("body");
     
-        componentHandler.upgradeElements($('.mdl-spinner').get());
-        setTimeout(function () {
-            $('#orrsLoader').css({opacity: 1});
-        }, 1);
-    }
+//         componentHandler.upgradeElements($('.mdl-spinner').get());
+//         setTimeout(function () {
+//             $('#orrsLoader').css({opacity: 1});
+//         }, 1);
+//     }
     
-    function hideLoading() {
-    $('#orrsLoader').css({opacity: 0});
-    setTimeout(function () {
-        $('#orrsLoader').remove();
-    }, 400);
-}
+//     function hideLoading() {
+//     $('#orrsLoader').css({opacity: 0});
+//     setTimeout(function () {
+//         $('#orrsLoader').remove();
+//     }, 400);
+// }
     
   
     //Submit LFG Post
