@@ -15,6 +15,14 @@
         <script src="/mdl-dropdown-script.js"></script>
         <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
         
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        
+        
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
         <link rel="stylesheet" href="customMDLstyling.css">
         <link rel="stylesheet" href="/style.css">
         <link rel="stylesheet" href="/iconSelectRadio.css">
