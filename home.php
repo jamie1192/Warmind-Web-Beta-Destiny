@@ -357,11 +357,68 @@ $getEmblems = curl_init();
                             <div class="mdl-select mdl-js-select mdl-select--floating-label">
                                 <select class="mdl-select__input" id="activitySelection" name="activitySelection">
                                     <option value=""></option>
-                                    <option value="option1">option 1</option>
-                                    <option value="option2">option 2</option>
-                                    <option value="option3">option 3</option>
-                                    <option value="option4">option 4</option>
-                                    <option value="option5">option 5</option>
+                                        <optgroup label="Raid - Wrath of the Machine">
+                                            <option value="Wrath of the Machine - Heroic (Fresh)">Heroic (Fresh)</option>
+                                            <option value="Wrath of the Machine - Heroic (Vosik)">Heroic (Vosik)</option>
+                                            <option value="Wrath of the Machine - Heroic (Siege Engine)">Heroic (Siege Engine)</option>
+                                            <option value="Wrath of the Machine - Heroic (Aksis Ph 2)">Heroic (Aksis Ph 2)</option>
+                                            <option value="Wrath of the Machine - Heroic (Aksis Ph 1)">Heroic (Aksis Ph 1)</option>
+                                        <option value="%">---</option>
+                                            <option value="Wrath of the Machine - Normal (Fresh)">Normal (Fresh)</option>
+                                            <option value="Wrath of the Machine - Normal (Vosik)">Normal (Vosik)</option>
+                                            <option value="Wrath of the Machine - Normal (Siege Engine)">Normal (Siege Engine)</option>
+                                            <option value="Wrath of the Machine - Normal (Aksis Ph 2)">Normal (Aksis Ph 2)</option>
+                                            <option value="Wrath of the Machine - Normal (Aksis Ph 1)">Normal (Aksis Ph 1)</option>
+                                            <optgroup label="Raid - King's Fall">
+                                                <option value="King's Fall - Heroic (Fresh)">Heroic (Fresh)</option>
+                                                <option value="King's Fall - Heroic (Oryx)">Heroic (Oryx)</option>
+                                                <option value="King's Fall - Heroic (Daughters)">Heroic (Daughters)</option>
+                                                <option value="King's Fall - Heroic (Golgoroth)">Heroic (Golgoroth)</option>
+                                                <option value="King's Fall - Heroic (Warpriest)">Heroic (Warpriest)</option>
+                                                <option value="King's Fall - Heroic (Totems)">Heroic (Totems)</option>
+                                            <option value="%">---</option>
+                                                <option value="King's Fall - Normal (Fresh)">Normal (Fresh)</option>
+                                                <option value="King's Fall - Normal (Oryx)">Normal (Oryx)</option>
+                                                <option value="King's Fall - Normal (Daughters)">Normal (Daughters)</option>
+                                                <option value="King's Fall - Normal (Golgoroth)">Normal (Golgoroth)</option>
+                                                <option value="King's Fall - Normal (Warpriest)">Normal (Warpriest)</option>
+                                                <option value="King's Fall - Normal (Totems)">Normal (Totems)</option>
+                                            </optgroup>
+                                            <optgroup label="Raid - Crota's End">
+                                                <option value="Crota's End - Heroic (Fresh)">Heroic (Fresh)</option>
+                                                <option value="Crota's End - Heroic (Crota)">Heroic (Crota)</option>
+                                                <option value="Crota's End - Heroic (Deathsinger)">Heroic (Deathsinger)</option>
+                                                <option value="Crota's End - Heroic (Thrallway)">Heroic (Thrallway)</option>
+                                                <option value="Crota's End - Heroic (Bridge)">Heroic (Bridge)</option>
+                                                <option value="%">---</option>
+                                                <option value="Crota's End - Normal (Fresh)">Normal (Fresh)</option>
+                                                <option value="Crota's End - Normal (Crota)">Normal (Crota)</option>
+                                                <option value="Crota's End - Normal (Deathsinger)">Normal (Deathsinger)</option>
+                                                <option value="Crota's End - Normal (Thrallway)">Normal (Thrallway)</option>
+                                                <option value="Crota's End - Normal (Bridge)">Normal (Bridge)</option>
+                                            </optgroup>
+                                            <optgroup label="Raid - Vault of Glass">
+                                                <option value="Vault of Glass - Heroic (Fresh)">Heroic (Fresh)</option>
+                                                <option value="Vault of Glass - Heroic (Atheon)">Heroic (Atheon)</option>
+                                                <option value="Vault of Glass - Heroic (Gatekeepers)">Heroic (Gatekeepers)</option>
+                                                <option value="Vault of Glass - Heroic (Gorgons)">Heroic (Gorgons)</option>
+                                                <option value="Vault of Glass - Heroic (Templar)">Heroic (Templar)</option>
+                                                <option value="Vault of Glass - Heroic (Oracles)">Heroic (Oracles)</option>
+                                                <option value="Vault of Glass - Heroic (Confluxes)">Heroic (Confluxes)</option>
+                                                <option value="%">---</option>
+                                                <option value="Vault of Glass - Normal (Fresh)">Normal (Fresh)</option>
+                                                <option value="Vault of Glass - Normal (Atheon)">Normal (Atheon)</option>
+                                                <option value="Vault of Glass - Normal (Gatekeepers)">Normal (Gatekeepers)</option>
+                                                <option value="Vault of Glass - Normal (Gorgons)">Normal (Gorgons)</option>
+                                                <option value="Vault of Glass - Normal (Templar)">Normal (Templar)</option>
+                                                <option value="Vault of Glass - Normal (Oracles)">Normal (Oracles)</option>
+                                                <option value="Vault of Glass - Normal (Confluxes)">Normal (Confluxes)</option>
+                                                </optgroup>
+                                            <optgroup label="Raid - Misc">
+                                                <option value="Raid - Checkpoint Share">Checkpoint Share</option>
+                                                <option value="Raid - Exploration">Exploration</option>
+                                            </optgroup>
+                                        </optgroup>
                                 </select>
                                 <label class="mdl-select__label" for="activitySelection">Select an Activity</label>
                             </div>
@@ -627,7 +684,7 @@ $getEmblems = curl_init();
                         //console icon insert
                         //   $(clone).find(".console").html(consoleChoice);
                         $(clone).find(".postActivityText").html(activity);
-                        // $(clone).find(".postDescription").html(description);
+                        $(clone).find(".postDescriptionText").html(description);
                         $(clone).find(".emblemIconImg").attr("src", emblemIcon);
                         $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
                         $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
@@ -755,9 +812,11 @@ $getEmblems = curl_init();
                 // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
                 if(typeof jsonResponse.Response.trialsOfOsiris.allTime === "undefined"){
                     console.log("ERROR");
-                    $(".getStats").html('Error: No stats found');
-                    $(".getStats").removeClass("mdl-button--accent");
-                    $(".getStats").addClass("getTrialsStatsError");
+                    $(e.target).html('Error: No stats found');
+                    $(e.target).removeClass("btn-primary");
+                    // $(e.target).addClass("getTrialsStatsError");
+                    $(e.target).addClass("btn-danger");
+                    $(e.target).attr("data-exists", null);
                     
                 }
                 else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio === "undefined"){

@@ -41,13 +41,13 @@
         //  echo "Error Response: ", $getMembershipResponse;
          
          
-         $membershipID = $getMembershipResponse->Response[0]->membershipId;
+         $activeMembershipID = $getMembershipResponse->Response[0]->membershipId;
          $displayName = $getMembershipResponse->Response[0]->displayName;
          
          //2. Character summary to get all 3 character info
          
          $ch = curl_init();
-         curl_setopt($ch, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/'.$consoleID.'/Account/'.$membershipID.'/Summary/');
+         curl_setopt($ch, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/'.$consoleID.'/Account/'.$activeMembershipID.'/Summary/');
          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
          curl_setopt($ch, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
          $result = curl_exec($ch);
