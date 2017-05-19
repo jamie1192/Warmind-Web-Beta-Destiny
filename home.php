@@ -16,8 +16,8 @@
     //     echo "To log out, go to <a href=\"logout.php\">Log Out</a> page";
     // }
     
-    
-     include("key.php");
+    include("head.php");
+    include("key.php");
      
      $jew = "jeewwbacca";
      $tim = "tanky_tim12";
@@ -29,34 +29,18 @@
      $xboxName = "The1 and only35";
      $xboxName2 = "DrearFlounder88";
      
-
-    $sessionUsername = $_SESSION['user']['username'];
-    $sessionConsoleID = $_SESSION['user']['consoleID'];
-    $sessionMembershipID = $_SESSION['user']['membershipID'];
+     $sessionUsername = $_SESSION['user']['username'];
+     $sessionConsoleID = $_SESSION['user']['consoleID'];
+     $sessionMembershipID = $_SESSION['user']['membershipID'];
      
-    // echo "session output consoleID: ", $sessionConsoleID;
-    // echo "session membershipID: ", $sessionMembershipID;
+    //  echo "Session name: ",$sessionUsername;
      
-    $sessionTitanSlot = $_SESSION['user']['titanSlot'];
-    $sessionHunterSlot = $_SESSION['user']['hunterSlot'];
-    $sessionWarlockSlot = $_SESSION['user']['warlockSlot'];
+    //  echo "session output consoleID: ", $sessionConsoleID;
+    //  echo "session membershipID: ", $sessionMembershipID;
      
-    echo $_SESSION['user']['titanSlot']; 
-    echo $_SESSION['user']['hunterSlot'];
-    echo $_SESSION['user']['warlockSlot'];
-     
-    $titanEmblem = $_SESSION['user']['titanEmblem']; 
-    $hunterEmblem = $_SESSION['user']['hunterEmblem'];
-    $warlockEmblem = $_SESSION['user']['warlockEmblem'];
-    
-    // echo "Titan: ", $titanEmblem;
-    // echo "<P>Hunter: ", $hunterEmblem;
-    // echo "<p> Warlock: ", $warlockEmblem;
-    
-    $titanBackground = $_SESSION['user']['titanBackground'];
-    $hunterBackground = $_SESSION['user']['hunterBackground'];
-    $warlockBackground = $_SESSION['user']['warlockBackground'];
-
+     $sessionTitanSlot = $_SESSION['user']['titanSlot'];
+     $sessionHunterSlot = $_SESSION['user']['hunterSlot'];
+     $sessionWarlockSlot = $_SESSION['user']['warlockSlot'];
      
      $titan = 0;
      $hunter = 1;
@@ -96,20 +80,17 @@
  //curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Stats/GetMembershipIdByDisplayName/'.$wheels.'/');
  
  //case insensitive PSN name search- THIS SPITS OUT AN ARRAY
-
- curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$psn.'/'.$jew.'/');
-
+ curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$psn.'/'.$tim.'/');
 //  curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Stats/GetMembershipIdByDisplayName/'.$cosmic.'/');
  curl_setopt($getMembershipId, CURLOPT_RETURNTRANSFER, true);
  curl_setopt($getMembershipId, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
  $getMembershipResults = curl_exec($getMembershipId);
  $getMembershipResponse = json_decode($getMembershipResults);
  
-//  echo $getMembershipResults;
  
  //
  $membershipID = $getMembershipResponse->Response[0]->membershipId;
- $displayName = $getMembershipResponse->Response[0]->displayName;;
+ $displayName = $getMembershipResponse->Response[0]->displayName;
 //  echo "xbox wut: ", $getMembershipResults;
  
 //  echo "First membership ID: ", $membershipID;
@@ -131,7 +112,6 @@
  //echo $result;
  // $membershipID = $json->Response;
  //$counter = 0;
-
  $slot0 = $json->Response->data->characters[0]->characterBase->classType; //wheels = 1, jew = 0
 //  echo "<p>slot 0, json: ", $slot0;
  $slot1 = $json->Response->data->characters[1]->characterBase->classType; //wheels = 0, jew = 1
@@ -169,8 +149,6 @@
 //  echo "<p>Grimoire: ", $grimoire;
  $bungieURL = "https://bungie.net";
  
-
- 
 //  GET EMBLEMS FOR LOGGED IN USER
 
 $getEmblems = curl_init();
@@ -186,105 +164,24 @@ $getEmblems = curl_init();
  
  // $urlMissing2 = "https://bungie.net";
  
-
- $emblemPath = $getEmblemsResult->Response->data->characters[$characterArraySlot]->emblemPath;
+ $emblemPath = $json->Response->data->characters[$characterArraySlot]->emblemPath;
  
  //TODO fix the if(isset) so doesn't JSON request every page load 
- //GET ALL THE SESSION DATA
- //INSERT CHARACTER SELECTION ALGORITHM TO GET ALL 3 CHARACTER ID's
-         $slot0 = $getEmblemsResult->Response->data->characters[0]->characterBase->classType; //wheels = 1, jew = 0
-        //  echo "<p>slot 0, json: ", $slot0;
-         $slot1 = $getEmblemsResult->Response->data->characters[1]->characterBase->classType; //wheels = 0, jew = 1
-        //  echo "<p>slot 1, json: ", $slot1;
-         $slot2 = $getEmblemsResult->Response->data->characters[2]->characterBase->classType; //wheels = 2, jew = 2
-        //  echo "<p>slot 2, json: ", $slot2;
-         
-         
-         //get Titan Slot
-         if($titan == $slot0){
-             $titanSlot = 0;
-         }
-         elseif($titan == $slot1){
-             $titanSlot = 1;
-         }
-         elseif($titan == $slot2){
-             $titanSlot = 2;
-         }
-         
-        //  echo "<p>Titan slot: ", $titanSlot;
-         
-        //  get Hunter slot
-        if($hunter == $slot0){
-             $hunterSlot = 0;
-         }
-         elseif($hunter == $slot1){
-             $hunterSlot = 1;
-         }
-         elseif($hunter == $slot2){
-             $hunterSlot = 2;
-         }
-         
-        //  echo "Hunter slot: ", $hunterSlot;
-         
-         //get warlock slot
-         if($warlock == $slot0){
-             $warlockSlot = 0;
-         }
-         elseif($warlock == $slot1){
-             $warlockSlot = 1;
-         }
-         elseif($warlock == $slot2){
-             $warlockSlot = 2;
-         }
-         
-
  
 //  if(isset($_SESSION['user'])){
 //      echo "just the tip ;)";
 //      if (!isset($_SESSION["titanArray"])) {
     
         //  echo "<p>we got inside ;)";
-
-        //Emblems
-        // $titanEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['titanSlot']]->emblemPath;
-        // $hunterEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['hunterSlot']]->emblemPath;
-        // $warlockEmblem = $getEmblemsResult->Response->data->characters[$_SESSION['user']['warlockSlot']]->emblemPath;
+        $titanEmblem = $_SESSION['user']['titanEmblem'];
+        $hunterEmblem = $_SESSION['user']['hunterEmblem'];
+        $warlockEmblem = $_SESSION['user']['warlockEmblem'];
         
-        //commenting out here
-        // $titanEmblem = $getEmblemsResult->Response->data->characters[$titanSlot]->emblemPath;
-        // $hunterEmblem = $getEmblemsResult->Response->data->characters[$hunterSlot]->emblemPath;
-        // $warlockEmblem = $getEmblemsResult->Response->data->characters[$warlockSlot]->emblemPath;
+        // $_SESSION["titanArray"]= $titanEmblem;
+        // $_SESSION["hunterArray"] = $hunterEmblem;
+        // $_SESSION["warlockArray"] = $warlockEmblem;
         
-        
-        // $titanBackground = $getEmblemsResult->Response->data->characters[$titanSlot]->backgroundPath;
-        // $hunterBackground = $getEmblemsResult->Response->data->characters[$hunterSlot]->backgroundPath;
-        // $warlockBackground = $getEmblemsResult->Response->data->characters[$warlockSlot]->backgroundPath;
-        
-        // $_SESSION["titanEmblemIconPath"]= $titanEmblem;
-        // $_SESSION["hunterEmblemIconPath"] = $hunterEmblem;
-        // $_SESSION["warlockEmblemIconPath"] = $warlockEmblem;
-        
-        // echo "slot test :",$_SESSION['user']['titanSlot'];
-        
-        // $_SESSION["titanEmblemBackground"] = $titanEmblemBackground;
-        // $_SESSION["hunterEmblemBackground"] = $hunterEmblemBackground;
-        // $_SESSION["warlockEmblemBackground"] = $warlockEmblemBackground;
-        
-        // //Light Level
-        // $lightLevel = $json->Response->data->characters[$characterArraySlot]->characterBase->powerLevel;
-        // $titanLightLevel = $getEmblemsResult->Response->data->characters[$_SESSION['user']['titanSlot']]->characterBase->powerLevel;
-        // $hunterLightLevel = $getEmblemsResult->Response->data->characters[$_SESSION['user']['hunterSlot']]->characterBase->powerLevel;
-        // $warlockLightLevel = $getEmblemsResult->Response->data->characters[$_SESSION['user']['warlockSlot']]->characterBase->powerLevel;
-        // $grimoire = $getEmblemsResult->Response->data->characters[$_SESSION['user']['titanSlot']]->characterBase->grimoireScore;
-        
-        // $_SESSION["titanLightLevel"] = $titanLightLevel;
-        // $_SESSION["hunterLightLevel"] = $hunterLightLevel;
-        // $_SESSION["warlockLightLevel"] = $warlockLightLevel;
-        // $_SESSION["grimoire"] = $grimoire;
-        
-        
-        //to here
-
+        // echo "titan emblem: ", $titanEmblem;
 //      }
 //  }
  
@@ -404,8 +301,12 @@ $getEmblems = curl_init();
     <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
     <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
     
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
     <link rel="stylesheet" href="/customMDLstyling.css">
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/iconSelectRadio.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -413,51 +314,79 @@ $getEmblems = curl_init();
      <!--PASTE STARTS HERE-->
       <body>
           
-          <dialog class="mdl-dialog loginDialog">
-                        <h1 class="mdl-dialog__title mdl-color-text--primary">Existing User Login</h1>
-                        <!--                                <div class="mdl-dialog__content">-->
-
-                        <!--                                Floating labels-->
-                        <form action="#" id="login-form" method="post" action="layout sandbox2.1.php">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-group">
-                                <?php 
-                            if($errors["username"]){
-                                $username_error = $errors["username"];
-                                $username_error_class = "has-error";
-                            }
-                        ?>
-                                <input class="mdl-textfield__input form-control" type="text" id="username">
-                                <label class="mdl-textfield__label" for="username">Username</label>
+           <dialog class="mdl-dialog postDialog">
+                <!--<h4 class="mdl-dialog__title">Submit LFG Post</h4>-->
+                <div class="mdl-dialog__title mdl-color--homeBackground" 
+                style="padding: 24px 24px 24px;
+                        font-size: 2.5rem;
+                        color: white;">Submit LFG Post</div>
+                    <div class="mdl-dialog__content">
+                       
+                        <form id="submitPostForm" method="post" action="#">
+                            <div class="class-selector lfgEmblemContainer">
+                                
+                                <input id="titan" type="radio" name="characterClass" value="Titan" checked/>
+                                <label class="classEmblems" for="titan">
+                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$titanEmblem");?>>
+                                </label>
+                                
+                                <input id="hunter" type="radio" name="characterClass" value="Hunter" />
+                                <label class="classEmblems"for="hunter">
+                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$hunterEmblem");?>>
+                                </label>
+                                
+                                <input id="warlock" type="radio" name="characterClass" value="Warlock" />
+                                <label class="classEmblems"for="warlock">
+                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$warlockEmblem");?>>
+                                </label>
+                                
                             </div>
                             
-                            <!--password field-->
-                            <?php 
-                            if($errors["password"]){
-                                $pw_error = $errors["password"];
-                                $pw_error_class = "has-error";
-                            }
-                        ?>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-group">
-                                <input class="mdl-textfield__input form-control" type="password" id="password">
-                                <label class="mdl-textfield__label" for="password">Password</label>
-
+                            <div class="class-selector emblemLabels">
+                                <!--<div>-->
+                                <label id="titanLabel" class="classEmblems" for="titan">Titan</label>
+                                <!--</div>-->
+                                <!--<div>-->
+                                <label id="hunterLabel" class="classEmblems" for="hunter">Hunter</label>
+                                <!--</div>-->
+                                <!--<div>-->
+                                <label id="warlockLabel" class="classEmblems" for="warlock">Warlock</label>
+                                <!--</div>-->
                             </div>
-                            <span class="mdl-textfield__error">Incorrect email or password!</span>
 
-                            <!--                                    Cancel Button-->
-                            <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
-                                <button class="mdl-button close mdl-js-button mdl-js-ripple-effect mdl-dialog__actions--full-width">
-  Cancel
-</button>
-
-                                <!--                                    Login Button-->
-                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-dialog__actions--full-width" type="submit" name="submit">
-  Login
-</button>
+                            <div class="mdl-select mdl-js-select mdl-select--floating-label">
+                                <select class="mdl-select__input" id="activitySelection" name="activitySelection">
+                                    <option value=""></option>
+                                    <option value="option1">option 1</option>
+                                    <option value="option2">option 2</option>
+                                    <option value="option3">option 3</option>
+                                    <option value="option4">option 4</option>
+                                    <option value="option5">option 5</option>
+                                </select>
+                                <label class="mdl-select__label" for="activitySelection">Select an Activity</label>
                             </div>
-                        </form>
-                        <!--                                </div>-->
-                    </dialog>
+                        <!--</form>-->
+    
+        
+                            <div class="mdl-textfield mdl-textfield-custom mdl-js-textfield">
+                                <textarea class="mdl-textfield__input" type="text" rows= "5" id="description" name="description" ></textarea>
+                                <label class="mdl-textfield__label" for="description">Description</label>
+                            </div>
+                        <!--</form>-->
+                    </div>
+                <div class="mdl-dialog__actions">
+                        <button type="submit" id="submitLFGpost" name="submit" class="mdl-button">Submit</button>
+                    <div class="mdl-spinner mdl-js-spinner is-active submitPostSpinner" id="submitPostLoading"></div>
+                    <button type="button" name="cancel" id="cancelLFGpost" class="mdl-button close">Cancel</button>
+                </div>
+            </form>
+            </dialog>
+            <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+                <div class="mdl-snackbar__text"></div>
+                <button class="mdl-snackbar__action" type="button"></button>
+            </div>
+    
+          
           
     <!-- Layout Container with Fixed Header and Tabs -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs mdl-layout--fixed-drawer">
@@ -469,64 +398,10 @@ $getEmblems = curl_init();
                 <div class="mdl-layout-spacer"></div>
                 <!-- Header Buttons -->
                 <nav class="mdl-navigation">
-                    <!--<button id="login-dialog" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Submit</button>-->
-                    <a class="mdl-button close mdl-js-button mdl-js-ripple-effect mdl-button--accent " href="submitDialog.php">Submit</a>
-                    <!--                            Start of MDL dialog new Login-->
-<!--                    <dialog class="mdl-dialog loginDialog">-->
-<!--                        <h1 class="mdl-dialog__title mdl-color-text--primary">Existing User Login</h1>-->
-                        <!--                                <div class="mdl-dialog__content">-->
-
-                        <!--                                Floating labels-->
-<!--                        <form action="#">-->
-<!--                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">-->
-<!--                                <input class="mdl-textfield__input" type="text" id="username">-->
-<!--                                <label class="mdl-textfield__label" for="username">Username</label>-->
-<!--                            </div>-->
-<!--                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">-->
-<!--                                <input class="mdl-textfield__input" type="password" id="password">-->
-<!--                                <label class="mdl-textfield__label" for="password">Password</label>-->
-
-<!--                            </div>-->
-<!--                            <span class="mdl-textfield__error">Incorrect email or password!</span>-->
-
-                            <!--                                    Cancel Button-->
-<!--                            <div class="mdl-dialog__actions mdl-dialog__actions--full-width">-->
-<!--                                <button class="mdl-button close mdl-js-button mdl-js-ripple-effect mdl-dialog__actions--full-width">-->
-<!--  Cancel-->
-<!--</button>-->
-
-                                <!--                                    Login Button-->
-<!--                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-dialog__actions--full-width">-->
-<!--  Login-->
-<!--</button>-->
-<!--                            </div>-->
-<!--                        </form>-->
-                        <!--                                </div>-->
-<!--                    </dialog>-->
-                    <!--<script>-->
-                    <!--    var dialog = document.querySelector('dialog');-->
-                    <!--    var showDialogButton = document.querySelector('#login-dialog');-->
-
-
-                    <!--    if (!dialog.showModal) {-->
-                    <!--        dialogPolyfill.registerDialog(dialog);-->
-                    <!--    }-->
-                    <!--    showDialogButton.addEventListener('click', function() {-->
-                    <!--        dialog.showModal();-->
-                    <!--    });-->
-                    <!--    dialog.querySelector('.close').addEventListener('click', function() {-->
-                    <!--        dialog.close();-->
-                    <!--    });-->
-                    <!--</script>-->
-                    <!--                            End of dialog-->
-
-                    <!--                            jQuery for button-->
-
-
-                    <!--                            end jQuery -->
-
-
-
+                   <!-- // ?php if(isset($_SESSION['user'])){
+                    //     echo "<button id=\"submit-dialog\" type=\"button\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent\">Submit</button>";
+                    // }?> -->
+                    <button id="submit-dialog" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Submit</button>
                 </nav>
             </div>
 
@@ -602,82 +477,79 @@ $getEmblems = curl_init();
 
             <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
                 <div class="page-content">
-                    <div class="tab1container"><!--Tab 1-->
-
+                    <div class="tab1container "><!--Tab 1-->
+                        <!--<div class="mdl-grid">-->
+                           <template id="playerPosts">
+                                <div class="posts mdl-cell mdl-cell--6-col mdl-cell--2-offset-tablet">
+                                    <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
+                                        <div class="emblemContainer">
+                                            <div class="emblemIcon">
+                                                <img class="emblemIconImg">
+                                            </div>
+                                            <div class="emblemBackground">
+                                                <img class="emblemBackgroundImg" src="">
+                                            </div>
+                                            <div class="playerUsername"></div>
+                                            <div class="playerCurrentClass"></div>
+                                            <div class="rightSide">
+                                                <div class="playerLightLevel"></div>
+                                                <div class="playerGrimoire"><span class="playerGrimoireOutput"></span>
+                                                    <img class="grimoireImage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mdl-spinner mdl-js-spinner is-active getStatsLoading statsLoading"></div>
+                                        <div class="postActivity"><span class="postActivityText"></span>
+                                            <div class="divider"></div>
+                                        </div>
+                                        <div class="postDescription"><span class="postDescriptionText"></span></div>
+                                        <button class="btn btn-primary getStats" type="button">Get Player Stats</button>
+                                    </div>
+                                
+                                <div class="stats-row whiteText"></div>
+                                    <template id="playerStats">
+                                            <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">
+                                            <thead>
+                                                <tr class="goldColour">
+                                                    <th>K/D Ratio</th>
+                                                    <th>Average Lifespan</th>
+                                                    <th>Win/Loss Ratio</th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>
+                                                     <!--Row 1 -->
+                                                    <tr class="whiteText">
+                                                        <td class="playerKD"></td>
+                                                        <td class="playerAverageLifespan"></td>
+                                                        <td class="playerWinLossRatio"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                    </template>
+                                </div> <!-- /posts mdl cell-6 -->
+                            </template>
+                        <!--template    -->
+                            <div class="postContainerTemplate mdl-grid">
+                            
+                            
+                            </div>
+                            
+                             <!--Hard coded post-->
+    
+  
+                            
+                        <!--</div>-->
+                        
+                        
 <!--LFG POST STARTS HERE-->
           
 <!--LFG POST STARTS HERE-->
-<!--<div class="mdl-grid">-->
-  <!--<div class="mdl-cell mdl-cell--1-col">1</div>-->
-  <!--<div class="mdl-cell mdl-cell--6-col">6</div>-->
-    <div class="postContainer">
-        <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
-            <div class="emblemContainer">
-                <div class="emblemIcon">
-                    <img src="<?= $completeEmblemIcon; ?>"></img>
-                </div>
-                <div class="emblemBackground">
-                    <img src="<?= $completeEmblemBackground; ?>"></img>
-                </div>
-                <div class="playerUsername"><?= $displayName; ?></div>
-                <div class="playerCurrentClass"><?= $activeCharacter; ?></div>
-                <div class="rightSide">
-                    <div class="playerLightLevel"><span id="lightLevelIcon">&#10022  </span><?= $lightLevel; ?></div>
-                    <div class="playerGrimoire"><?= $grimoire; ?>
-                        <img id="grimoireIcon" src="./assets/grimoireIcon.png"></img>
-                    </div>
-                </div>
-            </div>
-            <div class="mdl-spinner mdl-js-spinner is-active getStatsLoading" id="statsLoading"></div>
-                <!--<div class="innerContainer">-->
-            <div class="postActivity"><span class="postActivityText">Trials of Osiris</span>
-                <div class="divider"></div>
-            </div>
-           
-            <div class="postDescription"><span class="postDescriptionText">LF 1 more, must have K/D above 1.5, have mic and be over the age of 18.</span></div>
-                    <!--<form id="playerStatsForm"> -->
-                        <!--<input type="hidden" name="getStatsButton" value=" //$displayName; ?>">-->
-                            <button id="getStats" data-name="<?=$displayName;?>" data-character="<?=$activeCharacter;?>" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent ">Get Player Stats</button>
-                        <!--</input>-->
-                    <!--</form>-->
-                <!--</div>    -->
-        </div>
-        
-        
-        <div class="stats-row whiteText"></div>
-        <template id="playerStats">
-                <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">
-                <thead>
-                    <tr class="goldColour">
-                        <th>K/D Ratio</th>
-                        <th>Average Lifespan</th>
-                        <th>Win/Loss Ratio</th>
-                    </tr>
-                </thead>
-                    <tbody>
-                         <!--Row 1 -->
-                        <tr>
-                            <td class="playerKD"></td>
-                            <td class="playerAverageLifespan"></td>
-                            <td class="playerWinLossRatio"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </template>
-            
-    </div>
-    <!--<div class="mdl-cell mdl-cell--6-col">6</div>-->
-    
-<!--FIRST LFG POST ENDS HERE-->
-    
-   
-<!--SECOND LFG POST ENDS HERE-->
 
-  <!--TrialsReport star icon : ✦ -->
-  
-  </div>
-                </div>
-            </section>
+
+                    </div> <!--/tab1container-->
+                </div> <!-- /pagecontent-->
+                <!--</div>-->
+            </section> <!-- /fixed tab 1-->
 
             <section class="mdl-layout__tab-panel" id="fixed-tab-2">
                 <div class="page-content">
@@ -695,37 +567,160 @@ $getEmblems = curl_init();
         </main>
     </div>
   
-  <script type="text/javascript">
+  <script>
+    
+    function loadPosts(){
+          console.log("hello");
+          $(".postContainerTemplate").empty();
+            var datasource = "ajax/getPostsData.php";
+            // $(".postContainerTemplate").empty();
+            //make an ajax request
+            $.ajax({
+                url:datasource,
+                dataType:'json',
+                type:'POST',
+                encode:true
+            })
+            .done(function(data){
+                console.log(data);
+                //if there is data
+                if(data.length > 0){
+                    var len = data.length;
+                    console.log(len);
+                    
+                    
+                    for(i=0;i<len;i++){
+                        var template = $("#playerPosts").html().trim();
+                        var clone = $(template);
+                        //fill the data
+                        var username = data[i].username;
+                        var selectedCharacter = data[i].selectedCharacter;
+                        var consoleID = data[i].consoleID;
+                        var activity = data[i].activity;
+                        var description = data[i].description;
+                        var emblemIcon = data[i].emblemIcon;
+                        var emblemBackground = data[i].emblemBackground;
+                        var lightLevel = data[i].lightLevel;
+                        var grimoireScore = data[i].grimoireScore;
+                        var hasMic = data[i].hasMic;
+                        
+                        var lightLevelIcon = "&#10022  ";
+                        var grimoireImg = "./assets/grimoireIcon.png";
+                        var buttonText = " Get Player Stats";
+                        //TODO postTime = data[i].postTime;
+                        
+                        //TODO consoleID -> icon
+                        if(consoleID == 1){
+                          consoleChoice = ""; //xbox icon
+                        }
+                        else if(consoleID == 2){
+                          consoleChoice = ""; //PS icon
+                        }
+                        
+                        if(hasMic){
+                          //var mic = "mic icon path"
+                        }
+                
+                
+                        $(clone).find(".playerUsername").html(username);
+                        $(clone).find(".playerCurrentClass").html(selectedCharacter);
+                        //console icon insert
+                        //   $(clone).find(".console").html(consoleChoice);
+                        $(clone).find(".postActivityText").html(activity);
+                        // $(clone).find(".postDescription").html(description);
+                        $(clone).find(".emblemIconImg").attr("src", emblemIcon);
+                        $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
+                        $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
+                        
+                        $(clone).find(".grimoireImage").attr("src", grimoireImg);
+                        $(clone).find(".playerGrimoireOutput").html(grimoireScore);
+                        
+                        $(clone).find(".getStats").attr("data-name", username);
+                        
+                        // $(clone).find(".getStats").attr("value", buttonText);
+                        $(clone).find(".getStats").attr("data-character", selectedCharacter);
+                        
+                        //   $(clone).find(".hasMic").html();
+                        
+                        $(".postContainerTemplate").append(clone);
+                    }
+                }
+            });
+            // componentHandler.upgradeDom();
+          
+        }
+    
+    //load posts from DB
+    $(document).ready(function(){
+    //     $("button").click(function(){
+    //     alert("button");
+    // });
+        loadPosts();
+    });
+          
+    setInterval("upgradeMDL();", 100);
+    function upgradeMDL() {
+        componentHandler.upgradeDom();
+        //componentHandler.upgradeDom();
+        componentHandler.upgradeAllRegistered();
+    }
+        // });
     
     
+    //hide submit loader
+    $('#submitPostLoading').hide();
+    
+    //Login dialog
+    // var dialog = document.querySelector('dialog');
+    // var showDialogButton = document.querySelector('#login-dialog');
+
     var dialog = document.querySelector('dialog');
-    var showDialogButton = document.querySelector('#login-dialog');
-
-
+    var showDialogButton = document.querySelector('#submit-dialog');
     if (!dialog.showModal) {
-        dialogPolyfill.registerDialog(dialog);
+      dialogPolyfill.registerDialog(dialog);
     }
     showDialogButton.addEventListener('click', function() {
-        dialog.showModal();
+      dialog.showModal();
     });
     dialog.querySelector('.close').addEventListener('click', function() {
-        dialog.close();
+      dialog.close();
     });
     
+    //end login dialog
     
-    
-    
-    $(".postContainer").on("click", clickHandler);
-    
+    //get player stats on LFG post
+    $('.postContainerTemplate').on("click", ".getStats", clickHandler);
+    // document('.getStats').addEventListener('click', function(clickHandler) {
+    // var clickedButton = document.getElementsByClassName(".getStats");
+    // $(clickedButton).on("click", clickHandler);
+    // $(".btn").on("click", clickHandler);
+    var clicks = 0;
     function clickHandler(e){
+    
+        console.log(e);
+    // console.log("Data exists log: ", $(e.target).attr("data-exists"));
+        
+    if($(e.target).attr("data-exists") == undefined){
         e.target;
-        var getName = $(e.target).parents(".mdl-button").data("name");
-        var getCharacter = $(e.target).parents(".mdl-button").data("character");
+        // var clickedBtn;
+        
+        var getName = $(e.target).data("name");
+        // var getCharacter = $(e.target).parents(".mdl-button").data("character");
+        var getCharacter = $(e.target).data("character");
         var datasource = "ajax/getPlayerStats.php";
         
-        if(getName != null){
-            $('#statsLoading').show();
+        if(getName != undefined){
+            $(e.target).siblings('.statsLoading').show();
+            // $(clickedBtn).prop("disabled", true);
+            // $(clickedBtn).parents(".mdl-button").html('Retrieving Stats..');
+            clickedBtn =  $(e.target).parents(".getStats");
+            $(e.target).html("Retrieving Stats..");
+            $(e.target).attr("data-exists", "1");
         }
+        else{
+            // $(e.target).html("Error getting stats!");
+        }
+        
         
         console.log("e target: ", e.target);
         console.log("playerName: ", getName);
@@ -749,16 +744,20 @@ $getEmblems = curl_init();
                   console.log(data);
                 //if there is data
                 //TODO removeChild after clicking hide stats
+                // upgradeMDL();
+                // componentHandler.upgradeDom(".mdl-button");
+                $('.statsLoading').hide();
+                $(e.target).html("Hide Stats");
                 
-                $('#statsLoading').hide();
+                // $(".getStats").unbind("click", clickHandler);
                 
                 var jsonResponse = JSON.parse(data);
                 // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
                 if(typeof jsonResponse.Response.trialsOfOsiris.allTime === "undefined"){
                     console.log("ERROR");
-                    $("#getStats").html('Error: No stats found');
-                    $("#getStats").removeClass("mdl-button--accent");
-                    $("#getStats").addClass("getTrialsStatsError");
+                    $(".getStats").html('Error: No stats found');
+                    $(".getStats").removeClass("mdl-button--accent");
+                    $(".getStats").addClass("getTrialsStatsError");
                     
                 }
                 else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio === "undefined"){
@@ -772,7 +771,10 @@ $getEmblems = curl_init();
                     console.log("ERROR");
                 }
                 else{
-                    $("#getStats").html('Hide Stats');
+                    clicks++;
+                    console.log(clicks);
+                    // $(this).prop("disabled", false);
+                    // $(clickedBtn).html('Hide Stats');
                     
                     var template = $("#playerStats").html().trim();
                     var clone = $(template);
@@ -783,83 +785,138 @@ $getEmblems = curl_init();
                     var winLossRatio = jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio.basic.displayValue;
                     console.log("playerKD: ", playerKD);
                     console.log("Avg Lifespan: ", averageLifespan);
-                    console.log("Respone code: ", jsonResponse.Response);
+                    console.log("Response code: ", jsonResponse.Response);
                     
                     $(clone).find(".playerKD").html(playerKD);
                     $(clone).find(".playerAverageLifespan").html(averageLifespan);
                     $(clone).find(".playerWinLossRatio").html(winLossRatio);
-                    $(".stats-row").append(clone);
+                    // $(".stats-row").append(clone);
+                    // $(".stats-row").append(clone);
+                    // $(e.target).parent(".mdl-button").parent(".postCard").siblings(".stats-row").append(clone);
+                    console.log("btn :", clickedBtn);
+                    $(e.target).parents(".postCard").siblings(".stats-row").append(clone);
+                    //$(e.target).parents(".mdl-button").siblings('.statsLoading').show();
                 }
                 
-              })
+              });
             //   timeout: 3000;
+        
+        // $(".getStats").unbind("click", hideStatsClick);
+    
+        // function hideStatsClick(e){
+        //     console.log("Hide Test", e);
+        //     e.target;
+        // }
+        
+    }else if($(e.target).attr("data-exists") == 1){
+        
+        $(e.target).parents(".postCard").siblings(".stats-row").css("display", "none");
+        $(e.target).html("Show Player Stats");
+        console.log("data = 1");
+        $(e.target).attr("data-exists", "0");
+        
+        
+    //     // $(e.target).parents(".mdl-button").parents(".postDescription").parents(".postCard").siblings(".stats-row").remove();
+    //     // $(e.target).parent().siblings(".stats-row").attr("display", "none");
+    //     $(e.target).parent(".mdl-button").parent(".postCard").siblings(".stats-row").attr("display", "none");
+    //     clicks--;
+    //     console.log("click- :", clicks);
+    //     $(".getStats").html('Get Player Stats');
+    }else if($(e.target).attr("data-exists") == "0"){
+        $(e.target).html("Hide Stats");
+        $(e.target).parents(".postCard").siblings(".stats-row").css("display", "");
+        $(e.target).attr("data-exists", "1");
     }
-  
-  
-    //   $(document).ready(function(){
-    //       //add listener for button click
-    //       $("#playerStatsForm").on("submit", function(e){
-    //           e.preventDefault();
-    //           $('#statsLoading').show();
-              
-    //           //TODO how to get more than one value from LFG post (need character)
-    //           var playerName = {name:$("#playerStatsForm input").val(), characterName:$};
-    //           var datasource = "ajax/getPlayerStats.php";
-    //           $.ajax({
-    //               data:playerName, 
-    //               datatype: 'json',
-    //               url:datasource,
-    //               type: 'POST',
-    //               encode: true
-    //           })
-    //           .done(function(data){
-    //               console.log(data);
-    //             //if there is data
-    //             $('#statsLoading').hide();
-                
-    //             var jsonResponse = JSON.parse(data);
-    //             // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
-    //             if(typeof jsonResponse.Response.trialsOfOsiris.allTime === "undefined"){
-    //                 console.log("ERROR");
-    //                 $("#getStats").html('Error: No stats found');
-    //                 $("#getStats").removeClass("mdl-button--accent");
-    //                 $("#getStats").addClass("getTrialsStatsError");
-                    
-    //             }
-    //             else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio === "undefined"){
-    //                 console.log("ERROR");
-    //             }
-    //             //ELSEIF if response != 1, throw error if trial stats not found
-    //             else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan === "undefined"){
-    //                 console.log("ERROR");
-    //             }
-    //             else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio === "undefined"){
-    //                 console.log("ERROR");
-    //             }
-    //             else{
-    //                 var template = $("#playerStats").html().trim();
-    //                 var clone = $(template);
-    //                 //fill the data
-    //                 //console.log(data.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
-    //                 var playerKD = jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue;
-    //                 var averageLifespan = jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan.basic.displayValue;
-    //                 var winLossRatio = jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio.basic.displayValue;
-    //                 console.log("playerKD: ", playerKD);
-    //                 console.log("Avg Lifespan: ", averageLifespan);
-    //                 console.log("Respone code: ", jsonResponse.Response);
-                    
-    //                 $(clone).find(".playerKD").html(playerKD);
-    //                 $(clone).find(".playerAverageLifespan").html(averageLifespan);
-    //                 $(clone).find(".playerWinLossRatio").html(winLossRatio);
-    //                 $(".stats-row").append(clone);
-    //             }
-                
-    //           })
-              
-              
-    //       })
-    //   })
       
+      
+    }
+    
+    
+    //Hide shown stats
+    //$("#btn2").unbind("click").click(function () {
+    
+    function showLoading() {
+        console.log("showLoading fired");
+        // remove existing loaders
+        $('.loading-container').remove();
+        $('<div id="orrsLoader" class="loading-container"><div><div class="mdl-spinner mdl-js-spinner is-active"></div></div></div>').appendTo("body");
+    
+        componentHandler.upgradeElements($('.mdl-spinner').get());
+        setTimeout(function () {
+            $('#orrsLoader').css({opacity: 1});
+        }, 1);
+    }
+    
+    function hideLoading() {
+    $('#orrsLoader').css({opacity: 0});
+    setTimeout(function () {
+        $('#orrsLoader').remove();
+    }, 400);
+}
+    
+  
+    //Submit LFG Post
+    $("#submitPostForm").submit(function(e){
+        
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        }, 3000);
+        
+        $('#submitPostLoading').show();
+        // <button id='btnAddProfile' type='button'>Add</button>
+        $("#submitLFGpost").html('Submitting');
+        
+        var submitPHP = "ajax/submitNewPost.php";
+        
+        
+        //disable buttons on submit
+        $("#submitLFGpost").attr("disabled", "disabled");
+        $("#cancelLFGpost").remove();
+        
+        $.ajax({
+            type:"POST",
+            url: submitPHP,
+            data: $("#submitPostForm").serialize(),
+            
+            success: function(data){
+                // alert(data);
+                $('#submitPostLoading').show();
+                dialog.close();
+                
+                var notification = document.querySelector('.mdl-js-snackbar');
+                notification.MaterialSnackbar.showSnackbar(
+                  {
+                    message: 'Post Submitted!'
+                  }
+                );
+                $("#submitLFGpost").html('Submit');
+                $('#submitPostLoading').hide();
+                loadPosts();
+                upgradeMDL();
+                
+                // hideLoading();
+                
+                
+                
+                // var snackbarContainer = document.querySelector('#demo-toast-example');
+                // var data = {message: 'Example Message '};
+                // snackbarContainer.MaterialSnackbar.showSnackbar(data);
+                //success message or something
+                //hide loading animation
+                //close dialog
+            }
+            
+            
+        });
+        
+        e.preventDefault();
+    });
+    
+      
+      
+    
+    
   </script>
   
   

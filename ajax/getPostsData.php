@@ -2,7 +2,7 @@
   if($_SERVER["REQUEST_METHOD"]=="POST"){
       $posts = array();
       //get posts from database
-      $query="SELECT * FROM posts";
+      $query="SELECT * FROM posts ORDER BY postTime DESC";
       
       $result = $connection->query($query);
       

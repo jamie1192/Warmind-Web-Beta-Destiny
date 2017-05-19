@@ -4,6 +4,7 @@
         background:#181d25;
         /*min-width: 520px;*/
         width: 100%;
+        
     }
     
     .mdl-button--raised[disabled][disabled], .mdl-button--raised.mdl-button--disabled.mdl-button--disabled{

@@ -1,6 +1,6 @@
 <?php
 
-    include("./../database.php");
+    include("../database.php");
     include("./../key.php");
     
     session_start();
@@ -82,7 +82,10 @@
             //
             $query = "INSERT INTO posts (uid, username, selectedCharacter, consoleID, activity, description, emblemIcon, emblemBackground, lightLevel, 
                     grimoireScore, hasMic, postTime) VALUES ('$sessionID', '$sessionUsername', '$characterSelection', '$sessionConsoleID','$activitySelection',
-                    '$description', '$bungieURL$emblemIconPath','$bungieURL$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() )";
+                    '$description', '$bungieURL$emblemIconPath','$bungieURL$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() ) 
+                    ON DUPLICATE KEY UPDATE selectedCharacter='$characterSelection', activity='$activitySelection', description='$description', 
+                    emblemIcon='$bungieURL$emblemIconPath', 
+                    emblemBackground='$bungieURL$emblemBackgroundPath', lightLevel='$lightLevel', grimoireScore='$grimoire', hasMic='$hasMicrophone', postTime=NOW()";
             if(!$connection->query($query)){
                 $errors["database"] = "Database error!";
             }

@@ -7,7 +7,7 @@
     include("key.php");
     include("head.php");
     
-    session_start();
+    
     
     if(isset($_SESSION['user'])){
         header("location:home.php");  
@@ -102,9 +102,14 @@
         //  echo "Warlock slot: ", $warlockSlot;
          
 
-        $titanID = $json->Response->data->characters[$titanSlot]->characterBase->characterId;
-        $hunterID = $json->Response->data->characters[$hunterSlot]->characterBase->characterId;
-        $warlockID = $json->Response->data->characters[$warlockSlot]->characterBase->characterId;
+        $activeTitanID = $json->Response->data->characters[$titanSlot]->characterBase->characterId;
+        $activeHunterID = $json->Response->data->characters[$hunterSlot]->characterBase->characterId;
+        $activeWarlockID = $json->Response->data->characters[$warlockSlot]->characterBase->characterId;
+        
+        // echo "json titan ID: ", $titanID;
+        // echo "json titan ID: ", $warlockID;
+        // echo "json titan ID: ", $hunterID;
+        
          
          //emblems
         $titanEmblem = $json->Response->data->characters[$titanSlot]->emblemPath;
@@ -119,10 +124,10 @@
          //ends here
          
          //light level, grimoire
-        $titanLightLevel = $getEmblemsResult->Response->data->characters[$titanSlot]->characterBase->powerLevel;
-        $hunterLightLevel = $getEmblemsResult->Response->data->characters[$hunterSlot]->characterBase->powerLevel;
-        $warlockLightLevel = $getEmblemsResult->Response->data->characters[$warlock]->characterBase->powerLevel;
-        $grimoire = $getEmblemsResult->Response->data->characters[$titanSlot]->characterBase->grimoireScore;
+        $titanLightLevel = $json->Response->data->characters[$titanSlot]->characterBase->powerLevel;
+        $hunterLightLevel = $json->Response->data->characters[$hunterSlot]->characterBase->powerLevel;
+        $warlockLightLevel = $json->Response->data->characters[$warlock]->characterBase->powerLevel;
+        $grimoire = $json->Response->data->characters[$titanSlot]->characterBase->grimoireScore;
 
          //ends here
              
@@ -144,6 +149,9 @@
             if(count($errors)==0){
                 $username = filter_var($username, FILTER_SANITIZE_STRING);
                 $hashed = password_hash($password, PASSWORD_DEFAULT);
+                
+                // echo "titan emblem", $titanEmblem;
+                // echo "hunter", $hunterEmblem;
                 $query = "INSERT INTO accounts (username, password, consoleID, membershipID, titanID, hunterID, warlockID, 
                     creation_date, last_update, last_login) 
                     VALUES ('$displayName', '$hashed','$consoleID','$membershipID','$titanID', '$hunterID', '$warlockID', NOW(),NOW(),NOW())";
@@ -153,14 +161,19 @@
                 //     'hunterSlot' => $activeHunterSlot, 
                 //     'hunterEmblem' => $hunterEmblem, 'hunterBackground' => $hunterBackground, 'warlockID' => $activeWarlockID, 'warlockSlot' => $activeWarlockSlot, 
                 //     'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'lightLevel' => $lightLevel, 'grimoire' => $grimoire);
-                $_SESSION['user'] = array('uid' => $id, 'username' => $stored_username, 'consoleID' => $consoleID, 'membershipID' => $activeMembershipID, 
+                session_start();
+                $_SESSION['user'] = array('uid' => $id, 'username' => $displayName, 'consoleID' => $consoleID, 'membershipID' => $activeMembershipID, 
                     'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground' => $titanBackground, 
                     'titanLightLevel' => $titanLightLevel, 'hunterID' => $activeHunterID, 'hunterSlot' => $hunterSlot, 'hunterEmblem' => $hunterEmblem, 
                     'hunterBackground' => $hunterBackground, 'hunterLightLevel' => $hunterLightLevel, 'warlockID' => $activeWarlockID, 'warlockSlot' => $warlockSlot, 
                     'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'warlockLightLevel' => $warlockLightLevel, 'grimoire' => $grimoire);
                 
+                //login paste below
+                
+                
+                // print_r($_SESSION);
                 header("location:home.php");
-                exit();
+                // exit();
 
                 if(!$connection->query($query)){
                     $errors["database"] = "Database error!";
@@ -183,8 +196,8 @@
                     <h2 class="mdl-card__title-text">Sign Up</h2>
                 </div>
                 <div class="mdl-card__supporting-text ">
-                    <div class="row ">
-                        <div class="col-md-4 cold-md-offset-4">
+                    <!--<div class="row ">-->
+                        <!--<div class="col-md-4 cold-md-offset-4">-->
                             <form id="register-form" method="post" action="register.php">
                                 <?php
                                     if($errors["username"]){
@@ -194,11 +207,11 @@
                                 ?>
                                 
                                 <!--Username field-->
-                                <div class="form-group <?php echo $username_error_class; ?> mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="form-control mdl-textfield__input" name="username" value="<?php echo $username; ?>">
+                                <div class="<?php echo $username_error_class; ?> mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" name="username" value="<?php echo $username; ?>">
                                     <label class="mdl-textfield__label" for="username">PSN Name/Xbox Gamertag</label>
 
-                                    <span class = "errorCode mdl-textfield__error"> <?php echo $username_error; ?></span>
+                                    <span class = "mdl-textfield__error"> <?php echo $username_error; ?></span>
 
                                 </div>
                                 
@@ -209,14 +222,14 @@
                                         $pw_error_class = "has-error";
                                     }
                                 ?>
-                                <div class = "form-group <?php echo $pw_error_class;?> mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <input class="form-control mdl-textfield__input" type="password" id="password" name="password">
+                                <div class = "<?php echo $pw_error_class;?> mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="password" id="password" name="password">
                                     <label class="mdl-textfield__label" for="password">Password (min. 8 characters)</label>
                                     <!--<span class="errorCode mdl-textfield__error"> ?php echo $pw_error; ?></span>-->
                                 </div>
                                 
                                 <!--//confirm password-->
-                                <div class = "form-group <?php echo $pw_error_class;?> mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <div class = "<?php echo $pw_error_class;?> mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                     <input class="form-control mdl-textfield__input" type="password" id="confirmPassword" name="confirmPassword">
                                     <label class="mdl-textfield__label mdl-text-color--accent" for="confirmPassword">Confirm Password</label>
                                     
@@ -246,8 +259,8 @@
                                     <button class="mdl-button close mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-dialog__actions--full-width" type="submit" name="submit">Sign Up</button>
                                 </div>
                             </form>
-                        </div>
-                    </div>
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
             </div>
             </main>

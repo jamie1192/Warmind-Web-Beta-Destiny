@@ -620,10 +620,12 @@ SECOND LFG POST ENDS HERE
     </div>
   
   <script>
-    
+   
     function loadPosts(){
           console.log("hello");
+          $(".postContainerTemplate posts").empty();
             var datasource = "ajax/getPostsData.php";
+            // $(".postContainerTemplate").empty();
             //make an ajax request
             $.ajax({
                 url:datasource,
@@ -637,6 +639,7 @@ SECOND LFG POST ENDS HERE
                 if(data.length > 0){
                     var len = data.length;
                     console.log(len);
+                    
                     
                     for(i=0;i<len;i++){
                         var template = $("#playerPosts").html().trim();
@@ -685,6 +688,7 @@ SECOND LFG POST ENDS HERE
                         $(clone).find(".playerGrimoireOutput").html(grimoireScore);
                         
                         $(clone).find(".getStats").attr("data-name", username);
+                        
                         // $(clone).find(".getStats").attr("value", buttonText);
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         
@@ -700,6 +704,9 @@ SECOND LFG POST ENDS HERE
     
     //load posts from DB
     $(document).ready(function(){
+    //     $("button").click(function(){
+    //     alert("button");
+    // });
         loadPosts();
     });
           
@@ -734,28 +741,36 @@ SECOND LFG POST ENDS HERE
     //end login dialog
     
     //get player stats on LFG post
-    $(".mdl-button__ripple-container").on("click", clickHandler);
-    // $(".getStats").on("click", clickHandler);
+    $('.postContainerTemplate').on("click", ".getStats", clickHandler);
+    // document('.getStats').addEventListener('click', function(clickHandler) {
+    // var clickedButton = document.getElementsByClassName(".getStats");
+    // $(clickedButton).on("click", clickHandler);
+    // $(".btn").on("click", clickHandler);
     var clicks = 0;
     function clickHandler(e){
-        
+    
         console.log(e);
+    // console.log("Data exists log: ", $(e.target).attr("data-exists"));
         
-    if(clicks == 0){
+    if($(e.target).attr("data-exists") == undefined){
         e.target;
-        var clickedBtn;
+        // var clickedBtn;
         
-        var getName = $(e.target).parents(".mdl-button").data("name");
+        var getName = $(e.target).data("name");
         // var getCharacter = $(e.target).parents(".mdl-button").data("character");
-        var getCharacter = $(e.target).parents(".mdl-button").data("character");
+        var getCharacter = $(e.target).data("character");
         var datasource = "ajax/getPlayerStats.php";
         
-        if(getName != null){
-            $(e.target).parents(".mdl-button").siblings('.statsLoading').show();
+        if(getName != undefined){
+            $(e.target).siblings('.statsLoading').show();
             // $(clickedBtn).prop("disabled", true);
             // $(clickedBtn).parents(".mdl-button").html('Retrieving Stats..');
             clickedBtn =  $(e.target).parents(".getStats");
-            $(e.target).parents(".getStats").html("Retrieving Stats..");
+            $(e.target).html("Retrieving Stats..");
+            $(e.target).attr("data-exists", "1");
+        }
+        else{
+            // $(e.target).html("Error getting stats!");
         }
         
         
@@ -781,11 +796,12 @@ SECOND LFG POST ENDS HERE
                   console.log(data);
                 //if there is data
                 //TODO removeChild after clicking hide stats
-                upgradeMDL();
-                componentHandler.upgradeDom(".mdl-button");
+                // upgradeMDL();
+                // componentHandler.upgradeDom(".mdl-button");
                 $('.statsLoading').hide();
+                $(e.target).html("Hide Stats");
                 
-                $(".getStats").unbind("click", clickHandler);
+                // $(".getStats").unbind("click", clickHandler);
                 
                 var jsonResponse = JSON.parse(data);
                 // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
@@ -830,53 +846,65 @@ SECOND LFG POST ENDS HERE
                     // $(".stats-row").append(clone);
                     // $(e.target).parent(".mdl-button").parent(".postCard").siblings(".stats-row").append(clone);
                     console.log("btn :", clickedBtn);
-                    clickedBtn.parent(".postCard").siblings(".stats-row").append(clone);
+                    $(e.target).parents(".postCard").siblings(".stats-row").append(clone);
                     //$(e.target).parents(".mdl-button").siblings('.statsLoading').show();
                 }
                 
               });
             //   timeout: 3000;
         
-        $(".getStats").unbind("click", hideStatsClick);
+        // $(".getStats").unbind("click", hideStatsClick);
     
-        function hideStatsClick(e){
-            console.log("Hide Test", e);
-            e.target;
-        }
+        // function hideStatsClick(e){
+        //     console.log("Hide Test", e);
+        //     e.target;
+        // }
         
-    }else{
-        // $(e.target).parents(".mdl-button").parents(".postDescription").parents(".postCard").siblings(".stats-row").remove();
-        // $(e.target).parent().siblings(".stats-row").attr("display", "none");
-        $(e.target).parent(".mdl-button").parent(".postCard").siblings(".stats-row").attr("display", "none");
-        clicks--;
-        console.log("click- :", clicks);
-        $(".getStats").html('Get Player Stats');
+    }else if($(e.target).attr("data-exists") == 1){
+        
+        $(e.target).parents(".postCard").siblings(".stats-row").css("display", "none");
+        $(e.target).html("Show Player Stats");
+        console.log("data = 1");
+        $(e.target).attr("data-exists", "0");
+        
+        
+    //     // $(e.target).parents(".mdl-button").parents(".postDescription").parents(".postCard").siblings(".stats-row").remove();
+    //     // $(e.target).parent().siblings(".stats-row").attr("display", "none");
+    //     $(e.target).parent(".mdl-button").parent(".postCard").siblings(".stats-row").attr("display", "none");
+    //     clicks--;
+    //     console.log("click- :", clicks);
+    //     $(".getStats").html('Get Player Stats');
+    }else if($(e.target).attr("data-exists") == "0"){
+        $(e.target).html("Hide Stats");
+        $(e.target).parents(".postCard").siblings(".stats-row").css("display", "");
+        $(e.target).attr("data-exists", "1");
     }
-        
+      
+      e.preventDefault();  
     }
     
     
     //Hide shown stats
     //$("#btn2").unbind("click").click(function () {
     
-    function showLoading() {
-        console.log("showLoading fired");
-        // remove existing loaders
-        $('.loading-container').remove();
-        $('<div id="orrsLoader" class="loading-container"><div><div class="mdl-spinner mdl-js-spinner is-active"></div></div></div>').appendTo("body");
+//     function showLoading() {
+//         console.log("showLoading fired");
+//         // remove existing loaders
+//         $('.loading-container').remove();
+//         $('<div id="orrsLoader" class="loading-container"><div><div class="mdl-spinner mdl-js-spinner is-active"></div></div></div>').appendTo("body");
     
-        componentHandler.upgradeElements($('.mdl-spinner').get());
-        setTimeout(function () {
-            $('#orrsLoader').css({opacity: 1});
-        }, 1);
-    }
+//         componentHandler.upgradeElements($('.mdl-spinner').get());
+//         setTimeout(function () {
+//             $('#orrsLoader').css({opacity: 1});
+//         }, 1);
+//     }
     
-    function hideLoading() {
-    $('#orrsLoader').css({opacity: 0});
-    setTimeout(function () {
-        $('#orrsLoader').remove();
-    }, 400);
-}
+//     function hideLoading() {
+//     $('#orrsLoader').css({opacity: 0});
+//     setTimeout(function () {
+//         $('#orrsLoader').remove();
+//     }, 400);
+// }
     
   
     //Submit LFG Post
