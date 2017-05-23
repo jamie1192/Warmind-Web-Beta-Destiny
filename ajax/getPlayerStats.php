@@ -4,9 +4,10 @@
 
     $playerName = $_POST['name'];
     $selectedCharacter = $_POST['character'];
+    $consoleID = $_POST['console'];
 
      $psn = 2;
-     $xbox = 3;
+     $xbox = 1;
  
      if($selectedCharacter == "Titan")
      {
@@ -29,7 +30,7 @@
  $getMembershipId = curl_init();
  
  //case insensitive PSN name search- THIS SPITS OUT AN ARRAY
- curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$psn.'/'.$playerName.'/');
+ curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$consoleID.'/'.$playerName.'/');
  curl_setopt($getMembershipId, CURLOPT_RETURNTRANSFER, true);
  curl_setopt($getMembershipId, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
  $getMembershipResults = curl_exec($getMembershipId);
@@ -44,7 +45,7 @@
  
  //2. get Account Summary- Jeewwbacca
  $ch = curl_init();
- curl_setopt($ch, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Account/'.$membershipID.'/Summary/');
+ curl_setopt($ch, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/'.$consoleID.'/Account/'.$membershipID.'/Summary/');
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
  curl_setopt($ch, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
  $result = curl_exec($ch);
@@ -82,7 +83,7 @@
  $accountSummary = curl_init();
 
  //ALL TIME STATS HERE
- curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/2/'.$membershipID.'/'.$characterId.'/?modes=TrialsOfOsiris');
+ curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/'.$consoleID.'/'.$membershipID.'/'.$characterId.'/?modes=TrialsOfOsiris');
  curl_setopt($accountSummary, CURLOPT_RETURNTRANSFER, true);
  curl_setopt($accountSummary, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
  $getAccountSummary = curl_exec($accountSummary);

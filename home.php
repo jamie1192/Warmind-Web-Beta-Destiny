@@ -1,7 +1,6 @@
 <?php
 //wheels00769: 4611686018428911554
 //Jeewwbacca: 4611686018439307322
-    
     session_start();
     
     // print_r ($_SESSION['user']["membershipID"]);
@@ -455,10 +454,10 @@ $getEmblems = curl_init();
                 <div class="mdl-layout-spacer"></div>
                 <!-- Header Buttons -->
                 <nav class="mdl-navigation">
-                   <!-- // ?php if(isset($_SESSION['user'])){
-                    //     echo "<button id=\"submit-dialog\" type=\"button\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent\">Submit</button>";
-                    // }?> -->
-                    <button id="submit-dialog" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Submit</button>
+                      <?php if(isset($_SESSION['user'])){
+                          echo "<button id=\"submit-dialog\" type=\"button\" class=\"mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent\">Submit</button>";
+                      }?> 
+                    <!--<button id="submit-dialog" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Submit</button>-->
                 </nav>
             </div>
 
@@ -538,6 +537,7 @@ $getEmblems = curl_init();
                         <!--<div class="mdl-grid">-->
                            <template id="playerPosts">
                                 <div class="posts mdl-cell mdl-cell--1-offset-phone mdl-cell--6-col mdl-cell--2-offset-tablet">
+                                <!--<div class="posts mdl-cell mdl-cell--6--phone mdl-cell--6-col-tablet mdl-cell--4-desktop">-->
                                     <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
                                         <div class="emblemContainer">
                                             <div class="emblemIcon">
@@ -546,7 +546,10 @@ $getEmblems = curl_init();
                                             <div class="emblemBackground">
                                                 <img class="emblemBackgroundImg" src="">
                                             </div>
-                                            <div class="playerUsername"></div>
+                                            <div class="playerUsername">
+                                                <span class="playerUsernameOutput"></span>
+                                                <img class="consoleIcon">
+                                            </div>
                                             <div class="playerCurrentClass"></div>
                                             <div class="rightSide">
                                                 <div class="playerLightLevel"></div>
@@ -559,7 +562,10 @@ $getEmblems = curl_init();
                                         <div class="postActivity"><span class="postActivityText"></span>
                                             <div class="divider"></div>
                                         </div>
-                                        <div class="postDescription"><span class="postDescriptionText"></span></div>
+                                        <div class="postDescription">
+                                            <span class="postDescriptionText"></span>
+                                        </div>
+                                        <span class="postAge">Test Text</span>
                                         <button class="btn btn-primary getStats" type="button">Get Player Stats</button>
                                     </div>
                                 
@@ -624,7 +630,7 @@ $getEmblems = curl_init();
         </main>
     </div>
   
-  <script>
+  <script async>
     
     function loadPosts(){
           console.log("hello");
@@ -660,18 +666,67 @@ $getEmblems = curl_init();
                         var lightLevel = data[i].lightLevel;
                         var grimoireScore = data[i].grimoireScore;
                         var hasMic = data[i].hasMic;
+                        var postTimeD = data[i].ageD;
+                        var postTimeH = data[i].ageH;
+                        var postTimeM = data[i].ageM;
                         
                         var lightLevelIcon = "&#10022  ";
                         var grimoireImg = "./assets/grimoireIcon.png";
                         var buttonText = " Get Player Stats";
                         //TODO postTime = data[i].postTime;
+                        // console.log("postTime: ", postTime);
+                        // var a = new Date(Date.parse(postTime.replace('-','/','g')));
+                        console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
+                        
+
+                        // var b = new Date().getTime();
+                        // console.log("b", b);
+                        // var timeStart = new Date("Mon Jan 01 2007 11:00:00 GMT+0530").getTime();
+                        // var timeEnd = new Date("Mon Jan 01 2007 11:30:00 GMT+0530").getTime();
+                        // var hourDiff = b - a; //in ms
+                        // var secDiff = hourDiff / 1000; //in s
+                        // var minDiff = hourDiff / 60 / 1000; //in minutes
+                        // var hDiff = hourDiff / 3600 / 1000; //in hours
+                        // var humanReadable = {};
+                        // humanReadable.hours = Math.floor(hDiff);
+                        // humanReadable.minutes = minDiff - 60 * humanReadable.hours;
+                        // console.log(humanReadable); //{hours: 0, minutes: 30}
+                        
+                        
+                        // console.log("tets: ", nowTime);
+                        // console.log("sql", mySQLpostTime);
+                        
+                        // var javascript_date = new Date(mySQLpostTime);
+                        // console.log("js date:", javascript_date);
+                        
+                        // // var today = new Date.UTC();
+                        // var today = new Date().getTime(); //local time
+                        // console.log("today gettime", today);
+                        // var d = Math.floor((new Date()).getTime() / 1000)
+                        // // var milliseconds = new Date().getTime();
+                        // // var n = d.getUTCDate();
+                        // var s = new Date();
+                        // s.setTime(d);
+                        // //var date = new Date(today*1000);
+                        // console.log("today: ", today);
+                        // console.log("date", d);
+                        // console.log("s", postTime);
+                        // var diffMs = (today - javascript_date); // milliseconds between now & Christmas
+                        // var diffDays = Math.floor(diffMs / 86400000); // days
+                        // var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+                        // var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+                        // //alert(diffDays + " days, " + diffHrs + " hours, " + diffMins + " minutes until Christmas 2009 =)");
+                        // // console.log("Post ", milliseconds);
+                        // console.log(diffDays, " days ago");                        
+                        // console.log(diffHrs, " hours ago");
+                        // console.log(diffMins, " mins ago");
                         
                         //TODO consoleID -> icon
                         if(consoleID == 1){
-                          consoleChoice = ""; //xbox icon
+                          consoleChoice = "assets/xboxLogo.png"; //xbox icon
                         }
                         else if(consoleID == 2){
-                          consoleChoice = ""; //PS icon
+                          consoleChoice = "assets/psLogo.png"; //PS icon
                         }
                         
                         if(hasMic){
@@ -679,10 +734,10 @@ $getEmblems = curl_init();
                         }
                 
                 
-                        $(clone).find(".playerUsername").html(username);
+                        $(clone).find(".playerUsernameOutput").html(username);
                         $(clone).find(".playerCurrentClass").html(selectedCharacter);
                         //console icon insert
-                        //   $(clone).find(".console").html(consoleChoice);
+                        $(clone).find(".consoleIcon").attr("src", consoleChoice);
                         $(clone).find(".postActivityText").html(activity);
                         $(clone).find(".postDescriptionText").html(description);
                         $(clone).find(".emblemIconImg").attr("src", emblemIcon);
@@ -693,7 +748,7 @@ $getEmblems = curl_init();
                         $(clone).find(".playerGrimoireOutput").html(grimoireScore);
                         
                         $(clone).find(".getStats").attr("data-name", username);
-                        
+                        $(clone).find(".getStats").attr("data-console", consoleID);
                         // $(clone).find(".getStats").attr("value", buttonText);
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         
@@ -731,17 +786,20 @@ $getEmblems = curl_init();
     // var dialog = document.querySelector('dialog');
     // var showDialogButton = document.querySelector('#login-dialog');
 
-    var dialog = document.querySelector('dialog');
-    var showDialogButton = document.querySelector('#submit-dialog');
-    if (!dialog.showModal) {
-      dialogPolyfill.registerDialog(dialog);
+    
+    if ($('#submit-dialog').length){
+        var dialog = document.querySelector('dialog');
+        var showDialogButton = document.querySelector('#submit-dialog');
+        if (!dialog.showModal) {
+          dialogPolyfill.registerDialog(dialog);
+        }
+        showDialogButton.addEventListener('click', function() {
+          dialog.showModal();
+        });
+        dialog.querySelector('.close').addEventListener('click', function() {
+          dialog.close();
+        });
     }
-    showDialogButton.addEventListener('click', function() {
-      dialog.showModal();
-    });
-    dialog.querySelector('.close').addEventListener('click', function() {
-      dialog.close();
-    });
     
     //end login dialog
     
@@ -754,7 +812,7 @@ $getEmblems = curl_init();
     var clicks = 0;
     function clickHandler(e){
     
-        console.log(e);
+        // console.log(e);
     // console.log("Data exists log: ", $(e.target).attr("data-exists"));
         
     if($(e.target).attr("data-exists") == undefined){
@@ -764,6 +822,7 @@ $getEmblems = curl_init();
         var getName = $(e.target).data("name");
         // var getCharacter = $(e.target).parents(".mdl-button").data("character");
         var getCharacter = $(e.target).data("character");
+        var getConsole = $(e.target).data("console");
         var datasource = "ajax/getPlayerStats.php";
         
         if(getName != undefined){
@@ -779,12 +838,12 @@ $getEmblems = curl_init();
         }
         
         
-        console.log("e target: ", e.target);
-        console.log("playerName: ", getName);
-        console.log("Character: ", getCharacter);    
+        // console.log("e target: ", e.target);
+        // console.log("playerName: ", getName);
+        // console.log("Character: ", getCharacter);    
         
         //TODO get console from post and pass to php
-        var obj = {name: getName, character:getCharacter};
+        var obj = {name: getName, character:getCharacter, console:getConsole};
         
         //TODO how to get more than one value from LFG post (need character)
             //   var playerName = {name:$("#playerStatsForm input").val(), characterName:$};
@@ -798,7 +857,7 @@ $getEmblems = curl_init();
                   encode: true
               })
               .done(function(data){
-                  console.log(data);
+                //   console.log(data);
                 //if there is data
                 //TODO removeChild after clicking hide stats
                 // upgradeMDL();
@@ -821,17 +880,32 @@ $getEmblems = curl_init();
                 }
                 else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio === "undefined"){
                     console.log("ERROR");
+                    $(e.target).html('Error: No stats found');
+                    $(e.target).removeClass("btn-primary");
+                    // $(e.target).addClass("getTrialsStatsError");
+                    $(e.target).addClass("btn-danger");
+                    $(e.target).attr("data-exists", null);
                 }
                 //ELSEIF if response != 1, throw error if trial stats not found-->
                 else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan === "undefined"){
                     console.log("ERROR");
+                    $(e.target).html('Error: No stats found');
+                    $(e.target).removeClass("btn-primary");
+                    // $(e.target).addClass("getTrialsStatsError");
+                    $(e.target).addClass("btn-danger");
+                    $(e.target).attr("data-exists", null);
                 }
                 else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio === "undefined"){
                     console.log("ERROR");
+                    $(e.target).html('Error: No stats found');
+                    $(e.target).removeClass("btn-primary");
+                    // $(e.target).addClass("getTrialsStatsError");
+                    $(e.target).addClass("btn-danger");
+                    $(e.target).attr("data-exists", null);
                 }
                 else{
                     clicks++;
-                    console.log(clicks);
+                    // console.log(clicks);
                     // $(this).prop("disabled", false);
                     // $(clickedBtn).html('Hide Stats');
                     
@@ -842,9 +916,9 @@ $getEmblems = curl_init();
                     var playerKD = jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue;
                     var averageLifespan = jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan.basic.displayValue;
                     var winLossRatio = jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio.basic.displayValue;
-                    console.log("playerKD: ", playerKD);
-                    console.log("Avg Lifespan: ", averageLifespan);
-                    console.log("Response code: ", jsonResponse.Response);
+                    // console.log("playerKD: ", playerKD);
+                    // console.log("Avg Lifespan: ", averageLifespan);
+                    // console.log("Response code: ", jsonResponse.Response);
                     
                     $(clone).find(".playerKD").html(playerKD);
                     $(clone).find(".playerAverageLifespan").html(averageLifespan);
@@ -852,7 +926,7 @@ $getEmblems = curl_init();
                     // $(".stats-row").append(clone);
                     // $(".stats-row").append(clone);
                     // $(e.target).parent(".mdl-button").parent(".postCard").siblings(".stats-row").append(clone);
-                    console.log("btn :", clickedBtn);
+                    // console.log("btn :", clickedBtn);
                     $(e.target).parents(".postCard").siblings(".stats-row").append(clone);
                     //$(e.target).parents(".mdl-button").siblings('.statsLoading').show();
                 }
@@ -871,7 +945,7 @@ $getEmblems = curl_init();
         
         $(e.target).parents(".postCard").siblings(".stats-row").css("display", "none");
         $(e.target).html("Show Player Stats");
-        console.log("data = 1");
+        // console.log("data = 1");
         $(e.target).attr("data-exists", "0");
         
         
