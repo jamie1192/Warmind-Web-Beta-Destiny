@@ -538,7 +538,7 @@ $getEmblems = curl_init();
                 <div class="page-content">
                     
                     <div class="tab1container "><!--Tab 1-->
-                    <img class="contentLoading" src="assets/Warmind Alpha.png">
+                    <img class="contentLoading" src="assets/Rasputin-25.png">
                         <!--<div class="mdl-grid">-->
                            <template id="playerPosts">
                                 <div class="posts mdl-cell mdl-cell--1-offset-phone mdl-cell--6-col mdl-cell--2-offset-tablet">

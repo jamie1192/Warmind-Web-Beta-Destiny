@@ -101,9 +101,10 @@
     opacity:1;
     margin: 0 auto;
     position: absolute;
-    right: 270px;
+    right: 390px;
     top: 220px;
     z-index: 200;
+    /*display:none;*/
     -webkit-animation: flickerAnimation 1s infinite;
    -moz-animation: flickerAnimation 1s infinite;
    -o-animation: flickerAnimation 1s infinite;
