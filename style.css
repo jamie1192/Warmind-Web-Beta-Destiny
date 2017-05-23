@@ -60,6 +60,16 @@
       font-size: 12px;
   }
   
+  .postAge{
+      position: relative;
+      top: 160px;
+      color: #ccc;
+      font-size: 12px;
+      font-style: italic;
+      width: 180px;
+      left: 40px;
+  }
+  
   .getStatsLoading{
       position: absolute;
       bottom: 0;
@@ -87,6 +97,39 @@
       margin-bottom: 10px;
       margin-right: 10px;
   }
+  .contentLoading {
+    opacity:1;
+    margin: 0 auto;
+    position: absolute;
+    right: 270px;
+    top: 220px;
+    z-index: 200;
+    -webkit-animation: flickerAnimation 1s infinite;
+   -moz-animation: flickerAnimation 1s infinite;
+   -o-animation: flickerAnimation 1s infinite;
+    animation: flickerAnimation 1s infinite;
+}
+@keyframes flickerAnimation {
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+
   
   #hideStats{
       position: absolute;

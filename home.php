@@ -515,6 +515,9 @@ $getEmblems = curl_init();
                 echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
                     echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">assessment </i>My Stats</a>";
             }?>
+            <a class="mdl-navigation__link mdl-color-text--white" href="#">
+                <i class="material-icons mdl-color-text--white" role="presentation">search</i>Search Player</a>
+            <!--</div>-->
             <div class="mdl-layout-spacer"></div>
             <?php 
             if(isset($_SESSION['user'])){
@@ -533,7 +536,9 @@ $getEmblems = curl_init();
 
             <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
                 <div class="page-content">
+                    
                     <div class="tab1container "><!--Tab 1-->
+                    <img class="contentLoading" src="assets/Warmind Alpha.png">
                         <!--<div class="mdl-grid">-->
                            <template id="playerPosts">
                                 <div class="posts mdl-cell mdl-cell--1-offset-phone mdl-cell--6-col mdl-cell--2-offset-tablet">
@@ -565,7 +570,7 @@ $getEmblems = curl_init();
                                         <div class="postDescription">
                                             <span class="postDescriptionText"></span>
                                         </div>
-                                        <span class="postAge">Test Text</span>
+                                        <span class="postAge"></span>
                                         <button class="btn btn-primary getStats" type="button">Get Player Stats</button>
                                     </div>
                                 
@@ -633,6 +638,8 @@ $getEmblems = curl_init();
   <script async>
     
     function loadPosts(){
+        $('.contentLoading').show();
+        // $('.contentLoading').attr("display", "");
           console.log("hello");
           $(".postContainerTemplate").empty();
             var datasource = "ajax/getPostsData.php";
@@ -645,6 +652,7 @@ $getEmblems = curl_init();
                 encode:true
             })
             .done(function(data){
+                $('.contentLoading').hide();
                 console.log(data);
                 //if there is data
                 if(data.length > 0){
@@ -673,54 +681,28 @@ $getEmblems = curl_init();
                         var lightLevelIcon = "&#10022  ";
                         var grimoireImg = "./assets/grimoireIcon.png";
                         var buttonText = " Get Player Stats";
+                        var postAge;
                         //TODO postTime = data[i].postTime;
                         // console.log("postTime: ", postTime);
                         // var a = new Date(Date.parse(postTime.replace('-','/','g')));
-                        console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
-                        
-
-                        // var b = new Date().getTime();
-                        // console.log("b", b);
-                        // var timeStart = new Date("Mon Jan 01 2007 11:00:00 GMT+0530").getTime();
-                        // var timeEnd = new Date("Mon Jan 01 2007 11:30:00 GMT+0530").getTime();
-                        // var hourDiff = b - a; //in ms
-                        // var secDiff = hourDiff / 1000; //in s
-                        // var minDiff = hourDiff / 60 / 1000; //in minutes
-                        // var hDiff = hourDiff / 3600 / 1000; //in hours
-                        // var humanReadable = {};
-                        // humanReadable.hours = Math.floor(hDiff);
-                        // humanReadable.minutes = minDiff - 60 * humanReadable.hours;
-                        // console.log(humanReadable); //{hours: 0, minutes: 30}
-                        
-                        
-                        // console.log("tets: ", nowTime);
-                        // console.log("sql", mySQLpostTime);
-                        
-                        // var javascript_date = new Date(mySQLpostTime);
-                        // console.log("js date:", javascript_date);
-                        
-                        // // var today = new Date.UTC();
-                        // var today = new Date().getTime(); //local time
-                        // console.log("today gettime", today);
-                        // var d = Math.floor((new Date()).getTime() / 1000)
-                        // // var milliseconds = new Date().getTime();
-                        // // var n = d.getUTCDate();
-                        // var s = new Date();
-                        // s.setTime(d);
-                        // //var date = new Date(today*1000);
-                        // console.log("today: ", today);
-                        // console.log("date", d);
-                        // console.log("s", postTime);
-                        // var diffMs = (today - javascript_date); // milliseconds between now & Christmas
-                        // var diffDays = Math.floor(diffMs / 86400000); // days
-                        // var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-                        // var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-                        // //alert(diffDays + " days, " + diffHrs + " hours, " + diffMins + " minutes until Christmas 2009 =)");
-                        // // console.log("Post ", milliseconds);
-                        // console.log(diffDays, " days ago");                        
-                        // console.log(diffHrs, " hours ago");
-                        // console.log(diffMins, " mins ago");
-                        
+                        if(postTimeD <= 0){
+                            if(postTimeH <= 0){
+                                if(postTimeM <= 0){
+                                    postAge = "Just Now";
+                                }
+                                else{
+                                    postAge = postTimeM + " mins ago";
+                                }
+                            }
+                            else{
+                                postAge = postTimeH + " hours ago";
+                            }
+                        }
+                        else{
+                            postAge = postTimeD + " days ago";
+                        }
+                        // console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
+                       
                         //TODO consoleID -> icon
                         if(consoleID == 1){
                           consoleChoice = "assets/xboxLogo.png"; //xbox icon
@@ -749,7 +731,7 @@ $getEmblems = curl_init();
                         
                         $(clone).find(".getStats").attr("data-name", username);
                         $(clone).find(".getStats").attr("data-console", consoleID);
-                        // $(clone).find(".getStats").attr("value", buttonText);
+                        $(clone).find(".postAge").html(postAge);
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         
                         //   $(clone).find(".hasMic").html();
