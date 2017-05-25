@@ -1,200 +1,41 @@
 <?php
-//wheels00769: 4611686018428911554
-//Jeewwbacca: 4611686018439307322
+
     session_start();
-    
-    // print_r ($_SESSION['user']["membershipID"]);
-    // echo $_SESSION([1]);
-    //check if user is logged in via session variable "account_id"
-    // if(!$_SESSION["account_id"]){
-    //     header("location:login.php");
-    //     exit();
-    // }
-    // else{
-    //     echo "Hello user, your account id is ".$_SESSION["account_id"];
-    //     echo "To log out, go to <a href=\"logout.php\">Log Out</a> page";
-    // }
     
     include("head.php");
     include("key.php");
      
-     $jew = "jeewwbacca";
-     $tim = "tanky_tim12";
-     $wheels = "wheels00769";
-     $cosmic = "cosmicrichy";
-     $pip = "PippinMitch007";
-     $ran="RannerzS12";
-     $test = "a";
-     $xboxName = "The1 and only35";
-     $xboxName2 = "DrearFlounder88";
+//      $xboxName2 = "DrearFlounder88";
      
-     $sessionUsername = $_SESSION['user']['username'];
-     $sessionConsoleID = $_SESSION['user']['consoleID'];
-     $sessionMembershipID = $_SESSION['user']['membershipID'];
+    $sessionUsername = $_SESSION['user']['username'];
+    $sessionConsoleID = $_SESSION['user']['consoleID'];
+    $sessionMembershipID = $_SESSION['user']['membershipID'];
+    $sessionTitanSlot = $_SESSION['user']['titanSlot'];
+    $sessionHunterSlot = $_SESSION['user']['hunterSlot'];
+    $sessionWarlockSlot = $_SESSION['user']['warlockSlot'];
+    
+    $titanEmblem = $_SESSION['user']['titanEmblem'];
+    $hunterEmblem = $_SESSION['user']['hunterEmblem'];
+    $warlockEmblem = $_SESSION['user']['warlockEmblem'];
      
-    //  echo "Session name: ",$sessionUsername;
-     
-    //  echo "session output consoleID: ", $sessionConsoleID;
-    //  echo "session membershipID: ", $sessionMembershipID;
-     
-     $sessionTitanSlot = $_SESSION['user']['titanSlot'];
-     $sessionHunterSlot = $_SESSION['user']['hunterSlot'];
-     $sessionWarlockSlot = $_SESSION['user']['warlockSlot'];
-     
-     $titan = 0;
-     $hunter = 1;
-     $warlock = 2;
-     
-     $selectedCharacter = 1;
-     
-     $psn = 2;
-     $xbox = 1;
-     
-     if($selectedCharacter == 0)
-     {
-      $activeCharacter = "Titan";
-     }
-     elseif($selectedCharacter == 1)
-     {
-      $activeCharacter="Hunter";
-     }
-     elseif($selectedCharacter == 2){
-        $activeCharacter = "Warlock";   
-     }
-     else{
-         //throw error? iunno
-     }
- 
- 
- 
-// $membershipID = 4611686018439307322;
- 
-//  curl_setopt($ch, CURLOPT_URL, 'https://www.bungie.net/platform/Destiny/Manifest/InventoryItem/1274330687/');
 
-//get memberships (test)>
-// /SearchDestinyPlayer/{membershipType}/{displayName}/
-
-//1. get membershipID and search by given username
- $getMembershipId = curl_init();
- //curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Stats/GetMembershipIdByDisplayName/'.$wheels.'/');
- 
- //case insensitive PSN name search- THIS SPITS OUT AN ARRAY
- curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$psn.'/'.$tim.'/');
-//  curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Stats/GetMembershipIdByDisplayName/'.$cosmic.'/');
- curl_setopt($getMembershipId, CURLOPT_RETURNTRANSFER, true);
- curl_setopt($getMembershipId, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
- $getMembershipResults = curl_exec($getMembershipId);
- $getMembershipResponse = json_decode($getMembershipResults);
- 
- 
- //
- $membershipID = $getMembershipResponse->Response[0]->membershipId;
- $displayName = $getMembershipResponse->Response[0]->displayName;
-//  echo "xbox wut: ", $getMembershipResults;
- 
-//  echo "First membership ID: ", $membershipID;
- 
- //Aggregate Stats
- // /Stats/AggregateActivityStats/{membershipType}/{destinyMembershipId}/{characterId}/
- 
- //2. get Account Summary- Jeewwbacca
- //IF statement to determined correct array slot for character choice
- 
-  //error(?) //TODO
-  
- $ch = curl_init();
- curl_setopt($ch, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/'.$psn.'/Account/'.$membershipID.'/Summary/');
- curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
- curl_setopt($ch, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
- $result = curl_exec($ch);
- $json = json_decode($result);
- //echo $result;
- // $membershipID = $json->Response;
- //$counter = 0;
- $slot0 = $json->Response->data->characters[0]->characterBase->classType; //wheels = 1, jew = 0
-//  echo "<p>slot 0, json: ", $slot0;
- $slot1 = $json->Response->data->characters[1]->characterBase->classType; //wheels = 0, jew = 1
-//  echo "<p>slot 1, json: ", $slot1;
- $slot2 = $json->Response->data->characters[2]->characterBase->classType; //wheels = 2, jew = 2
-//  echo "<p>slot 2, json: ", $slot2;
- 
- if($selectedCharacter == $slot0){
-     $characterArraySlot = 0;
-    //  echo "<p>IF slot 0";
- }
- elseif($selectedCharacter == $slot1){
-     $characterArraySlot = 1;
-    //  echo "<P>IF slot 1";
- }
- elseif($selectedCharacter == $slot2){
-     $characterArraySlot = 2;
-    //  echo "<P>IF slot 2";
- }
- else{
-     //throw error or something //TODO
- }
-//  echo "<p> Active Char: ", $activeCharacter;
-//  echo "<p>Character array slot: ". $characterArraySlot;
- //$json->Response->data->characters[$selectedCharacter]->characterBase->classType
- $characterId = $json->Response->data->characters[$characterArraySlot]->characterBase->characterId;
- $lightLevel = $json->Response->data->characters[$characterArraySlot]->characterBase->powerLevel;
- $grimoire = $json->Response->data->characters[$characterArraySlot]->characterBase->grimoireScore;
- 
-//  echo "<p>User DisplayName: ", $displayName;
-//  echo "<p>Membership ID: ", $membershipID;
-//  echo "<P>Character ID: ", $characterId;
-//  echo "<p>Character: ", $activeCharacter;
-//  echo "<p>Light Level: ", $lightLevel;
-//  echo "<p>Grimoire: ", $grimoire;
- $bungieURL = "https://bungie.net";
+    $bungieURL = "https://bungie.net";
  
 //  GET EMBLEMS FOR LOGGED IN USER
 
-$getEmblems = curl_init();
- curl_setopt($getEmblems, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/'.$sessionConsoleID.'/Account/'.$sessionMembershipID.'/Summary/');
- curl_setopt($getEmblems, CURLOPT_RETURNTRANSFER, true);
- curl_setopt($getEmblems, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
- $getEmblemsJSON = curl_exec($getEmblems);
- $getEmblemsResult = json_decode($getEmblemsJSON);
+    $getEmblems = curl_init();
+    curl_setopt($getEmblems, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/'.$sessionConsoleID.'/Account/'.$sessionMembershipID.'/Summary/');
+    curl_setopt($getEmblems, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($getEmblems, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
+    $getEmblemsJSON = curl_exec($getEmblems);
+    $getEmblemsResult = json_decode($getEmblemsJSON);
 
 // END GET EMBLEMS
  
  
  
- // $urlMissing2 = "https://bungie.net";
- 
- $emblemPath = $json->Response->data->characters[$characterArraySlot]->emblemPath;
- 
- //TODO fix the if(isset) so doesn't JSON request every page load 
- 
-//  if(isset($_SESSION['user'])){
-//      echo "just the tip ;)";
-//      if (!isset($_SESSION["titanArray"])) {
-    
-        //  echo "<p>we got inside ;)";
-        $titanEmblem = $_SESSION['user']['titanEmblem'];
-        $hunterEmblem = $_SESSION['user']['hunterEmblem'];
-        $warlockEmblem = $_SESSION['user']['warlockEmblem'];
         
-        // $_SESSION["titanArray"]= $titanEmblem;
-        // $_SESSION["hunterArray"] = $hunterEmblem;
-        // $_SESSION["warlockArray"] = $warlockEmblem;
         
-        // echo "titan emblem: ", $titanEmblem;
-//      }
-//  }
- 
-    // array_push($_SESSION['titanEmblem'], $titanEmblem);
-    // array_push($_SESSION['hunterEmblem'],$hunterEmblem);
-    // array_push($_SESSION['warlockEmblem'], $warlockEmblem);
-//  array_push($_SESSION['titanEmblem'],$titanEmblem);
-//  array_push($_SESSION['hunterEmblem'],$hunterEmblem);
-//  array_push($_SESSION['warlockEmblem'],$warlockEmblem);
- 
- $emblemBackgroundPath = $json->Response->data->characters[$characterArraySlot]->backgroundPath;
- 
- // echo "<p>emblem: ", $emblemPath;
- // echo "<p>background: ", $emblemBackgroundPath;
  
  $completeEmblemIcon = "$bungieURL$emblemPath";
  $completeEmblemBackground = "$bungieURL$emblemBackgroundPath";
@@ -202,86 +43,19 @@ $getEmblems = curl_init();
  // echo "<p>emblem: ", $completeEmblemIcon;
  // echo "<p>background: ", $completeEmblemBackground;
  
- // $grimoire = $json->Response->data->characters[$hunter]->characterBase->grimoireScore;
- 
- // echo "Hunter Emblem Icon Link: ", $completeEmblemIcon;
- // echo "<p> Emblem Background Path: ", $completeEmblemBackground;
- // echo "<p> Hunter Grimoire is: ", $grimoire;
- 
- 
- //TODO GET RID OF THIS (BELOW) LATER 
- 
- 
- //TESTING BELOW- Trials stats
- $accountSummary = curl_init();
- // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Account/'.$membershipID.'/Summary/');
- // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/ActivityHistory/2/'.$membershipID.'/'.$characterId.'/?mode=TrialsOfOsiris');
- // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/AggregateActivityStats/2/'.$membershipID.'/'.$characterId.'/?defintions=true');
- // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/Definition/');
- // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/2/Account/'.$membershipID.'/Triumphs/');
- 
- //ALL TIME STATS HERE
- curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/2/'.$membershipID.'/'.$characterId.'/?modes=TrialsOfOsiris');
 
-
-
-
-
-
- // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/AggregateActivityStats/2/'.$membershipID.'/'.$characterId.'/');
- // www.bungie.net/Platform/Destiny/Stats/ActivityHistory/{membershipType}/{destinyMembershipId}/{characterId}/
- curl_setopt($accountSummary, CURLOPT_RETURNTRANSFER, true);
- curl_setopt($accountSummary, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
- $getAccountSummary = curl_exec($accountSummary);
- $json2 = json_decode($getAccountSummary);
- 
- //Get Warlock Light Level 
- //echo "<p>Light Level: ", $json2->Response->data->characters[$hunter]->characterBase->powerLevel;//->characterBase->minutesPlayedTotal;
- 
- 
- $trialsKDRatio = $json2->Response->trialsOfOsiris->allTime->killsDeathsRatio->basic->displayValue;
- $trialsTotalKills = $json2->Response->trialsOfOsiris->allTime->kills->basic->displayValue;
- $trialsAverageKillsPerGame = $json2->Response->trialsOfOsiris->allTime->kills->pga->displayValue;
- $trialsTotalDeaths = $json2->Response->trialsOfOsiris->allTime->deaths->basic->displayValue;
- $trialsAverageDeathsPerGame = $json2->Response->trialsOfOsiris->allTime->deaths->pga->displayValue;
- $trialsAverageLifespan = $json2->Response->trialsOfOsiris->allTime->averageLifespan->basic->displayValue;
- $trialsWinLossRatio = $json2->Response->trialsOfOsiris->allTime->winLossRatio->basic->displayValue;
- $trialsLongestKillSpree = $json2->Response->trialsOfOsiris->allTime->longestKillSpree->basic->displayValue;
+//  $trialsKDRatio = $json2->Response->trialsOfOsiris->allTime->killsDeathsRatio->basic->displayValue;
+//  $trialsTotalKills = $json2->Response->trialsOfOsiris->allTime->kills->basic->displayValue;
+//  $trialsAverageKillsPerGame = $json2->Response->trialsOfOsiris->allTime->kills->pga->displayValue;
+//  $trialsTotalDeaths = $json2->Response->trialsOfOsiris->allTime->deaths->basic->displayValue;
+//  $trialsAverageDeathsPerGame = $json2->Response->trialsOfOsiris->allTime->deaths->pga->displayValue;
+//  $trialsAverageLifespan = $json2->Response->trialsOfOsiris->allTime->averageLifespan->basic->displayValue;
+//  $trialsWinLossRatio = $json2->Response->trialsOfOsiris->allTime->winLossRatio->basic->displayValue;
+//  $trialsLongestKillSpree = $json2->Response->trialsOfOsiris->allTime->longestKillSpree->basic->displayValue;
  
  
  
- // echo "<p>Trials test: ", $getAccountSummary;
-//  echo "<p>Trials Stats: <p>", $trialsTotalKills, " kills, Average per game: ", $trialsAverageKillsPerGame;
-//  echo "<p>";
-//  echo $trialsTotalDeaths, " deaths, Average per game: ", $trialsAverageDeathsPerGame;
-//  echo "<p>Average K/D: ", $trialsKDRatio;
- 
- 
- //Aggregate Stats
- //Stats/AggregateActivityStats/{membershipType}/{destinyMembershipId}/{characterId}/
- // www.bungie.net/Platform/Destiny/Stats/AggregateActivityStats/{membershipType}/{destinyMembershipId}/{characterId}/
- 
- // http://www.bungie.net/Platform/Destiny/Stats/Account/{membershipType}/{destinyMembershipId}/   ??
- 
- // $getActivityStats = curl_init();
- // //IF (to decide which character we get stats for and pass into URL?)
- // curl_setopt($getActivityStats, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/Account/2/'.$membershipId.'/');
- // curl_setopt($getActivityStats, CURLOPT_RETURNTRANSFER, true);
- // curl_setopt($getActivityStats, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
- // $activityResults = curl_exec($getActivityStats);
- // $jsonActivityResults = json_decode($activityResults);
- 
- // echo "<p>Activity Results: ", $jsonActivityResults;
- //print whole array
- //print_r($json);
- 
- 
- //prints whole json also
-
-
- //TODO condense these two into one variable
- 
- $urlMissing2 = "https://bungie.net";
+//  $urlMissing2 = "https://bungie.net";
  
 
 ?>
