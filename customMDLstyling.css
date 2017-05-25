@@ -6794,7 +6794,7 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,
     position: absolute;
     font-size: 12px;
     margin-top: 3px;
-    visibility: hidden;
+    /*visibility: hidden;*/
     display: block
 }
 

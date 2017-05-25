@@ -302,6 +302,7 @@ $getEmblems = curl_init();
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://use.fontawesome.com/87ed5f0b78.js"></script>
     
     <link rel="stylesheet" href="/customMDLstyling.css">
     <link rel="stylesheet" href="/style.css">
@@ -313,14 +314,14 @@ $getEmblems = curl_init();
      <!--PASTE STARTS HERE-->
       <body>
           
-           <dialog class="mdl-dialog postDialog">
+          <!--submit post dialog-->
+            <dialog class="mdl-dialog postDialog">
                 <!--<h4 class="mdl-dialog__title">Submit LFG Post</h4>-->
                 <div class="mdl-dialog__title mdl-color--homeBackground" 
                 style="padding: 24px 24px 24px;
                         font-size: 2.5rem;
                         color: white;">Submit LFG Post</div>
                     <div class="mdl-dialog__content">
-                       
                         <form id="submitPostForm" method="post" action="#">
                             <div class="class-selector lfgEmblemContainer">
                                 
@@ -353,8 +354,38 @@ $getEmblems = curl_init();
                                 <!--</div>-->
                             </div>
 
-                            <div class="mdl-select mdl-js-select mdl-select--floating-label">
-                                <select class="mdl-select__input" id="activitySelection" name="activitySelection">
+                            <div class="mdl-dialog__actions mdl-dialog__action--full-width">
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-1">
+                                <input type="radio" id="activity-1" class="mdl-radio__button" name="activity" value="other">
+                                <span class="mdl-radio__label">Other</span>
+                            </label>
+                            <div class="mdl-layout-spacer"></div>
+                            
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-2">
+                                <input type="radio" id="activity-2" class="mdl-radio__button" name="activity" value="strikes">
+                                <span class="mdl-radio__label">Strikes</span>
+                            </label>
+                            
+                            <div class="mdl-layout-spacer"></div>
+                            
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-3">
+                                <input type="radio" id="activity-3" class="mdl-radio__button" name="activity" value="PvP">
+                                <span class="mdl-radio__label">PVP</span>
+                            </label>
+                            
+                            <div class="mdl-layout-spacer"></div>
+                            
+                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-4">
+                                <input type="radio" id="activity-4" class="mdl-radio__button" name="activity" value="Raid">
+                                <span class="mdl-radio__label">Raid</span>
+                            </label>
+                            
+                            
+                        </div>
+                        
+                            <!--Raid select list-->
+                            <div class="mdl-select mdl-js-select mdl-select--floating-label Raid">
+                                <select class="mdl-select__input" id="activitySelection" name="raid">
                                     <option value=""></option>
                                         <optgroup label="Raid - Wrath of the Machine">
                                             <option value="Wrath of the Machine - Heroic (Fresh)">Heroic (Fresh)</option>
@@ -368,7 +399,7 @@ $getEmblems = curl_init();
                                             <option value="Wrath of the Machine - Normal (Siege Engine)">Normal (Siege Engine)</option>
                                             <option value="Wrath of the Machine - Normal (Aksis Ph 2)">Normal (Aksis Ph 2)</option>
                                             <option value="Wrath of the Machine - Normal (Aksis Ph 1)">Normal (Aksis Ph 1)</option>
-                                            <optgroup label="Raid - King's Fall">
+                                        <optgroup label="Raid - King's Fall">
                                                 <option value="King's Fall - Heroic (Fresh)">Heroic (Fresh)</option>
                                                 <option value="King's Fall - Heroic (Oryx)">Heroic (Oryx)</option>
                                                 <option value="King's Fall - Heroic (Daughters)">Heroic (Daughters)</option>
@@ -382,8 +413,8 @@ $getEmblems = curl_init();
                                                 <option value="King's Fall - Normal (Golgoroth)">Normal (Golgoroth)</option>
                                                 <option value="King's Fall - Normal (Warpriest)">Normal (Warpriest)</option>
                                                 <option value="King's Fall - Normal (Totems)">Normal (Totems)</option>
-                                            </optgroup>
-                                            <optgroup label="Raid - Crota's End">
+                                        </optgroup>
+                                        <optgroup label="Raid - Crota's End">
                                                 <option value="Crota's End - Heroic (Fresh)">Heroic (Fresh)</option>
                                                 <option value="Crota's End - Heroic (Crota)">Heroic (Crota)</option>
                                                 <option value="Crota's End - Heroic (Deathsinger)">Heroic (Deathsinger)</option>
@@ -395,8 +426,8 @@ $getEmblems = curl_init();
                                                 <option value="Crota's End - Normal (Deathsinger)">Normal (Deathsinger)</option>
                                                 <option value="Crota's End - Normal (Thrallway)">Normal (Thrallway)</option>
                                                 <option value="Crota's End - Normal (Bridge)">Normal (Bridge)</option>
-                                            </optgroup>
-                                            <optgroup label="Raid - Vault of Glass">
+                                        </optgroup>
+                                        <optgroup label="Raid - Vault of Glass">
                                                 <option value="Vault of Glass - Heroic (Fresh)">Heroic (Fresh)</option>
                                                 <option value="Vault of Glass - Heroic (Atheon)">Heroic (Atheon)</option>
                                                 <option value="Vault of Glass - Heroic (Gatekeepers)">Heroic (Gatekeepers)</option>
@@ -421,26 +452,125 @@ $getEmblems = curl_init();
                                 </select>
                                 <label class="mdl-select__label" for="activitySelection">Select an Activity</label>
                             </div>
-                        <!--</form>-->
-    
+                        
+                            <!--PVP select list-->
+                            <div class="mdl-select mdl-js-select mdl-select--floating-label pvp">
+                                <select class="mdl-select__input" id="PvP" name="PvP">
+                                    <option value=""></option>
+                                    <optgroup label="PvP">
+                                        <option value="Trials of Osiris (Casual/Bounty)">Trials of Osiris (Casual/Bounty)</option>
+                                        <option value="Trials of Osiris (Competitive)">Trials of Osiris (Competitive)</option>
+                                        <option value="Iron Banner">Iron Banner</option>
+                                        <option value="Crucible - Private Match">Private Match</option>
+                                    </optgroup>
+                                </select>
+                                <label class="mdl-select__label" for="pvp">Select an Activity</label>
+                            </div>
         
+        
+                            <!--Strikes select list-->
+                            <div class="mdl-select mdl-js-select mdl-select--floating-label strikes">
+                                <select class="mdl-select__input" id="strikes" name="strikes">
+                                    <optgroup label="Strike Playlist">
+                                            <option value="Strike Playlist - SIVA Crisis Heroic">SIVA Crisis Heroic</option>
+                                            <option value="Strike Playlist - SIVA Crisis">SIVA Crisis</option>
+                                            <option value="Strike Playlist - Taken War">Taken War</option>
+                                            <option value="Strike Playlist - Vanguard Legacy">Vanguard Legacy</option>
+                                        </optgroup>
+                                        <optgroup label="Weeklies">
+                                            <option value="Nightfall">Nightfall</option>
+                                            <option value="Weekly Challenge of the Elders">Weekly Challenge of the Elders</option>
+                                            <option value="Weekly Story Playlist">Weekly Story Playlist</option>
+                                            <option value="Weekly Heroic Strike">Weekly Heroic Strike</option>
+                                        </optgroup>
+                                </select>
+                                <label class="mdl-select__label" for="strikes">Select an Activity</label>
+                            </div>
+                            
+                            
+                            <!--Other select list-->
+                            <div class="mdl-select mdl-js-select mdl-select--floating-label other">
+                                <select class="mdl-select__input" id="other" name="other">
+                                    <option value=""></option>
+                                        <optgroup label="Arena">
+                                            <option value="Arena - Archon's Forge">Archon's Forge</option>
+                                            <option value="Arena - Court of Oryx">Court of Oryx</option>
+                                            <option value="Arena - Challenge of the Elders">Challenge of the Elders</option>
+                                            <option value="Arena - Prison of Elders">Prison of Elders</option>
+                                        </optgroup>
+                                </select>
+                                <label class="mdl-select__label" for="other">Select an Activity</label>
+                            </div>
+                            
+                            <input type="hidden" name="dropdownSelection" value="">
+                            
                             <div class="mdl-textfield mdl-textfield-custom mdl-js-textfield">
                                 <textarea class="mdl-textfield__input" type="text" rows= "5" id="description" name="description" ></textarea>
                                 <label class="mdl-textfield__label" for="description">Description</label>
                             </div>
+                            
+                            <!--Mic toggle-->
+                            <div class="micDiv">
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect hasMicToggle" for="micCheckbox">
+                                    <input type="checkbox" id="micCheckbox" name="micCheckbox" class="mdl-checkbox__input">
+                                    <span class="mdl-checkbox__label">Mic?</span>
+                                </label>
+                            </div>
+                            
                         <!--</form>-->
+                    <!--</div>-->
+                            <div class="mdl-dialog__actions">
+                                <button type="submit" id="submitLFGpost" name="submit" class="mdl-button">Submit</button>
+                                <div class="mdl-spinner mdl-js-spinner is-active submitPostSpinner" id="submitPostLoading"></div>
+                                <button type="button" name="cancel" id="cancelLFGpost" class="mdl-button close">Cancel</button>
+                            </div>
+                        
+                        </form>
                     </div>
-                <div class="mdl-dialog__actions">
-                        <button type="submit" id="submitLFGpost" name="submit" class="mdl-button">Submit</button>
-                    <div class="mdl-spinner mdl-js-spinner is-active submitPostSpinner" id="submitPostLoading"></div>
-                    <button type="button" name="cancel" id="cancelLFGpost" class="mdl-button close">Cancel</button>
-                </div>
-            </form>
             </dialog>
+            
             <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
                 <div class="mdl-snackbar__text"></div>
                 <button class="mdl-snackbar__action" type="button"></button>
             </div>
+            
+            <dialog class="mdl-dialog searchDialog">
+                <!--<h4 class="mdl-dialog__title">Submit LFG Post</h4>-->
+                <div class="mdl-dialog__title mdl-color--homeBackground" 
+                style="padding: 24px 24px 24px;
+                        font-size: 2.5rem;
+                        color: white;">Search Player</div>
+                    <div class="mdl-dialog__content">
+                        <form id="submitPostForm" method="post" action="#">
+                            
+
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" id="sample3">
+                                <label class="mdl-textfield__label" for="sample3">PSN Name/Xbox Gamertag..</label>
+                            </div>
+
+                            <div class="mdl-dialog__actions mdl-dialog__action--full-width">
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                                        <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1">
+                                            <span class="mdl-radio__label">Xbox</span>
+                                    </label>
+                                    <div class="mdl-layout-spacer"></div>
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                                        <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2" checked>
+                                            <span class="mdl-radio__label">PlayStation</span>
+                                    </label>
+                            </div>
+                        
+                            <div class="mdl-dialog__actions">
+                                <button type="submit" id="submitLFGpost" name="submit" class="mdl-button">Submit</button>
+                                <div class="mdl-spinner mdl-js-spinner is-active submitPostSpinner" id="submitPostLoading"></div>
+                                <button type="button" name="cancel" id="cancelLFGpost" class="mdl-button close">Cancel</button>
+                            </div>
+                        
+                        </form>
+                    </div>
+            </dialog>
+            <!--end player search-->
     
           
           
@@ -464,9 +594,11 @@ $getEmblems = curl_init();
             <!-- Tab Container with Tab links -->
             <div class="mdl-layout__tab-bar mdl-js-ripple-effect darkColour">
                 <!-- class is-active to show currently active tab -->
-                <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Trials of Osiris</a>
-                <a href="#fixed-tab-2" class="mdl-layout__tab">Raids</a>
-                <a href="#fixed-tab-3" class="mdl-layout__tab">Iron Banner</a>
+                <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Raids</a>
+                <a href="#fixed-tab-2" class="mdl-layout__tab">PVP</a>
+                <a href="#fixed-tab-3" class="mdl-layout__tab">Strikes</a>
+                <a href="#fixed-tab-4" class="mdl-layout__tab">Other</a>
+                
             </div>
         </header>
 
@@ -496,7 +628,6 @@ $getEmblems = curl_init();
                     <!--<span>?= $_SESSION['user']['consoleID'] ;?></span>-->
                     <!--<span>?= $_SESSION['user']['membershipID'] ;?></span>-->
                     <div class="demo-avatar-dropdown">
-                        
                         <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
                             <li class="mdl-menu__item">Titan</li>
                             <li class="mdl-menu__item">Hunter</li>
@@ -506,7 +637,7 @@ $getEmblems = curl_init();
                     </div>
             </header>  
         <nav class="demo-navigation mdl-navigation navStyling">
-            <a class="mdl-navigation__link mdl-color-text--white" href="#">
+            <a class="mdl-navigation__link mdl-color-text--white" href="home.php">
                 <i class="material-icons mdl-color-text--white" role="presentation">person_add</i>LFG Feed</a>
             <?php 
             if(isset($_SESSION['user'])){
@@ -515,12 +646,15 @@ $getEmblems = curl_init();
                 echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
                     echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">assessment </i>My Stats</a>";
             }?>
-            <a class="mdl-navigation__link mdl-color-text--white" href="#">
+            <a class="mdl-navigation__link mdl-color-text--white" id="search-dialog" href="#">
                 <i class="material-icons mdl-color-text--white" role="presentation">search</i>Search Player</a>
             <!--</div>-->
             <div class="mdl-layout-spacer"></div>
             <?php 
             if(isset($_SESSION['user'])){
+                echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
+                echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">settings</i>Account</a>";
+                
                 echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"logout.php\">";
                 echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">power_settings_new</i>Log Out</a>";
             }else{
@@ -554,20 +688,30 @@ $getEmblems = curl_init();
                                             <div class="playerUsername">
                                                 <span class="playerUsernameOutput"></span>
                                                 <img class="consoleIcon">
+                                                
+                                                
                                             </div>
-                                            <div class="playerCurrentClass"></div>
+                                            <div class="playerCurrentClass">
+                                                <span class="playerClassOutput"></span>
+                                                
+                                            </div>
+                                            
+                                            
                                             <div class="rightSide">
                                                 <div class="playerLightLevel"></div>
-                                                <div class="playerGrimoire"><span class="playerGrimoireOutput"></span>
+                                                <div class="playerGrimoire">
+                                                    <span class="playerGrimoireOutput"></span>
                                                     <img class="grimoireImage">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="mdl-spinner mdl-js-spinner is-active getStatsLoading statsLoading"></div>
+                                        <!--<div class="mdl-spinner mdl-js-spinner is-active getStatsLoading statsLoading"></div>-->
+                                        <img class="getStatsLoading statsLoading" src="assets/Rasputin-25px.png">
                                         <div class="postActivity"><span class="postActivityText"></span>
                                             <div class="divider"></div>
                                         </div>
                                         <div class="postDescription">
+                                            <i class="material-icons hasMic"></i>
                                             <span class="postDescriptionText"></span>
                                         </div>
                                         <span class="postAge"></span>
@@ -608,10 +752,6 @@ $getEmblems = curl_init();
                             
                         <!--</div>-->
                         
-                        
-<!--LFG POST STARTS HERE-->
-          
-<!--LFG POST STARTS HERE-->
 
 
                     </div> <!--/tab1container-->
@@ -640,7 +780,6 @@ $getEmblems = curl_init();
     function loadPosts(){
         $('.contentLoading').show();
         // $('.contentLoading').attr("display", "");
-          console.log("hello");
           $(".postContainerTemplate").empty();
             var datasource = "ajax/getPostsData.php";
             // $(".postContainerTemplate").empty();
@@ -653,7 +792,6 @@ $getEmblems = curl_init();
             })
             .done(function(data){
                 $('.contentLoading').hide();
-                console.log(data);
                 //if there is data
                 if(data.length > 0){
                     var len = data.length;
@@ -690,13 +828,22 @@ $getEmblems = curl_init();
                                 if(postTimeM <= 0){
                                     postAge = "Just Now";
                                 }
+                                else if(postTimeM == 1){
+                                    postAge = postTimeM + " min ago";
+                                }
                                 else{
                                     postAge = postTimeM + " mins ago";
                                 }
                             }
+                            else if(postTimeH == 1){
+                                postAge = postTimeH + " hour ago"; 
+                            }
                             else{
                                 postAge = postTimeH + " hours ago";
                             }
+                        }
+                        else if(postTimeD == 1){
+                            postAge = postTimeD + " day ago";
                         }
                         else{
                             postAge = postTimeD + " days ago";
@@ -713,11 +860,15 @@ $getEmblems = curl_init();
                         
                         if(hasMic){
                           //var mic = "mic icon path"
+                          var mic = "mic";
+                        }
+                        else{
+                            var mic = "mic_off";
                         }
                 
                 
                         $(clone).find(".playerUsernameOutput").html(username);
-                        $(clone).find(".playerCurrentClass").html(selectedCharacter);
+                        $(clone).find(".playerClassOutput").html(selectedCharacter);
                         //console icon insert
                         $(clone).find(".consoleIcon").attr("src", consoleChoice);
                         $(clone).find(".postActivityText").html(activity);
@@ -734,7 +885,7 @@ $getEmblems = curl_init();
                         $(clone).find(".postAge").html(postAge);
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         
-                        //   $(clone).find(".hasMic").html();
+                        $(clone).find(".hasMic").html(mic);
                         
                         $(".postContainerTemplate").append(clone);
                     }
@@ -746,16 +897,16 @@ $getEmblems = curl_init();
     
     //load posts from DB
     $(document).ready(function(){
-    //     $("button").click(function(){
-    //     alert("button");
-    // });
+        $('.raid').hide();
+        $('.pvp').hide();
+        $('.other').hide();
+        $('.strikes').hide();
         loadPosts();
     });
           
     setInterval("upgradeMDL();", 100);
     function upgradeMDL() {
         componentHandler.upgradeDom();
-        //componentHandler.upgradeDom();
         componentHandler.upgradeAllRegistered();
     }
         // });
@@ -770,7 +921,7 @@ $getEmblems = curl_init();
 
     
     if ($('#submit-dialog').length){
-        var dialog = document.querySelector('dialog');
+        var dialog = document.querySelector('.postDialog');
         var showDialogButton = document.querySelector('#submit-dialog');
         if (!dialog.showModal) {
           dialogPolyfill.registerDialog(dialog);
@@ -783,6 +934,51 @@ $getEmblems = curl_init();
         });
     }
     
+    if ($('#search-dialog').length){
+        var dialog2 = document.querySelector('.searchDialog');
+        var showDialogButton2 = document.querySelector('#search-dialog');
+        if (!dialog2.showModal) {
+          dialogPolyfill.registerDialog(dialog2);
+        }
+        showDialogButton2.addEventListener('click', function() {
+          dialog2.showModal();
+        });
+        dialog2.querySelector('.close').addEventListener('click', function() {
+          dialog2.close();
+        });
+    }
+    
+    //other
+    $('#activity-1').click(function(){
+       $('.other').show(); 
+       $('.raid').hide();
+       $('.PvP').hide();
+       $('#PvP').val('');
+       $('.strikes').hide();
+    });
+    //strikes
+    $('#activity-2').click(function(){
+       $('.other').hide(); 
+       $('.raid').hide();
+       $('.PvP').hide();
+       $('.strikes').show();
+    });
+    //PvP
+    $('#activity-3').click(function(){
+       $('.other').hide(); 
+       $('.raid').hide();
+       $('.PvP').show();
+       $('.strikes').hide();
+    });
+    //Raids
+    $('#activity-4').click(function(){
+        $('.Raid').show();
+        $('.other').hide(); 
+        $('.PvP').hide();
+        $('.strikes').hide();
+    });
+    
+    
     //end login dialog
     
     //get player stats on LFG post
@@ -794,8 +990,7 @@ $getEmblems = curl_init();
     var clicks = 0;
     function clickHandler(e){
     
-        // console.log(e);
-    // console.log("Data exists log: ", $(e.target).attr("data-exists"));
+        
         
     if($(e.target).attr("data-exists") == undefined){
         e.target;
@@ -913,8 +1108,11 @@ $getEmblems = curl_init();
                     //$(e.target).parents(".mdl-button").siblings('.statsLoading').show();
                 }
                 
-              });
-            //   timeout: 3000;
+              })
+              .fail(function(){
+                  alert("text");
+              })
+              timeout: 300;
         
         // $(".getStats").unbind("click", hideStatsClick);
     
@@ -995,7 +1193,10 @@ $getEmblems = curl_init();
             data: $("#submitPostForm").serialize(),
             
             success: function(data){
-                // alert(data);
+                // var selected = $(':selected', this);
+                // console.log(selected);
+                alert(data);
+                // alert(selected.closest('optgroup').attr('label'));
                 $('#submitPostLoading').show();
                 dialog.close();
                 
@@ -1006,6 +1207,7 @@ $getEmblems = curl_init();
                   }
                 );
                 $("#submitLFGpost").html('Submit');
+                $("#submitLFGpost").attr("disabled", "disabled");
                 $('#submitPostLoading').hide();
                 loadPosts();
                 upgradeMDL();

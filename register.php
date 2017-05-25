@@ -144,17 +144,33 @@
                 $errors["password"] = "Password mismatch.";
             }
             
-            // print_r($errors);
+            print_r($errors);
             
             if(count($errors)==0){
                 $username = filter_var($username, FILTER_SANITIZE_STRING);
                 $hashed = password_hash($password, PASSWORD_DEFAULT);
+               
                 
-                // echo "titan emblem", $titanEmblem;
-                // echo "hunter", $hunterEmblem;
+                
+                // $selectQuery
+                $query = "SELECT membershipID FROM accounts WHERE membershipID='$activeMembershipID'";
+
+        // $query = "SELECT uid, username, password, consoleID, membershipID, titanID, titanSlot, hunterID, hunterSlot, warlockID, warlockSlot FROM accounts WHERE username='$username'";
+
+        //   echo $query;
+        if(!$connection->query($query)){
+                $errors["database"] = "Database error!";
+        }
+        $result = $connection->query($query);
+        if($result->num_rows > 0){
+            $errors["username"] = "Username already exists.";
+        }
+        
+        else{
+                
                 $query = "INSERT INTO accounts (username, password, consoleID, membershipID, titanID, hunterID, warlockID, 
                     creation_date, last_update, last_login) 
-                    VALUES ('$displayName', '$hashed','$consoleID','$membershipID','$titanID', '$hunterID', '$warlockID', NOW(),NOW(),NOW())";
+                    VALUES ('$displayName', '$hashed','$consoleID','$activeMembershipID','$activeTitanID', '$activeHunterID', '$activeWarlockID', NOW(),NOW(),NOW())";
                 
                 // $_SESSION['user'] = array('uid' => $id, 'username' => $displayName, 'consoleID' => $consoleID, 'membershipID' => $membershipID, 
                 //     'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground', 'hunterID' => $activeHunterID, 
@@ -179,7 +195,7 @@
                     $errors["database"] = "Database error!";
                 }
             }
-        
+        }
     }
 
 
@@ -211,7 +227,7 @@
                                     <input class="mdl-textfield__input" name="username" value="<?php echo $username; ?>">
                                     <label class="mdl-textfield__label" for="username">PSN Name/Xbox Gamertag</label>
 
-                                    <span class = "mdl-textfield__error"> <?php echo $username_error; ?></span>
+                                    <span class = "errorCode mdl-textfield__error"><?php echo $username_error; ?></span>
 
                                 </div>
                                 

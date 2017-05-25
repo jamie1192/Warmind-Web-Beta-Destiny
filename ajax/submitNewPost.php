@@ -32,17 +32,49 @@
         
         // echo htmlspecialchars($_POST['sample5']);
         // echo $_POST['description'];
-        // print_r($_POST);
+        print_r($_POST);
         
         
         
         $errors = array();
         
-        $activitySelection = $_POST['activitySelection'];
+        //list selections
+        $activitySelection = $_POST['raid'];
+        $pvp = $_POST['PvP'];
+        $strikes = $_POST['strikes'];
+        $other = $_POST['other'];
+        
         $description = $_POST['description'];
         
         //TODO FILL THIS IN
         $characterSelection = $_POST['characterClass'];
+        
+        $hasMic = $_POST['micCheckbox'];
+        if($hasMic){
+            $micOutput = "mic";
+        }
+        
+        //checkbox
+        $activityChoice = $_POST['activity'];
+        if($activityChoice == "Raid"){
+            // $a = 'How are you?';
+            // if (strpos($a, 'are') !== false) {
+            //     echo 'true';
+            // }
+            // if(strpos($))
+            
+            
+        }
+        if($activityChoice == "other"){
+            
+        }
+        if($activityChoice == "PvP"){
+            
+        }
+        if($activityChoice == "strikes"){
+            
+        }
+        
         // $hasMicrophone = $_POST[''];
         
         //Character assignment and checking
@@ -67,6 +99,8 @@
         else{
             $errors["character"] = "Character not found.";
         }
+        
+        
     
         // echo $lightLevel;
         // echo "<p> ",$characterSelection;
@@ -85,7 +119,7 @@
                     '$description', '$bungieURL$emblemIconPath','$bungieURL$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() ) 
                     ON DUPLICATE KEY UPDATE selectedCharacter='$characterSelection', activity='$activitySelection', description='$description', 
                     emblemIcon='$bungieURL$emblemIconPath', 
-                    emblemBackground='$bungieURL$emblemBackgroundPath', lightLevel='$lightLevel', grimoireScore='$grimoire', hasMic='$hasMicrophone', postTime=NOW()";
+                    emblemBackground='$bungieURL$emblemBackgroundPath', lightLevel='$lightLevel', grimoireScore='$grimoire', hasMic='$micOutput', postTime=NOW()";
             if(!$connection->query($query)){
                 $errors["database"] = "Database error!";
             }
