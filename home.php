@@ -121,15 +121,17 @@
                                 <?php if($_SESSION['user']['secondCharacterID'] != null){
                                     echo "<input id=\"secondCharacter\" type=\"radio\" name=\"characterSlot\" value=\"1\" />
                                     <label class=\"classEmblems\" for=\"secondCharacter\">
-                                        <img class=\"emblemIcons\" src= htmlspecialchars(\"$bungieURL$secondCharacterEmblem\")>
-                                    </label>"
-                                ;}?>
+                                        <img class=\"emblemIcons\" src=";echo htmlspecialchars("$bungieURL$secondCharacterEmblem");
+                                    echo "></label>";
+                                }?>
                                 <?php if($_SESSION['user']['thirdCharacterID'] != null){
                                     echo "<input id=\"thirdCharacter\" type=\"radio\" name=\"characterSlot\" value=\"2\" />
                                     <label class=\"classEmblems\"for=\"thirdCharacter\">
-                                        <img class=\"emblemIcons\" src= htmlspecialchars(\"$bungieURL$thirdCharacterEmblem\")>
-                                    </label>"
-                                ;}?>
+                                        <img class=\"emblemIcons\" src=";echo htmlspecialchars("$bungieURL$thirdCharacterEmblem");
+                                    echo "></label>";
+                                }?>
+                                    
+                                    
                                 
                                 <input type="hidden" name="className" id="lfgCharacterClass" value="<?php echo $sessionFirstCharacter;?>"/>
                                 <input type="hidden" name="characterID" id="getCharacterID" value="<?php echo $firstCharacterID;?>"/>
@@ -142,7 +144,7 @@
                                 <!--</div>-->
                                 <!--<div>-->
                                 <?php if($_SESSION['user']['secondCharacterID'] != null){
-                                    echo "<label id=\"hunterLabel\" class=\"classEmblems\" for=\"secondCharacter\">< $sessionSecondCharacter</label>"
+                                    echo "<label id=\"hunterLabel\" class=\"classEmblems\" for=\"secondCharacter\">$sessionSecondCharacter</label>"
                                 ;}?>
                                 <!--</div>-->
                                 <!--<div>-->
