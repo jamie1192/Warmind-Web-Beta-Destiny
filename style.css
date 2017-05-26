@@ -15,6 +15,10 @@
         margin-left:12px;
     }
 
+    .cancelButton{
+        color: #ccc;
+    }
+
   .buttonError{
       background: red;
   }
@@ -28,10 +32,20 @@
   
   .submitPostSpinner{
       position: absolute;
-      bottom: 26px;
-      right: 120px;
+      
       /*margin-bottom: 12px;*/
       /*display:none;*/
+  }
+  
+  .submitPostLoading{
+      /*display: none;*/
+      bottom: 60px;
+      right: 155px;
+      position: absolute;
+      -webkit-animation: flickerAnimation 1s infinite;
+      -moz-animation: flickerAnimation 1s infinite;
+      -o-animation: flickerAnimation 1s infinite;
+      animation: flickerAnimation 1s infinite;
   }
   
   .whiteText{
@@ -154,7 +168,6 @@
   }
   
   .page-content{
-      
       margin-top:20px;
   }
   
@@ -169,6 +182,14 @@
      /*position: relative;*/
       
       width:950px;
+      clear:both;
+  }
+  
+  .allPostsTemplate{
+      margin: 0 auto;
+     /*position: relative;*/
+      
+      width:870px;
       clear:both;
   }
   
@@ -197,6 +218,7 @@
   
   .postDialog{
       width: 420px ;
+      background-color: #2a333e; /*changed*/
   }
   
   .searchDialog{
@@ -569,7 +591,8 @@ a.mdl-navigation__link:hover{
 
     .mdl-select__input {
         border: none;
-        border-bottom: 1px solid rgba(0,0,0, 0.12);
+        /*border-bottom: 1px solid rgba(0,0,0, 0.12); changed*/
+        border-bottom: #ffd700;
         display: inline-block;
         font-size: 16px;
         margin: 0;
@@ -617,7 +640,8 @@ a.mdl-navigation__link:hover{
 
         .mdl-select--floating-label.is-focused .mdl-select__label,
         .mdl-select--floating-label.is-dirty .mdl-select__label {
-          color: rgb(63,81,181);
+          /*color: rgb(63,81,181); changed*/
+          color: #ffd700;
           font-size: 12px;
           top: 4px;
           visibility: visible;

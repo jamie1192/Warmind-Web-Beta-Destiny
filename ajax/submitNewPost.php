@@ -72,16 +72,16 @@
         }
         else if(strpos($activityStr, 'PvP') !== false){
             // if(strpos($))
-            echo 'pvp';
+            // echo 'pvp';
             $activityType = "pvp";
         }
         else if((strpos($activityStr, 'Weeklies') !== false) || (strpos($activityStr, 'Strike') !== false)){
             $activityType = "strikes";
-            echo 'strikes';
+            // echo 'strikes';
         }
-        else if((strpos($activityStr, 'Arena') !== false) || (strpos($activityStr, 'Strike') !== false)){
+        else if((strpos($activityStr, 'Arena') !== false) || (strpos($activityStr, 'Patrol') !== false)){
             $activityType = "other";
-            echo 'other';
+            // echo 'other';
         }
         
         
@@ -124,13 +124,13 @@
             $emblemBackgroundPath = filter_var($emblemBackgroundPath, FILTER_SANITIZE_URL);
             
             //
-            echo "act var: ", $activityType;
+            // echo "act var: ", $activityType;
             $query = "INSERT INTO posts (uid, username, selectedCharacter, characterID, consoleID, activity, activityType, description, emblemIcon, emblemBackground, lightLevel, grimoireScore, hasMic, postTime) 
                     VALUES ('$sessionID', '$sessionUsername', '$className', '$characterID', '$sessionConsoleID', '$activitySelection', '$activityType', '$description', '$bungieURL$emblemIconPath','$bungieURL$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() ) 
                     ON DUPLICATE KEY UPDATE selectedCharacter='$className', characterID='$characterID', activity='$activitySelection', activityType='$activityType', description='$description', 
                     emblemIcon='$bungieURL$emblemIconPath', emblemBackground='$bungieURL$emblemBackgroundPath', lightLevel='$lightLevel', grimoireScore='$grimoire', hasMic='$micOutput', postTime=NOW()";
                     
-                    print_r($query);
+                    // print_r($query);
             if(!$connection->query($query)){
                 $errors["database"] = "Database error!";
             }

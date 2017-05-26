@@ -118,15 +118,19 @@
                                     <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$firstCharacterEmblem");?>>
                                 </label>
                                 
-                                <input id="secondCharacter" type="radio" name="characterSlot" value="1" />
-                                <label class="classEmblems"for="secondCharacter">
-                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$secondCharacterEmblem");?>>
-                                </label>
+                                <?php if($_SESSION['user']['secondCharacterID'] != null){
+                                    echo "<input id=\"secondCharacter\" type=\"radio\" name=\"characterSlot\" value=\"1\" />
+                                    <label class=\"classEmblems\" for=\"secondCharacter\">
+                                        <img class=\"emblemIcons\" src= htmlspecialchars(\"$bungieURL$secondCharacterEmblem\")>
+                                    </label>"
+                                ;}?>
+                                <?php if($_SESSION['user']['thirdCharacterID'] != null){
+                                    echo "<input id=\"thirdCharacter\" type=\"radio\" name=\"characterSlot\" value=\"2\" />
+                                    <label class=\"classEmblems\"for=\"thirdCharacter\">
+                                        <img class=\"emblemIcons\" src= htmlspecialchars(\"$bungieURL$thirdCharacterEmblem\")>
+                                    </label>"
+                                ;}?>
                                 
-                                <input id="thirdCharacter" type="radio" name="characterSlot" value="2" />
-                                <label class="classEmblems"for="thirdCharacter">
-                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$thirdCharacterEmblem");?>>
-                                </label>
                                 <input type="hidden" name="className" id="lfgCharacterClass" value="<?php echo $sessionFirstCharacter;?>"/>
                                 <input type="hidden" name="characterID" id="getCharacterID" value="<?php echo $firstCharacterID;?>"/>
                                 
@@ -137,39 +141,17 @@
                                 <label id="titanLabel" class="classEmblems" for="firstCharacter"><?php echo $sessionFirstCharacter; ?></label>
                                 <!--</div>-->
                                 <!--<div>-->
-                                <label id="hunterLabel" class="classEmblems" for="secondCharacter"><?php echo $sessionSecondCharacter; ?></label>
+                                <?php if($_SESSION['user']['secondCharacterID'] != null){
+                                    echo "<label id=\"hunterLabel\" class=\"classEmblems\" for=\"secondCharacter\">< $sessionSecondCharacter</label>"
+                                ;}?>
                                 <!--</div>-->
                                 <!--<div>-->
-                                <label id="warlockLabel" class="classEmblems" for="thirdCharacter"><?php echo $sessionThirdCharacter; ?></label>
+                                <?php if($_SESSION['user']['thirdCharacterID'] != null){
+                                    echo "<label id=\"warlockLabel\" class=\"classEmblems\" for=\"thirdCharacter\">$sessionThirdCharacter</label>"
+                                ;}?>
                                 <!--</div>-->
                             </div>
 
-                            <!--<div class="mdl-dialog__actions mdl-dialog__action--full-width">-->
-                            <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-1">-->
-                            <!--        <input type="radio" id="activity-1" class="mdl-radio__button" name="activity" value="other">-->
-                            <!--        <span class="mdl-radio__label">Other</span>-->
-                            <!--    </label>-->
-                            <!--    <div class="mdl-layout-spacer"></div>-->
-                                
-                            <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-2">-->
-                            <!--        <input type="radio" id="activity-2" class="mdl-radio__button" name="activity" value="strikes">-->
-                            <!--        <span class="mdl-radio__label">Strikes</span>-->
-                            <!--    </label>-->
-                                
-                            <!--    <div class="mdl-layout-spacer"></div>-->
-                                
-                            <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-3">-->
-                            <!--        <input type="radio" id="activity-3" class="mdl-radio__button" name="activity" value="PvP">-->
-                            <!--        <span class="mdl-radio__label">PVP</span>-->
-                            <!--    </label>-->
-                                
-                            <!--    <div class="mdl-layout-spacer"></div>-->
-                                
-                            <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-4">-->
-                            <!--        <input type="radio" id="activity-4" class="mdl-radio__button" name="activity" value="Raid">-->
-                            <!--        <span class="mdl-radio__label">Raid</span>-->
-                            <!--    </label>-->
-                            <!--</div>-->
                         
                             <!--Raid select list-->
                             <div class="mdl-select mdl-js-select mdl-select--floating-label Raid">
@@ -278,14 +260,17 @@
                                     <input type="checkbox" id="micCheckbox" name="micCheckbox" class="mdl-checkbox__input">
                                     <span class="mdl-checkbox__label">Mic?</span>
                                 </label>
+                                <!--<label class="checkbox-inline hasMicToggle">-->
+                                <!--    <input type="checkbox" id="micCheckbox" name="micCheckbox" value="">Mic?</label>-->
                             </div>
                             
                         <!--</form>-->
                     <!--</div>-->
                             <div class="mdl-dialog__actions">
-                                <button type="submit" id="submitLFGpost" name="submit" class="mdl-button">Submit</button>
-                                <div class="mdl-spinner mdl-js-spinner is-active submitPostSpinner" id="submitPostLoading"></div>
-                                <button type="button" name="cancel" id="cancelLFGpost" class="mdl-button close">Cancel</button>
+                                <button type="submit" id="submitLFGpost" name="submit" class="mdl-button mdl-color--accent">Submit</button>
+                                <!--<div class="mdl-spinner mdl-js-spinner is-active submitPostSpinner" id="submitPostLoading"></div>-->
+                                <img class="submitPostLoading" id="submitPostLoading" src="assets/Rasputin-25px.png">
+                                <button type="button" name="cancel" id="cancelLFGpost" class="mdl-button closeDialog cancelButton">Cancel</button>
                             </div>
                         
                         </form>
@@ -295,8 +280,10 @@
             <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
                 <div class="mdl-snackbar__text"></div>
                 <button class="mdl-snackbar__action" type="button"></button>
-            </div>
+            </div> <!--End submit post dialog-->
             
+            
+            <!--Search player dialog-->
             <dialog class="mdl-dialog searchDialog">
                 <!--<h4 class="mdl-dialog__title">Submit LFG Post</h4>-->
                 <div class="mdl-dialog__title mdl-color--homeBackground" 
@@ -377,8 +364,12 @@
                         
                         echo "<div class=\"iconTestBox\">";
                         echo "<img src=\"$bungieURL$firstCharacterEmblem\" class=\"demo-avatar titanEmblemIcon\">";
-                        echo "<img src=\"$bungieURL$secondCharacterEmblem\" class=\"demo-avatar\">";
-                        echo "<img src=\"$bungieURL$thirdCharacterEmblem\" class=\"demo-avatar warlockEmblemIcon\">";
+                        if($_SESSION['user']['secondCharacterID'] != null){
+                            echo "<img src=\"$bungieURL$secondCharacterEmblem\" class=\"demo-avatar\">";
+                        }
+                        if($_SESSION['user']['thirdCharacterID'] != null){
+                            echo "<img src=\"$bungieURL$thirdCharacterEmblem\" class=\"demo-avatar warlockEmblemIcon\">";
+                        }
                         echo "</div>";
                         echo "<span class=\"headerLoggedUser\">$sessionUsername</span>";
                     }
@@ -524,15 +515,243 @@
 
             <section class="mdl-layout__tab-panel" id="fixed-tab-2">
                 <div class="page-content">
-                    <div class="tab2container">Tab 2
+                    <div class="tab2container">
+                        
+                        <img class="pvpContentLoading contentLoading" src="assets/Rasputin-25.png">
+                        
+                        <template id="pvpPosts">
+                                <div class="posts mdl-cell mdl-cell--1-offset-phone mdl-cell--6-col mdl-cell--2-offset-tablet">
+                                <!--<div class="posts mdl-cell mdl-cell--6--phone mdl-cell--6-col-tablet mdl-cell--4-desktop">-->
+                                    <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
+                                        <div class="emblemContainer">
+                                            <div class="emblemIcon">
+                                                <img class="emblemIconImg">
+                                            </div>
+                                            <div class="emblemBackground">
+                                                <img class="emblemBackgroundImg" src="">
+                                            </div>
+                                            <div class="playerUsername">
+                                                <span class="playerUsernameOutput"></span>
+                                                <img class="consoleIcon">
+                                                
+                                                
+                                            </div>
+                                            <div class="playerCurrentClass">
+                                                <span class="playerClassOutput"></span>
+                                                
+                                            </div>
+                                            
+                                            
+                                            <div class="rightSide">
+                                                <div class="playerLightLevel"></div>
+                                                <div class="playerGrimoire">
+                                                    <span class="playerGrimoireOutput"></span>
+                                                    <img class="grimoireImage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="mdl-spinner mdl-js-spinner is-active getStatsLoading statsLoading"></div>-->
+                                        <img class="getStatsLoading statsLoading" src="assets/Rasputin-25px.png">
+                                        <div class="postActivity"><span class="postActivityText"></span>
+                                            <div class="divider"></div>
+                                        </div>
+                                        <div class="postDescription">
+                                            <i class="material-icons hasMic"></i>
+                                            <span class="postDescriptionText"></span>
+                                        </div>
+                                        <span class="postAge"></span>
+                                        <button class="btn btn-primary getStats" type="button">Get Player Stats</button>
+                                    </div>
+                                
+                                <div class="stats-row whiteText"></div>
+                                    <template id="playerStats">
+                                            <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">
+                                            <thead>
+                                                <tr class="goldColour">
+                                                    <th>K/D Ratio</th>
+                                                    <th>Average Lifespan</th>
+                                                    <th>Win/Loss Ratio</th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>
+                                                     <!--Row 1 -->
+                                                    <tr class="whiteText">
+                                                        <td class="playerKD"></td>
+                                                        <td class="playerAverageLifespan"></td>
+                                                        <td class="playerWinLossRatio"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                    </template>
+                                </div> <!-- /posts mdl cell-6 -->
+                            </template>
 
+                        <div class="pvpContainerTemplate allPostsTemplate mdl-grid">
+                        
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section class="mdl-layout__tab-panel" id="fixed-tab-3">
                 <div class="page-content">
-                    <div class="tab3container">Tab 3</div>
+                    <div class="tab3container">
+                        
+                        <img class="strikesContentLoading contentLoading" src="assets/Rasputin-25.png">
+                        
+                        <template id="strikesPosts">
+                                <div class="posts mdl-cell mdl-cell--1-offset-phone mdl-cell--6-col mdl-cell--2-offset-tablet">
+                                <!--<div class="posts mdl-cell mdl-cell--6--phone mdl-cell--6-col-tablet mdl-cell--4-desktop">-->
+                                    <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
+                                        <div class="emblemContainer">
+                                            <div class="emblemIcon">
+                                                <img class="emblemIconImg">
+                                            </div>
+                                            <div class="emblemBackground">
+                                                <img class="emblemBackgroundImg" src="">
+                                            </div>
+                                            <div class="playerUsername">
+                                                <span class="playerUsernameOutput"></span>
+                                                <img class="consoleIcon">
+                                                
+                                                
+                                            </div>
+                                            <div class="playerCurrentClass">
+                                                <span class="playerClassOutput"></span>
+                                                
+                                            </div>
+                                            
+                                            
+                                            <div class="rightSide">
+                                                <div class="playerLightLevel"></div>
+                                                <div class="playerGrimoire">
+                                                    <span class="playerGrimoireOutput"></span>
+                                                    <img class="grimoireImage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="mdl-spinner mdl-js-spinner is-active getStatsLoading statsLoading"></div>-->
+                                        <img class="getStatsLoading statsLoading" src="assets/Rasputin-25px.png">
+                                        <div class="postActivity"><span class="postActivityText"></span>
+                                            <div class="divider"></div>
+                                        </div>
+                                        <div class="postDescription">
+                                            <i class="material-icons hasMic"></i>
+                                            <span class="postDescriptionText"></span>
+                                        </div>
+                                        <span class="postAge"></span>
+                                        <button class="btn btn-primary getStats" type="button">Get Player Stats</button>
+                                    </div>
+                                
+                                <div class="stats-row whiteText"></div>
+                                    <template id="playerStats">
+                                            <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">
+                                            <thead>
+                                                <tr class="goldColour">
+                                                    <th>K/D Ratio</th>
+                                                    <th>Average Lifespan</th>
+                                                    <th>Win/Loss Ratio</th>
+                                                </tr>
+                                            </thead>
+                                                <tbody>
+                                                     <!--Row 1 -->
+                                                    <tr class="whiteText">
+                                                        <td class="playerKD"></td>
+                                                        <td class="playerAverageLifespan"></td>
+                                                        <td class="playerWinLossRatio"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                    </template>
+                                </div> <!-- /posts mdl cell-6 -->
+                            </template>
+
+                        <div class="strikesContainerTemplate allPostsTemplate mdl-grid">
+                        
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+            
+            <section class="mdl-layout__tab-panel" id="fixed-tab-4">
+                <div class="page-content">
+                    <div class="tab4container">
+                        
+                        <img class="otherContentLoading contentLoading" src="assets/Rasputin-25.png">
+                        
+                        <template id="otherPosts">
+                                <div class="posts mdl-cell mdl-cell--1-offset-phone mdl-cell--6-col mdl-cell--2-offset-tablet">
+                                <!--<div class="posts mdl-cell mdl-cell--6--phone mdl-cell--6-col-tablet mdl-cell--4-desktop">-->
+                                    <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
+                                        <div class="emblemContainer">
+                                            <div class="emblemIcon">
+                                                <img class="emblemIconImg">
+                                            </div>
+                                            <div class="emblemBackground">
+                                                <img class="emblemBackgroundImg" src="">
+                                            </div>
+                                            <div class="playerUsername">
+                                                <span class="playerUsernameOutput"></span>
+                                                <img class="consoleIcon">
+                                                
+                                                
+                                            </div>
+                                            <div class="playerCurrentClass">
+                                                <span class="playerClassOutput"></span>
+                                                
+                                            </div>
+                                            
+                                            
+                                            <div class="rightSide">
+                                                <div class="playerLightLevel"></div>
+                                                <div class="playerGrimoire">
+                                                    <span class="playerGrimoireOutput"></span>
+                                                    <img class="grimoireImage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="mdl-spinner mdl-js-spinner is-active getStatsLoading statsLoading"></div>-->
+                                        <img class="getStatsLoading statsLoading" src="assets/Rasputin-25px.png">
+                                        <div class="postActivity"><span class="postActivityText"></span>
+                                            <div class="divider"></div>
+                                        </div>
+                                        <div class="postDescription">
+                                            <i class="material-icons hasMic"></i>
+                                            <span class="postDescriptionText"></span>
+                                        </div>
+                                        <span class="postAge"></span>
+                                        <!--<button class="btn btn-primary getStats" type="button">Get Player Stats</button>-->
+                                    </div>
+                                
+                                <!--<div class="stats-row whiteText"></div>-->
+                                <!--    <template id="playerStats">-->
+                                <!--            <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">-->
+                                <!--            <thead>-->
+                                <!--                <tr class="goldColour">-->
+                                <!--                    <th>K/D Ratio</th>-->
+                                <!--                    <th>Average Lifespan</th>-->
+                                <!--                    <th>Win/Loss Ratio</th>-->
+                                <!--                </tr>-->
+                                <!--            </thead>-->
+                                <!--                <tbody>-->
+                                                     <!--Row 1 -->
+                                <!--                    <tr class="whiteText">-->
+                                <!--                        <td class="playerKD"></td>-->
+                                <!--                        <td class="playerAverageLifespan"></td>-->
+                                <!--                        <td class="playerWinLossRatio"></td>-->
+                                <!--                    </tr>-->
+                                <!--                </tbody>-->
+                                <!--            </table>-->
+                                <!--    </template>-->
+                                </div> <!-- /posts mdl cell-6 -->
+                            </template>
+
+                        <div class="otherContainerTemplate allPostsTemplate mdl-grid">
+                        
+                        </div>
+                        
+                    </div>
                 </div>
             </section>
         </main>
@@ -540,6 +759,7 @@
   
   <script async>
     
+    //load raid posts
     function loadPosts(){
         $('.contentLoading').show();
         // $('.contentLoading').attr("display", "");
@@ -658,9 +878,371 @@
           
         }
     
+    //load pvp posts
+    function loadPvpPosts(){
+        $('.pvpContentLoading').show();
+        // $('.contentLoading').attr("display", "");
+          $(".pvpContainerTemplate").empty();
+            var datasource = "ajax/getPvpPosts.php";
+            // $(".postContainerTemplate").empty();
+            //make an ajax request
+            $.ajax({
+                url:datasource,
+                dataType:'json',
+                type:'POST',
+                encode:true
+            })
+            .done(function(data){
+                $('.pvpContentLoading').hide();
+                //if there is data
+                if(data.length > 0){
+                    var len = data.length;
+                    console.log(len);
+                    
+                    
+                    for(i=0;i<len;i++){
+                        var template = $("#pvpPosts").html().trim();
+                        var clone = $(template);
+                        //fill the data
+                        var username = data[i].username;
+                        var selectedCharacter = data[i].selectedCharacter;
+                        var consoleID = data[i].consoleID;
+                        var activity = data[i].activity;
+                        var description = data[i].description;
+                        var emblemIcon = data[i].emblemIcon;
+                        var emblemBackground = data[i].emblemBackground;
+                        var lightLevel = data[i].lightLevel;
+                        var grimoireScore = data[i].grimoireScore;
+                        var hasMic = data[i].hasMic;
+                        var postTimeD = data[i].ageD;
+                        var postTimeH = data[i].ageH;
+                        var postTimeM = data[i].ageM;
+                        
+                        var lightLevelIcon = "&#10022  ";
+                        var grimoireImg = "./assets/grimoireIcon.png";
+                        var buttonText = " Get Player Stats";
+                        var postAge;
+                        //TODO postTime = data[i].postTime;
+                        // console.log("postTime: ", postTime);
+                        // var a = new Date(Date.parse(postTime.replace('-','/','g')));
+                        if(postTimeD <= 0){
+                            if(postTimeH <= 0){
+                                if(postTimeM <= 0){
+                                    postAge = "Just Now";
+                                }
+                                else if(postTimeM == 1){
+                                    postAge = postTimeM + " min ago";
+                                }
+                                else{
+                                    postAge = postTimeM + " mins ago";
+                                }
+                            }
+                            else if(postTimeH == 1){
+                                postAge = postTimeH + " hour ago"; 
+                            }
+                            else{
+                                postAge = postTimeH + " hours ago";
+                            }
+                        }
+                        else if(postTimeD == 1){
+                            postAge = postTimeD + " day ago";
+                        }
+                        else{
+                            postAge = postTimeD + " days ago";
+                        }
+                        // console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
+                       
+                        //TODO consoleID -> icon
+                        if(consoleID == 1){
+                          consoleChoice = "assets/xboxLogo.png"; //xbox icon
+                        }
+                        else if(consoleID == 2){
+                          consoleChoice = "assets/psLogo.png"; //PS icon
+                        }
+                        
+                        if(hasMic){
+                          //var mic = "mic icon path"
+                          var mic = "mic";
+                        }
+                        else{
+                            var mic = "mic_off";
+                        }
+                
+                
+                        $(clone).find(".playerUsernameOutput").html(username);
+                        $(clone).find(".playerClassOutput").html(selectedCharacter);
+                        //console icon insert
+                        $(clone).find(".consoleIcon").attr("src", consoleChoice);
+                        $(clone).find(".postActivityText").html(activity);
+                        $(clone).find(".postDescriptionText").html(description);
+                        $(clone).find(".emblemIconImg").attr("src", emblemIcon);
+                        $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
+                        $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
+                        
+                        $(clone).find(".grimoireImage").attr("src", grimoireImg);
+                        $(clone).find(".playerGrimoireOutput").html(grimoireScore);
+                        
+                        $(clone).find(".getStats").attr("data-name", username);
+                        $(clone).find(".getStats").attr("data-console", consoleID);
+                        $(clone).find(".postAge").html(postAge);
+                        $(clone).find(".getStats").attr("data-character", selectedCharacter);
+                        
+                        $(clone).find(".hasMic").html(mic);
+                        
+                        $(".pvpContainerTemplate").append(clone);
+                    }
+                }
+            });
+            // componentHandler.upgradeDom();
+          
+        }
+    
+    //load strikes posts
+    function loadStrikesPosts(){
+        $('.strikesContentLoading').show();
+        // $('.contentLoading').attr("display", "");
+          $(".strikesContainerTemplate").empty();
+            var datasource = "ajax/getStrikesPosts.php";
+            // $(".postContainerTemplate").empty();
+            //make an ajax request
+            $.ajax({
+                url:datasource,
+                dataType:'json',
+                type:'POST',
+                encode:true
+            })
+            .done(function(data){
+                $('.strikesContentLoading').hide();
+                //if there is data
+                if(data.length > 0){
+                    var len = data.length;
+                    console.log(len);
+                    
+                    
+                    for(i=0;i<len;i++){
+                        var template = $("#strikesPosts").html().trim();
+                        var clone = $(template);
+                        //fill the data
+                        var username = data[i].username;
+                        var selectedCharacter = data[i].selectedCharacter;
+                        var consoleID = data[i].consoleID;
+                        var activity = data[i].activity;
+                        var description = data[i].description;
+                        var emblemIcon = data[i].emblemIcon;
+                        var emblemBackground = data[i].emblemBackground;
+                        var lightLevel = data[i].lightLevel;
+                        var grimoireScore = data[i].grimoireScore;
+                        var hasMic = data[i].hasMic;
+                        var postTimeD = data[i].ageD;
+                        var postTimeH = data[i].ageH;
+                        var postTimeM = data[i].ageM;
+                        
+                        var lightLevelIcon = "&#10022  ";
+                        var grimoireImg = "./assets/grimoireIcon.png";
+                        var buttonText = " Get Player Stats";
+                        var postAge;
+                        //TODO postTime = data[i].postTime;
+                        // console.log("postTime: ", postTime);
+                        // var a = new Date(Date.parse(postTime.replace('-','/','g')));
+                        if(postTimeD <= 0){
+                            if(postTimeH <= 0){
+                                if(postTimeM <= 0){
+                                    postAge = "Just Now";
+                                }
+                                else if(postTimeM == 1){
+                                    postAge = postTimeM + " min ago";
+                                }
+                                else{
+                                    postAge = postTimeM + " mins ago";
+                                }
+                            }
+                            else if(postTimeH == 1){
+                                postAge = postTimeH + " hour ago"; 
+                            }
+                            else{
+                                postAge = postTimeH + " hours ago";
+                            }
+                        }
+                        else if(postTimeD == 1){
+                            postAge = postTimeD + " day ago";
+                        }
+                        else{
+                            postAge = postTimeD + " days ago";
+                        }
+                        // console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
+                       
+                        //TODO consoleID -> icon
+                        if(consoleID == 1){
+                          consoleChoice = "assets/xboxLogo.png"; //xbox icon
+                        }
+                        else if(consoleID == 2){
+                          consoleChoice = "assets/psLogo.png"; //PS icon
+                        }
+                        
+                        if(hasMic){
+                          //var mic = "mic icon path"
+                          var mic = "mic";
+                        }
+                        else{
+                            var mic = "mic_off";
+                        }
+                
+                
+                        $(clone).find(".playerUsernameOutput").html(username);
+                        $(clone).find(".playerClassOutput").html(selectedCharacter);
+                        //console icon insert
+                        $(clone).find(".consoleIcon").attr("src", consoleChoice);
+                        $(clone).find(".postActivityText").html(activity);
+                        $(clone).find(".postDescriptionText").html(description);
+                        $(clone).find(".emblemIconImg").attr("src", emblemIcon);
+                        $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
+                        $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
+                        
+                        $(clone).find(".grimoireImage").attr("src", grimoireImg);
+                        $(clone).find(".playerGrimoireOutput").html(grimoireScore);
+                        
+                        $(clone).find(".getStats").attr("data-name", username);
+                        $(clone).find(".getStats").attr("data-console", consoleID);
+                        $(clone).find(".postAge").html(postAge);
+                        $(clone).find(".getStats").attr("data-character", selectedCharacter);
+                        
+                        $(clone).find(".hasMic").html(mic);
+                        
+                        $(".strikesContainerTemplate").append(clone);
+                    }
+                }
+            });
+            // componentHandler.upgradeDom();
+          
+        }
+    
+    
+    //load all other posts
+    function loadOtherPosts(){
+        $('.otherContentLoading').show();
+        // $('.contentLoading').attr("display", "");
+          $(".otherContainerTemplate").empty();
+            var datasource = "ajax/getOtherPosts.php";
+            // $(".postContainerTemplate").empty();
+            //make an ajax request
+            $.ajax({
+                url:datasource,
+                dataType:'json',
+                type:'POST',
+                encode:true
+            })
+            .done(function(data){
+                $('.otherContentLoading').hide();
+                //if there is data
+                if(data.length > 0){
+                    var len = data.length;
+                    console.log(len);
+                    
+                    
+                    for(i=0;i<len;i++){
+                        var template = $("#otherPosts").html().trim();
+                        var clone = $(template);
+                        //fill the data
+                        var username = data[i].username;
+                        var selectedCharacter = data[i].selectedCharacter;
+                        var consoleID = data[i].consoleID;
+                        var activity = data[i].activity;
+                        var description = data[i].description;
+                        var emblemIcon = data[i].emblemIcon;
+                        var emblemBackground = data[i].emblemBackground;
+                        var lightLevel = data[i].lightLevel;
+                        var grimoireScore = data[i].grimoireScore;
+                        var hasMic = data[i].hasMic;
+                        var postTimeD = data[i].ageD;
+                        var postTimeH = data[i].ageH;
+                        var postTimeM = data[i].ageM;
+                        
+                        var lightLevelIcon = "&#10022  ";
+                        var grimoireImg = "./assets/grimoireIcon.png";
+                        var buttonText = " Get Player Stats";
+                        var postAge;
+                        //TODO postTime = data[i].postTime;
+                        // console.log("postTime: ", postTime);
+                        // var a = new Date(Date.parse(postTime.replace('-','/','g')));
+                        if(postTimeD <= 0){
+                            if(postTimeH <= 0){
+                                if(postTimeM <= 0){
+                                    postAge = "Just Now";
+                                }
+                                else if(postTimeM == 1){
+                                    postAge = postTimeM + " min ago";
+                                }
+                                else{
+                                    postAge = postTimeM + " mins ago";
+                                }
+                            }
+                            else if(postTimeH == 1){
+                                postAge = postTimeH + " hour ago"; 
+                            }
+                            else{
+                                postAge = postTimeH + " hours ago";
+                            }
+                        }
+                        else if(postTimeD == 1){
+                            postAge = postTimeD + " day ago";
+                        }
+                        else{
+                            postAge = postTimeD + " days ago";
+                        }
+                        // console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
+                       
+                        //TODO consoleID -> icon
+                        if(consoleID == 1){
+                          consoleChoice = "assets/xboxLogo.png"; //xbox icon
+                        }
+                        else if(consoleID == 2){
+                          consoleChoice = "assets/psLogo.png"; //PS icon
+                        }
+                        
+                        if(hasMic){
+                          //var mic = "mic icon path"
+                          var mic = "mic";
+                        }
+                        else{
+                            var mic = "mic_off";
+                        }
+                
+                
+                        $(clone).find(".playerUsernameOutput").html(username);
+                        $(clone).find(".playerClassOutput").html(selectedCharacter);
+                        //console icon insert
+                        $(clone).find(".consoleIcon").attr("src", consoleChoice);
+                        $(clone).find(".postActivityText").html(activity);
+                        $(clone).find(".postDescriptionText").html(description);
+                        $(clone).find(".emblemIconImg").attr("src", emblemIcon);
+                        $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
+                        $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
+                        
+                        $(clone).find(".grimoireImage").attr("src", grimoireImg);
+                        $(clone).find(".playerGrimoireOutput").html(grimoireScore);
+                        
+                        // $(clone).find(".getStats").attr("data-name", username);
+                        // $(clone).find(".getStats").attr("data-console", consoleID);
+                        $(clone).find(".postAge").html(postAge);
+                        // $(clone).find(".getStats").attr("data-character", selectedCharacter);
+                        
+                        $(clone).find(".hasMic").html(mic);
+                        
+                        $(".otherContainerTemplate").append(clone);
+                    }
+                }
+            });
+            // componentHandler.upgradeDom();
+          
+        }
+    
+    
     //load posts from DB
     $(document).ready(function(){
         loadPosts();
+        loadPvpPosts();
+        loadStrikesPosts();
+        loadOtherPosts();
     });
           
     setInterval("upgradeMDL();", 100);
@@ -691,7 +1273,7 @@
             $("#submitLFGpost").attr("enabled", "true");
             $("#cancelLFGpost").show();
         });
-        dialog.querySelector('.close').addEventListener('click', function() {
+        dialog.querySelector('.closeDialog').addEventListener('click', function() {
           dialog.close();
         });
     }
@@ -769,7 +1351,7 @@
     //end login dialog
     
     //get player stats on LFG post
-    $('.postContainerTemplate').on("click", ".getStats", clickHandler);
+    $('.pvpContainerTemplate').on("click", ".getStats", clickHandler);
     // document('.getStats').addEventListener('click', function(clickHandler) {
     // var clickedButton = document.getElementsByClassName(".getStats");
     // $(clickedButton).on("click", clickHandler);
@@ -931,10 +1513,6 @@
       
     }
     
-    
-    //Hide shown stats
-    //$("#btn2").unbind("click").click(function () {
-    
     function showLoading() {
         console.log("showLoading fired");
         // remove existing loaders
@@ -977,41 +1555,35 @@
         $.ajax({
             type:"POST",
             url: submitPHP,
-            data: $("#submitPostForm").serialize(),
-            
-            success: function(data){
+            data: $("#submitPostForm").serialize()
+        })
+            .done(function(data){
                 // var selected = $(':selected', this);
                 // console.log(selected);
-                alert(data);
+                // alert(data);
                 // alert(selected.closest('optgroup').attr('label'));
                 $('#submitPostLoading').show();
                 dialog.close();
                 
                 var notification = document.querySelector('.mdl-js-snackbar');
-                notification.MaterialSnackbar.showSnackbar(
-                  {
+                notification.MaterialSnackbar.showSnackbar({
                     message: 'Post Submitted!'
-                  }
-                );
+                });
                 
                 $('#submitPostLoading').hide();
                 loadPosts();
+                loadPvpPosts();
+                loadStrikesPosts();
+                loadOtherPosts();
                 upgradeMDL();
-                
-                // hideLoading();
-                
-                
-                
-                // var snackbarContainer = document.querySelector('#demo-toast-example');
-                // var data = {message: 'Example Message '};
-                // snackbarContainer.MaterialSnackbar.showSnackbar(data);
-                //success message or something
-                //hide loading animation
-                //close dialog
-            }
+            })
+            .fail(function(){
+                $("#submitLFGpost").html('Error submitting post!');
+            });
             
             
-        });
+            
+        // );
         
         e.preventDefault();
     });
