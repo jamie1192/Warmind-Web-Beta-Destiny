@@ -108,3 +108,12 @@
 [23-May-2017 04:42:31 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPostsData.php:0
 [25-May-2017 07:02:39 UTC] PHP Parse error:  syntax error, unexpected ')', expecting variable (T_VARIABLE) or '$' in /home/ubuntu/workspace/ajax/submitNewPost.php on line 64
 [25-May-2017 07:06:02 UTC] PHP Parse error:  syntax error, unexpected ')', expecting variable (T_VARIABLE) or '$' in /home/ubuntu/workspace/ajax/submitNewPost.php on line 64
+[25-May-2017 23:57:15 UTC] PHP Parse error:  syntax error, unexpected '$pvp' (T_VARIABLE) in /home/ubuntu/workspace/ajax/submitNewPost.php on line 48
+[25-May-2017 23:58:25 UTC] PHP Parse error:  syntax error, unexpected '$description' (T_VARIABLE) in /home/ubuntu/workspace/ajax/submitNewPost.php on line 52
+[25-May-2017 23:59:31 UTC] PHP Parse error:  syntax error, unexpected '$description' (T_VARIABLE) in /home/ubuntu/workspace/ajax/submitNewPost.php on line 52
+[26-May-2017 00:00:07 UTC] PHP Parse error:  syntax error, unexpected '$description' (T_VARIABLE) in /home/ubuntu/workspace/ajax/submitNewPost.php on line 52
+[26-May-2017 00:27:02 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/ubuntu/workspace/ajax/submitNewPost.php on line 74
+[26-May-2017 00:30:24 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/ubuntu/workspace/ajax/submitNewPost.php on line 74
+[26-May-2017 00:39:11 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/ubuntu/workspace/ajax/submitNewPost.php on line 74
+[26-May-2017 00:39:39 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/ubuntu/workspace/ajax/submitNewPost.php on line 74
+[26-May-2017 00:40:20 UTC] PHP Parse error:  syntax error, unexpected '{' in /home/ubuntu/workspace/ajax/submitNewPost.php on line 75

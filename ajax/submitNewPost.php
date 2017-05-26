@@ -9,45 +9,53 @@
     $sessionUsername = $_SESSION['user']['username'];
     $sessionConsoleID = $_SESSION['user']['consoleID'];
     $sessionMembershipID = $_SESSION['user']['membershipID'];
-    $activeTitanSlot = $_SESSION['user']['titanSlot'];
-    $activeHunterSlot = $_SESSION['user']['hunterSlot'];
-    $activeWarlock = $_SESSION['user']['warlockSlot'];
+    $sessionFirstCharacter = $_SESSION['user']['firstCharacter'];
+    $sessionSecondCharacter = $_SESSION['user']['secondCharacter'];
+    $sessionThirdCharacter = $_SESSION['user']['thirdCharacter'];
     
-    $titanEmblemIcon = $_SESSION['user']['titanEmblem'];
-    $hunterEmblemIcon = $_SESSION['user']['hunterEmblem'];
-    $warlockEmblemIcon = $_SESSION['user']['warlockEmblem'];
-    $titanEmblem = $_SESSION['user']['titanBackground'];
-    $hunterEmblem = $_SESSION['user']['hunterBackground'];
-    $warlockEmblem = $_SESSION['user']['warlockBackground'];
+    $firstCharacterEmblem = $_SESSION['user']['firstCharacterEmblem'];
+    $secondCharacterEmblem = $_SESSION['user']['secondCharacterEmblem'];
+    $thirdCharacterEmblem = $_SESSION['user']['thirdCharacterEmblem'];
+    
+    $firstCharacterBackground = $_SESSION['user']['firstCharacterBackground'];
+    $secondCharacterBackground = $_SESSION['user']['secondCharacterBackground'];
+    $thirdCharacterBackground = $_SESSION['user']['thirdCharacterBackground'];
     $bungieURL = "https://bungie.net";
     
-    $titanLightLevel = $_SESSION['user']['titanLightLevel'];
-    $hunterLightLevel = $_SESSION['user']['hunterLightLevel'];
-    $warlockLightLevel = $_SESSION['user']['warlockLightLevel'];
+    $firstCharacterLight = $_SESSION['user']['firstLightLevel'];
+    $secondCharacterLight = $_SESSION['user']['secondLightLevel'];
+    $thirdCharacterLight = $_SESSION['user']['thirdLightLevel'];
     $grimoire = $_SESSION['user']['grimoire'];
     
+
+     
     
     //Submit post to database
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         
         // echo htmlspecialchars($_POST['sample5']);
         // echo $_POST['description'];
-        print_r($_POST);
+        // print_r($_POST);
         
         
         
         $errors = array();
         
         //list selections
-        $activitySelection = $_POST['raid'];
-        $pvp = $_POST['PvP'];
-        $strikes = $_POST['strikes'];
-        $other = $_POST['other'];
+        $characterName = $_POST['characterName'];
+        $activitySelection = $_POST['activitySelection'];
+        $activityStr = $_POST['dropdownSelection'];
+        // $pvp = $_POST['PvP'];
+        // $strikes = $_POST['strikes'];
+        // $other = $_POST['other'];
         
         $description = $_POST['description'];
         
         //TODO FILL THIS IN
-        $characterSelection = $_POST['characterClass'];
+        $characterSelection = $_POST['characterSlot'];
+        $characterID = $_POST['characterID'];
+        
+        $className = $_POST['className'];
         
         $hasMic = $_POST['micCheckbox'];
         if($hasMic){
@@ -55,45 +63,46 @@
         }
         
         //checkbox
-        $activityChoice = $_POST['activity'];
-        if($activityChoice == "Raid"){
+        // $activityChoice = $_POST['activity'];
+        // if($activityChoice == "Raid"){
             // $a = 'How are you?';
-            // if (strpos($a, 'are') !== false) {
-            //     echo 'true';
-            // }
+        if (strpos($activityStr, 'Raid') !== false) {
+            $activityType = "raid";
+            
+        }
+        else if(strpos($activityStr, 'PvP') !== false){
             // if(strpos($))
-            
-            
+            echo 'pvp';
+            $activityType = "pvp";
         }
-        if($activityChoice == "other"){
-            
+        else if((strpos($activityStr, 'Weeklies') !== false) || (strpos($activityStr, 'Strike') !== false)){
+            $activityType = "strikes";
+            echo 'strikes';
         }
-        if($activityChoice == "PvP"){
-            
-        }
-        if($activityChoice == "strikes"){
-            
+        else if((strpos($activityStr, 'Arena') !== false) || (strpos($activityStr, 'Strike') !== false)){
+            $activityType = "other";
+            echo 'other';
         }
         
-        // $hasMicrophone = $_POST[''];
+        
         
         //Character assignment and checking
-        if($characterSelection == "Titan"){
-            $emblemIconPath = $titanEmblemIcon;
-            $emblemBackgroundPath = $titanEmblem;
-            $lightLevel = $titanLightLevel;
+        if($characterSelection == "0"){
+            $emblemIconPath = $firstCharacterEmblem;
+            $emblemBackgroundPath = $firstCharacterBackground;
+            $lightLevel = $firstCharacterLight;
             // $selectedCharacter = "Titan";
         }
-        else if($characterSelection == "Hunter"){
-            $emblemIconPath = $hunterEmblemIcon;
-            $emblemBackgroundPath = $hunterEmblem;
-            $lightLevel = $hunterLightLevel;
+        else if($characterSelection == "1"){
+            $emblemIconPath = $secondCharacterEmblem;
+            $emblemBackgroundPath = $secondCharacterBackground;
+            $lightLevel = $secondCharacterLight;
             // $selectedCharacter = "Hunter";
         }
-        else if($characterSelection == "Warlock"){
-            $emblemIconPath = $warlockEmblemIcon;
-            $emblemBackgroundPath = $warlockEmblem;
-            $lightLevel = $warlockLightLevel;
+        else if($characterSelection == "2"){
+            $emblemIconPath = $thirdCharacterEmblem;
+            $emblemBackgroundPath = $thirdCharacterBackground;
+            $lightLevel = $thirdCharacterLight;
             // $selectedCharacter = "Warlock";
         }
         else{
@@ -107,6 +116,7 @@
         // $errors["database"] = "Database error!";
         
         //if no errors
+        
         if(count($errors)==0){
             $activitySelection = filter_var($activitySelection, FILTER_SANITIZE_STRING);
             $description = filter_var($description, FILTER_SANITIZE_STRING);
@@ -114,12 +124,13 @@
             $emblemBackgroundPath = filter_var($emblemBackgroundPath, FILTER_SANITIZE_URL);
             
             //
-            $query = "INSERT INTO posts (uid, username, selectedCharacter, consoleID, activity, description, emblemIcon, emblemBackground, lightLevel, 
-                    grimoireScore, hasMic, postTime) VALUES ('$sessionID', '$sessionUsername', '$characterSelection', '$sessionConsoleID','$activitySelection',
-                    '$description', '$bungieURL$emblemIconPath','$bungieURL$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() ) 
-                    ON DUPLICATE KEY UPDATE selectedCharacter='$characterSelection', activity='$activitySelection', description='$description', 
-                    emblemIcon='$bungieURL$emblemIconPath', 
-                    emblemBackground='$bungieURL$emblemBackgroundPath', lightLevel='$lightLevel', grimoireScore='$grimoire', hasMic='$micOutput', postTime=NOW()";
+            echo "act var: ", $activityType;
+            $query = "INSERT INTO posts (uid, username, selectedCharacter, characterID, consoleID, activity, activityType, description, emblemIcon, emblemBackground, lightLevel, grimoireScore, hasMic, postTime) 
+                    VALUES ('$sessionID', '$sessionUsername', '$className', '$characterID', '$sessionConsoleID', '$activitySelection', '$activityType', '$description', '$bungieURL$emblemIconPath','$bungieURL$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() ) 
+                    ON DUPLICATE KEY UPDATE selectedCharacter='$className', characterID='$characterID', activity='$activitySelection', activityType='$activityType', description='$description', 
+                    emblemIcon='$bungieURL$emblemIconPath', emblemBackground='$bungieURL$emblemBackgroundPath', lightLevel='$lightLevel', grimoireScore='$grimoire', hasMic='$micOutput', postTime=NOW()";
+                    
+                    print_r($query);
             if(!$connection->query($query)){
                 $errors["database"] = "Database error!";
             }

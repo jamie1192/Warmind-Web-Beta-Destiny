@@ -21,10 +21,6 @@
         $confirmPassword = $_POST["confirmPassword"];
         $consoleID = $_POST["options"];
         
-        $titan = 0;
-        $hunter = 1;
-        $warlock = 2;
-        
         //TODO more error checking
         //1. get membershipID and search by given username
          $getMembershipId = curl_init();
@@ -53,81 +49,78 @@
          $result = curl_exec($ch);
          $json = json_decode($result);
          
-         //INSERT CHARACTER SELECTION ALGORITHM TO GET ALL 3 CHARACTER ID's
-         $slot0 = $json->Response->data->characters[0]->characterBase->classType; //wheels = 1, jew = 0
+        //INSERT CHARACTER SELECTION ALGORITHM TO GET ALL 3 CHARACTER ID's
+         $slot0character = $json->Response->data->characters[0]->characterBase->classType; //wheels = 1, jew = 0
         //  echo "<p>slot 0, json: ", $slot0;
-         $slot1 = $json->Response->data->characters[1]->characterBase->classType; //wheels = 0, jew = 1
+         $slot1character = $json->Response->data->characters[1]->characterBase->classType; //wheels = 0, jew = 1
         //  echo "<p>slot 1, json: ", $slot1;
-         $slot2 = $json->Response->data->characters[2]->characterBase->classType; //wheels = 2, jew = 2
+         $slot2character = $json->Response->data->characters[2]->characterBase->classType; //wheels = 2, jew = 2
         //  echo "<p>slot 2, json: ", $slot2;
          
+         $titan = 0;
+         $hunter = 1;
+         $warlock = 2;
          
-         //get Titan Slot
-         if($titan == $slot0){
-             $titanSlot = 0;
-         }
-         elseif($titan == $slot1){
-             $titanSlot = 1;
-         }
-         elseif($titan == $slot2){
-             $titanSlot = 2;
-         }
+        //character in first slot
+        if($slot0 == $titan){
+            $firstCharacterClass = "Titan";
+        }
+        elseif($slot0 == $hunter){
+            $firstCharacterClass = "Hunter";
+        }
+        elseif($slot0 == $warlock){
+            $firstCharacterClass = "Warlock";
+        }
          
         //  echo "<p>Titan slot: ", $titanSlot;
          
-        //  get Hunter slot
-        if($hunter == $slot0){
-             $hunterSlot = 0;
-         }
-         elseif($hunter == $slot1){
-             $hunterSlot = 1;
-         }
-         elseif($hunter == $slot2){
-             $hunterSlot = 2;
-         }
+        //  get second character
+        if($slot1 == $titan){
+            $secondCharacterClass = "Titan";
+        }
+        elseif($slot1 == $hunter){
+            $secondCharacterClass = "Hunter";
+        }
+        elseif($slot1 == $warlock){
+            $secondCharacterClass = "Warlock";
+        }
          
         //  echo "Hunter slot: ", $hunterSlot;
          
-         //get warlock slot
-         if($warlock == $slot0){
-             $warlockSlot = 0;
-         }
-         elseif($warlock == $slot1){
-             $warlockSlot = 1;
-         }
-         elseif($warlock == $slot2){
-             $warlockSlot = 2;
-         }
+         //third character slot
+        if($slot2 == $titan){
+            $thirdCharacterClass = "Titan";
+        }
+        elseif($slot2 == $hunter){
+            $thirdCharacterClass = "Hunter";
+        }
+        elseif($slot2 == $warlock){
+            $thirdCharacterClass = "Warlock";
+        }
          
         //  echo "Warlock slot: ", $warlockSlot;
+        
+        $firstCharacterID = $json->Response->data->characters[0]->characterBase->characterId;
+        $secondCharacterID = $json->Response->data->characters[1]->characterBase->characterId;
+        $thirdCharacterID = $json->Response->data->characters[2]->characterBase->characterId;
          
-
-        $activeTitanID = $json->Response->data->characters[$titanSlot]->characterBase->characterId;
-        $activeHunterID = $json->Response->data->characters[$hunterSlot]->characterBase->characterId;
-        $activeWarlockID = $json->Response->data->characters[$warlockSlot]->characterBase->characterId;
-        
-        // echo "json titan ID: ", $titanID;
-        // echo "json titan ID: ", $warlockID;
-        // echo "json titan ID: ", $hunterID;
-        
-         
-         //emblems
-        $titanEmblem = $json->Response->data->characters[$titanSlot]->emblemPath;
-        $hunterEmblem = $json->Response->data->characters[$hunterSlot]->emblemPath;
-        $warlockEmblem = $json->Response->data->characters[$warlockSlot]->emblemPath;
+        //emblems
+        $firstCharacterEmblem = $json->Response->data->characters[0]->emblemPath;
+        $secondCharacterEmblem = $json->Response->data->characters[1]->emblemPath;
+        $thirdCharacterEmblem = $json->Response->data->characters[2]->emblemPath;
         
         
-        $titanBackground = $json->Response->data->characters[$titanSlot]->backgroundPath;
-        $hunterBackground = $json->Response->data->characters[$hunterSlot]->backgroundPath;
-        $warlockBackground = $json->Response->data->characters[$warlockSlot]->backgroundPath;
+        $firstCharacterBackground = $json->Response->data->characters[0]->backgroundPath;
+        $secondCharacterBackground = $json->Response->data->characters[1]->backgroundPath;
+        $thirdCharacterBackground = $json->Response->data->characters[2]->backgroundPath;
          
          //ends here
          
          //light level, grimoire
-        $titanLightLevel = $json->Response->data->characters[$titanSlot]->characterBase->powerLevel;
-        $hunterLightLevel = $json->Response->data->characters[$hunterSlot]->characterBase->powerLevel;
-        $warlockLightLevel = $json->Response->data->characters[$warlock]->characterBase->powerLevel;
-        $grimoire = $json->Response->data->characters[$titanSlot]->characterBase->grimoireScore;
+        $firstCharacterLight = $json->Response->data->characters[0]->characterBase->powerLevel;
+        $secondCharacterLight = $json->Response->data->characters[1]->characterBase->powerLevel;
+        $thirdCharacterLight = $json->Response->data->characters[2]->characterBase->powerLevel;
+        $grimoire = $json->Response->data->characters[0]->characterBase->grimoireScore;
 
          //ends here
              
@@ -179,10 +172,10 @@
                 //     'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'lightLevel' => $lightLevel, 'grimoire' => $grimoire);
                 session_start();
                 $_SESSION['user'] = array('uid' => $id, 'username' => $displayName, 'consoleID' => $consoleID, 'membershipID' => $activeMembershipID, 
-                    'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground' => $titanBackground, 
-                    'titanLightLevel' => $titanLightLevel, 'hunterID' => $activeHunterID, 'hunterSlot' => $hunterSlot, 'hunterEmblem' => $hunterEmblem, 
-                    'hunterBackground' => $hunterBackground, 'hunterLightLevel' => $hunterLightLevel, 'warlockID' => $activeWarlockID, 'warlockSlot' => $warlockSlot, 
-                    'warlockEmblem' => $warlockEmblem, 'warlockBackground' => $warlockBackground, 'warlockLightLevel' => $warlockLightLevel, 'grimoire' => $grimoire);
+                    'firstCharacterID' => $firstCharacterID, 'firstCharacter' => $firstCharacterClass,'firstCharacterEmblem' => $firstCharacterEmblem, 'firstCharacterBackground' => $firstCharacterBackground, 'firstLightLevel' => $firstCharacterLight, 
+                    'secondCharacterID' => $secondCharacterID,'secondCharacter' => $secondCharacterClass,'secondCharacterEmblem' => $secondCharacterEmblem, 'secondCharacterBackground' => $secondCharacterBackground, 'secondLightLevel' => $secondCharacterLight, 
+                    'thirdCharacterID' => $thirdCharacterID, 'thirdCharacter' => $thirdCharacterClass, 'thirdCharacterEmblem' => $thirdCharacterEmblem, 'thirdCharacterBackground' => $thirdCharacterBackground, 'thirdLightLevel' => $thirdCharacterLight, 
+                    'grimoire' => $grimoire);
                 
                 //login paste below
                 

@@ -10,14 +10,28 @@
     $sessionUsername = $_SESSION['user']['username'];
     $sessionConsoleID = $_SESSION['user']['consoleID'];
     $sessionMembershipID = $_SESSION['user']['membershipID'];
-    $sessionTitanSlot = $_SESSION['user']['titanSlot'];
-    $sessionHunterSlot = $_SESSION['user']['hunterSlot'];
-    $sessionWarlockSlot = $_SESSION['user']['warlockSlot'];
+    // $sessionTitanSlot = $_SESSION['user']['titanSlot'];
+    // $sessionHunterSlot = $_SESSION['user']['hunterSlot'];
+    // $sessionWarlockSlot = $_SESSION['user']['warlockSlot'];
     
-    $titanEmblem = $_SESSION['user']['titanEmblem'];
-    $hunterEmblem = $_SESSION['user']['hunterEmblem'];
-    $warlockEmblem = $_SESSION['user']['warlockEmblem'];
+    $firstCharacterID = $_SESSION['user']['firstCharacterID'];
+    $secondCharacterID = $_SESSION['user']['secondCharacterID'];
+    $thirdCharacterID = $_SESSION['user']['thirdCharacterID'];
+    // echo $firstCharacterID;
+    
+    $sessionFirstCharacter = $_SESSION['user']['firstCharacter'];
+    $sessionSecondCharacter = $_SESSION['user']['secondCharacter'];
+    $sessionThirdCharacter = $_SESSION['user']['thirdCharacter'];
+    
+    $firstCharacterEmblem = $_SESSION['user']['firstCharacterEmblem'];
+    $secondCharacterEmblem = $_SESSION['user']['secondCharacterEmblem'];
+    $thirdCharacterEmblem = $_SESSION['user']['thirdCharacterEmblem'];
+    
+    $firstCharacterBackground = $_SESSION['user']['firstCharacterBackground'];
+    $secondCharacterBackground = $_SESSION['user']['secondCharacterBackground'];
+    $thirdCharacterBackground = $_SESSION['user']['thirdCharacterBackground'];
      
+    //  echo "first: ", $firstCharacterEmblem;
 
     $bungieURL = "https://bungie.net";
  
@@ -99,153 +113,137 @@
                         <form id="submitPostForm" method="post" action="#">
                             <div class="class-selector lfgEmblemContainer">
                                 
-                                <input id="titan" type="radio" name="characterClass" value="Titan" checked/>
-                                <label class="classEmblems" for="titan">
-                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$titanEmblem");?>>
+                                <input id="firstCharacter" type="radio" name="characterSlot" value="0" checked/>
+                                <label class="classEmblems" for="firstCharacter">
+                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$firstCharacterEmblem");?>>
                                 </label>
                                 
-                                <input id="hunter" type="radio" name="characterClass" value="Hunter" />
-                                <label class="classEmblems"for="hunter">
-                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$hunterEmblem");?>>
+                                <input id="secondCharacter" type="radio" name="characterSlot" value="1" />
+                                <label class="classEmblems"for="secondCharacter">
+                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$secondCharacterEmblem");?>>
                                 </label>
                                 
-                                <input id="warlock" type="radio" name="characterClass" value="Warlock" />
-                                <label class="classEmblems"for="warlock">
-                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$warlockEmblem");?>>
+                                <input id="thirdCharacter" type="radio" name="characterSlot" value="2" />
+                                <label class="classEmblems"for="thirdCharacter">
+                                    <img class="emblemIcons" src=<?php echo htmlspecialchars("$bungieURL$thirdCharacterEmblem");?>>
                                 </label>
+                                <input type="hidden" name="className" id="lfgCharacterClass" value="<?php echo $sessionFirstCharacter;?>"/>
+                                <input type="hidden" name="characterID" id="getCharacterID" value="<?php echo $firstCharacterID;?>"/>
                                 
                             </div>
                             
                             <div class="class-selector emblemLabels">
                                 <!--<div>-->
-                                <label id="titanLabel" class="classEmblems" for="titan">Titan</label>
+                                <label id="titanLabel" class="classEmblems" for="firstCharacter"><?php echo $sessionFirstCharacter; ?></label>
                                 <!--</div>-->
                                 <!--<div>-->
-                                <label id="hunterLabel" class="classEmblems" for="hunter">Hunter</label>
+                                <label id="hunterLabel" class="classEmblems" for="secondCharacter"><?php echo $sessionSecondCharacter; ?></label>
                                 <!--</div>-->
                                 <!--<div>-->
-                                <label id="warlockLabel" class="classEmblems" for="warlock">Warlock</label>
+                                <label id="warlockLabel" class="classEmblems" for="thirdCharacter"><?php echo $sessionThirdCharacter; ?></label>
                                 <!--</div>-->
                             </div>
 
-                            <div class="mdl-dialog__actions mdl-dialog__action--full-width">
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-1">
-                                <input type="radio" id="activity-1" class="mdl-radio__button" name="activity" value="other">
-                                <span class="mdl-radio__label">Other</span>
-                            </label>
-                            <div class="mdl-layout-spacer"></div>
-                            
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-2">
-                                <input type="radio" id="activity-2" class="mdl-radio__button" name="activity" value="strikes">
-                                <span class="mdl-radio__label">Strikes</span>
-                            </label>
-                            
-                            <div class="mdl-layout-spacer"></div>
-                            
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-3">
-                                <input type="radio" id="activity-3" class="mdl-radio__button" name="activity" value="PvP">
-                                <span class="mdl-radio__label">PVP</span>
-                            </label>
-                            
-                            <div class="mdl-layout-spacer"></div>
-                            
-                            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-4">
-                                <input type="radio" id="activity-4" class="mdl-radio__button" name="activity" value="Raid">
-                                <span class="mdl-radio__label">Raid</span>
-                            </label>
-                            
-                            
-                        </div>
+                            <!--<div class="mdl-dialog__actions mdl-dialog__action--full-width">-->
+                            <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-1">-->
+                            <!--        <input type="radio" id="activity-1" class="mdl-radio__button" name="activity" value="other">-->
+                            <!--        <span class="mdl-radio__label">Other</span>-->
+                            <!--    </label>-->
+                            <!--    <div class="mdl-layout-spacer"></div>-->
+                                
+                            <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-2">-->
+                            <!--        <input type="radio" id="activity-2" class="mdl-radio__button" name="activity" value="strikes">-->
+                            <!--        <span class="mdl-radio__label">Strikes</span>-->
+                            <!--    </label>-->
+                                
+                            <!--    <div class="mdl-layout-spacer"></div>-->
+                                
+                            <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-3">-->
+                            <!--        <input type="radio" id="activity-3" class="mdl-radio__button" name="activity" value="PvP">-->
+                            <!--        <span class="mdl-radio__label">PVP</span>-->
+                            <!--    </label>-->
+                                
+                            <!--    <div class="mdl-layout-spacer"></div>-->
+                                
+                            <!--    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="activity-4">-->
+                            <!--        <input type="radio" id="activity-4" class="mdl-radio__button" name="activity" value="Raid">-->
+                            <!--        <span class="mdl-radio__label">Raid</span>-->
+                            <!--    </label>-->
+                            <!--</div>-->
                         
                             <!--Raid select list-->
                             <div class="mdl-select mdl-js-select mdl-select--floating-label Raid">
-                                <select class="mdl-select__input" id="activitySelection" name="raid">
-                                    <option value=""></option>
+                                <select class="mdl-select__input" id="activitySelection" name="activitySelection">
+                                    <!--<option value=""></option>-->
                                         <optgroup label="Raid - Wrath of the Machine">
                                             <option value="Wrath of the Machine - Heroic (Fresh)">Heroic (Fresh)</option>
                                             <option value="Wrath of the Machine - Heroic (Vosik)">Heroic (Vosik)</option>
                                             <option value="Wrath of the Machine - Heroic (Siege Engine)">Heroic (Siege Engine)</option>
                                             <option value="Wrath of the Machine - Heroic (Aksis Ph 2)">Heroic (Aksis Ph 2)</option>
                                             <option value="Wrath of the Machine - Heroic (Aksis Ph 1)">Heroic (Aksis Ph 1)</option>
-                                        <option value="%">---</option>
+                                            <option value="%">---</option>
                                             <option value="Wrath of the Machine - Normal (Fresh)">Normal (Fresh)</option>
                                             <option value="Wrath of the Machine - Normal (Vosik)">Normal (Vosik)</option>
                                             <option value="Wrath of the Machine - Normal (Siege Engine)">Normal (Siege Engine)</option>
                                             <option value="Wrath of the Machine - Normal (Aksis Ph 2)">Normal (Aksis Ph 2)</option>
                                             <option value="Wrath of the Machine - Normal (Aksis Ph 1)">Normal (Aksis Ph 1)</option>
                                         <optgroup label="Raid - King's Fall">
-                                                <option value="King's Fall - Heroic (Fresh)">Heroic (Fresh)</option>
-                                                <option value="King's Fall - Heroic (Oryx)">Heroic (Oryx)</option>
-                                                <option value="King's Fall - Heroic (Daughters)">Heroic (Daughters)</option>
-                                                <option value="King's Fall - Heroic (Golgoroth)">Heroic (Golgoroth)</option>
-                                                <option value="King's Fall - Heroic (Warpriest)">Heroic (Warpriest)</option>
-                                                <option value="King's Fall - Heroic (Totems)">Heroic (Totems)</option>
+                                            <option value="King's Fall - Heroic (Fresh)">Heroic (Fresh)</option>
+                                            <option value="King's Fall - Heroic (Oryx)">Heroic (Oryx)</option>
+                                            <option value="King's Fall - Heroic (Daughters)">Heroic (Daughters)</option>
+                                            <option value="King's Fall - Heroic (Golgoroth)">Heroic (Golgoroth)</option>
+                                            <option value="King's Fall - Heroic (Warpriest)">Heroic (Warpriest)</option>
+                                            <option value="King's Fall - Heroic (Totems)">Heroic (Totems)</option>
                                             <option value="%">---</option>
-                                                <option value="King's Fall - Normal (Fresh)">Normal (Fresh)</option>
-                                                <option value="King's Fall - Normal (Oryx)">Normal (Oryx)</option>
-                                                <option value="King's Fall - Normal (Daughters)">Normal (Daughters)</option>
-                                                <option value="King's Fall - Normal (Golgoroth)">Normal (Golgoroth)</option>
-                                                <option value="King's Fall - Normal (Warpriest)">Normal (Warpriest)</option>
-                                                <option value="King's Fall - Normal (Totems)">Normal (Totems)</option>
+                                            <option value="King's Fall - Normal (Fresh)">Normal (Fresh)</option>
+                                            <option value="King's Fall - Normal (Oryx)">Normal (Oryx)</option>
+                                            <option value="King's Fall - Normal (Daughters)">Normal (Daughters)</option>
+                                            <option value="King's Fall - Normal (Golgoroth)">Normal (Golgoroth)</option>
+                                            <option value="King's Fall - Normal (Warpriest)">Normal (Warpriest)</option>
+                                            <option value="King's Fall - Normal (Totems)">Normal (Totems)</option>
                                         </optgroup>
                                         <optgroup label="Raid - Crota's End">
-                                                <option value="Crota's End - Heroic (Fresh)">Heroic (Fresh)</option>
-                                                <option value="Crota's End - Heroic (Crota)">Heroic (Crota)</option>
-                                                <option value="Crota's End - Heroic (Deathsinger)">Heroic (Deathsinger)</option>
-                                                <option value="Crota's End - Heroic (Thrallway)">Heroic (Thrallway)</option>
-                                                <option value="Crota's End - Heroic (Bridge)">Heroic (Bridge)</option>
-                                                <option value="%">---</option>
-                                                <option value="Crota's End - Normal (Fresh)">Normal (Fresh)</option>
-                                                <option value="Crota's End - Normal (Crota)">Normal (Crota)</option>
-                                                <option value="Crota's End - Normal (Deathsinger)">Normal (Deathsinger)</option>
-                                                <option value="Crota's End - Normal (Thrallway)">Normal (Thrallway)</option>
-                                                <option value="Crota's End - Normal (Bridge)">Normal (Bridge)</option>
+                                            <option value="Crota's End - Heroic (Fresh)">Heroic (Fresh)</option>
+                                            <option value="Crota's End - Heroic (Crota)">Heroic (Crota)</option>
+                                            <option value="Crota's End - Heroic (Deathsinger)">Heroic (Deathsinger)</option>
+                                            <option value="Crota's End - Heroic (Thrallway)">Heroic (Thrallway)</option>
+                                            <option value="Crota's End - Heroic (Bridge)">Heroic (Bridge)</option>
+                                            <option value="%">---</option>
+                                            <option value="Crota's End - Normal (Fresh)">Normal (Fresh)</option>
+                                            <option value="Crota's End - Normal (Crota)">Normal (Crota)</option>
+                                            <option value="Crota's End - Normal (Deathsinger)">Normal (Deathsinger)</option>
+                                            <option value="Crota's End - Normal (Thrallway)">Normal (Thrallway)</option>
+                                            <option value="Crota's End - Normal (Bridge)">Normal (Bridge)</option>
                                         </optgroup>
                                         <optgroup label="Raid - Vault of Glass">
-                                                <option value="Vault of Glass - Heroic (Fresh)">Heroic (Fresh)</option>
-                                                <option value="Vault of Glass - Heroic (Atheon)">Heroic (Atheon)</option>
-                                                <option value="Vault of Glass - Heroic (Gatekeepers)">Heroic (Gatekeepers)</option>
-                                                <option value="Vault of Glass - Heroic (Gorgons)">Heroic (Gorgons)</option>
-                                                <option value="Vault of Glass - Heroic (Templar)">Heroic (Templar)</option>
-                                                <option value="Vault of Glass - Heroic (Oracles)">Heroic (Oracles)</option>
-                                                <option value="Vault of Glass - Heroic (Confluxes)">Heroic (Confluxes)</option>
-                                                <option value="%">---</option>
-                                                <option value="Vault of Glass - Normal (Fresh)">Normal (Fresh)</option>
-                                                <option value="Vault of Glass - Normal (Atheon)">Normal (Atheon)</option>
-                                                <option value="Vault of Glass - Normal (Gatekeepers)">Normal (Gatekeepers)</option>
-                                                <option value="Vault of Glass - Normal (Gorgons)">Normal (Gorgons)</option>
-                                                <option value="Vault of Glass - Normal (Templar)">Normal (Templar)</option>
-                                                <option value="Vault of Glass - Normal (Oracles)">Normal (Oracles)</option>
-                                                <option value="Vault of Glass - Normal (Confluxes)">Normal (Confluxes)</option>
-                                                </optgroup>
-                                            <optgroup label="Raid - Misc">
-                                                <option value="Raid - Checkpoint Share">Checkpoint Share</option>
-                                                <option value="Raid - Exploration">Exploration</option>
-                                            </optgroup>
+                                            <option value="Vault of Glass - Heroic (Fresh)">Heroic (Fresh)</option>
+                                            <option value="Vault of Glass - Heroic (Atheon)">Heroic (Atheon)</option>
+                                            <option value="Vault of Glass - Heroic (Gatekeepers)">Heroic (Gatekeepers)</option>
+                                            <option value="Vault of Glass - Heroic (Gorgons)">Heroic (Gorgons)</option>
+                                            <option value="Vault of Glass - Heroic (Templar)">Heroic (Templar)</option>
+                                            <option value="Vault of Glass - Heroic (Oracles)">Heroic (Oracles)</option>
+                                            <option value="Vault of Glass - Heroic (Confluxes)">Heroic (Confluxes)</option>
+                                            <option value="%">---</option>
+                                            <option value="Vault of Glass - Normal (Fresh)">Normal (Fresh)</option>
+                                            <option value="Vault of Glass - Normal (Atheon)">Normal (Atheon)</option>
+                                            <option value="Vault of Glass - Normal (Gatekeepers)">Normal (Gatekeepers)</option>
+                                            <option value="Vault of Glass - Normal (Gorgons)">Normal (Gorgons)</option>
+                                            <option value="Vault of Glass - Normal (Templar)">Normal (Templar)</option>
+                                            <option value="Vault of Glass - Normal (Oracles)">Normal (Oracles)</option>
+                                            <option value="Vault of Glass - Normal (Confluxes)">Normal (Confluxes)</option>
                                         </optgroup>
-                                </select>
-                                <label class="mdl-select__label" for="activitySelection">Select an Activity</label>
-                            </div>
-                        
-                            <!--PVP select list-->
-                            <div class="mdl-select mdl-js-select mdl-select--floating-label pvp">
-                                <select class="mdl-select__input" id="PvP" name="PvP">
-                                    <option value=""></option>
-                                    <optgroup label="PvP">
-                                        <option value="Trials of Osiris (Casual/Bounty)">Trials of Osiris (Casual/Bounty)</option>
-                                        <option value="Trials of Osiris (Competitive)">Trials of Osiris (Competitive)</option>
-                                        <option value="Iron Banner">Iron Banner</option>
-                                        <option value="Crucible - Private Match">Private Match</option>
-                                    </optgroup>
-                                </select>
-                                <label class="mdl-select__label" for="pvp">Select an Activity</label>
-                            </div>
-        
-        
-                            <!--Strikes select list-->
-                            <div class="mdl-select mdl-js-select mdl-select--floating-label strikes">
-                                <select class="mdl-select__input" id="strikes" name="strikes">
-                                    <optgroup label="Strike Playlist">
+                                        <optgroup label="Raid - Misc">
+                                            <option value="Raid - Checkpoint Share">Checkpoint Share</option>
+                                            <option value="Raid - Exploration">Exploration</option>
+                                        </optgroup>
+                                        </optgroup>
+                                        <optgroup label="PvP">
+                                            <option value="Trials of Osiris (Casual/Bounty)">Trials of Osiris (Casual/Bounty)</option>
+                                            <option value="Trials of Osiris (Competitive)">Trials of Osiris (Competitive)</option>
+                                            <option value="Iron Banner">Iron Banner</option>
+                                            <option value="Crucible - Private Match">Private Match</option>
+                                        </optgroup>
+                                        <optgroup label="Strike Playlist">
                                             <option value="Strike Playlist - SIVA Crisis Heroic">SIVA Crisis Heroic</option>
                                             <option value="Strike Playlist - SIVA Crisis">SIVA Crisis</option>
                                             <option value="Strike Playlist - Taken War">Taken War</option>
@@ -257,15 +255,6 @@
                                             <option value="Weekly Story Playlist">Weekly Story Playlist</option>
                                             <option value="Weekly Heroic Strike">Weekly Heroic Strike</option>
                                         </optgroup>
-                                </select>
-                                <label class="mdl-select__label" for="strikes">Select an Activity</label>
-                            </div>
-                            
-                            
-                            <!--Other select list-->
-                            <div class="mdl-select mdl-js-select mdl-select--floating-label other">
-                                <select class="mdl-select__input" id="other" name="other">
-                                    <option value=""></option>
                                         <optgroup label="Arena">
                                             <option value="Arena - Archon's Forge">Archon's Forge</option>
                                             <option value="Arena - Court of Oryx">Court of Oryx</option>
@@ -273,10 +262,10 @@
                                             <option value="Arena - Prison of Elders">Prison of Elders</option>
                                         </optgroup>
                                 </select>
-                                <label class="mdl-select__label" for="other">Select an Activity</label>
+                                <label class="mdl-select__label" for="activitySelection">Select an Activity</label>
                             </div>
                             
-                            <input type="hidden" name="dropdownSelection" value="">
+                            <input type="hidden" id="dropdownSelection" name="dropdownSelection" value="Raid - Wrath of the Machine"/>
                             
                             <div class="mdl-textfield mdl-textfield-custom mdl-js-textfield">
                                 <textarea class="mdl-textfield__input" type="text" rows= "5" id="description" name="description" ></textarea>
@@ -387,9 +376,9 @@
                     if(isset($_SESSION['user'])){
                         
                         echo "<div class=\"iconTestBox\">";
-                        echo "<img src=\"$bungieURL$titanEmblem\" class=\"demo-avatar titanEmblemIcon\">";
-                        echo "<img src=\"$bungieURL$hunterEmblem\" class=\"demo-avatar\">";
-                        echo "<img src=\"$bungieURL$warlockEmblem\" class=\"demo-avatar warlockEmblemIcon\">";
+                        echo "<img src=\"$bungieURL$firstCharacterEmblem\" class=\"demo-avatar titanEmblemIcon\">";
+                        echo "<img src=\"$bungieURL$secondCharacterEmblem\" class=\"demo-avatar\">";
+                        echo "<img src=\"$bungieURL$thirdCharacterEmblem\" class=\"demo-avatar warlockEmblemIcon\">";
                         echo "</div>";
                         echo "<span class=\"headerLoggedUser\">$sessionUsername</span>";
                     }
@@ -671,10 +660,6 @@
     
     //load posts from DB
     $(document).ready(function(){
-        $('.raid').hide();
-        $('.pvp').hide();
-        $('.other').hide();
-        $('.strikes').hide();
         loadPosts();
     });
           
@@ -702,6 +687,9 @@
         }
         showDialogButton.addEventListener('click', function() {
           dialog.showModal();
+            $("#submitLFGpost").html('Submit');
+            $("#submitLFGpost").attr("enabled", "true");
+            $("#cancelLFGpost").show();
         });
         dialog.querySelector('.close').addEventListener('click', function() {
           dialog.close();
@@ -723,35 +711,60 @@
     }
     
     //other
-    $('#activity-1').click(function(){
-       $('.other').show(); 
-       $('.raid').hide();
-       $('.PvP').hide();
-       $('#PvP').val('');
-       $('.strikes').hide();
-    });
-    //strikes
-    $('#activity-2').click(function(){
-       $('.other').hide(); 
-       $('.raid').hide();
-       $('.PvP').hide();
-       $('.strikes').show();
-    });
-    //PvP
-    $('#activity-3').click(function(){
-       $('.other').hide(); 
-       $('.raid').hide();
-       $('.PvP').show();
-       $('.strikes').hide();
-    });
-    //Raids
-    $('#activity-4').click(function(){
-        $('.Raid').show();
-        $('.other').hide(); 
-        $('.PvP').hide();
-        $('.strikes').hide();
+    // $('#activity-1').click(function(){
+    //   $('.other').show(); 
+    //   $('.raid').hide();
+    //   $('.PvP').hide();
+    //   $('#PvP').val('');
+    //   $('.strikes').hide();
+    // });
+    
+    $('#activitySelection').on('change', function (){
+        var label = $(this.options[this.selectedIndex]).closest('optgroup').prop('label');
+        console.log(label);
+        $('#dropdownSelection').attr("value", label);
     });
     
+    // //strikes
+    // $('#activity-2').click(function(){
+    //   $('.other').hide(); 
+    //   $('.raid').hide();
+    //   $('.PvP').hide();
+    //   $('.strikes').show();
+    // });
+    // //PvP
+    // $('#activity-3').click(function(){
+    //   $('.other').hide(); 
+    //   $('.raid').hide();
+    //   $('.PvP').show();
+    //   $('.strikes').hide();
+    // });
+    // //Raids
+    // $('#activity-4').click(function(){
+    //     $('.Raid').show();
+    //     $('.other').hide(); 
+    //     $('.PvP').hide();
+    //     $('.strikes').hide();
+    // });
+    
+    
+    //Submit LFG character radio select
+    $('#firstCharacter').click(function(){
+        $('#lfgCharacterClass').attr("value", '<?php echo $sessionFirstCharacter;?>');
+        $('#getCharacterID').attr("value", '<?php echo $firstCharacterID;?>');
+    });
+    
+    $('#secondCharacter').click(function(){
+        $('#lfgCharacterClass').attr("value", '<?php echo $sessionSecondCharacter;?>');
+        $('#getCharacterID').attr("value", '<?php echo $secondCharacterID;?>');
+    
+    });
+    
+    $('#thirdCharacter').click(function(){
+        $('#lfgCharacterClass').attr("value", '<?php echo $sessionThirdCharacter;?>');
+        $('#getCharacterID').attr("value", '<?php echo $thirdCharacterID;?>');
+
+    });
     
     //end login dialog
     
@@ -958,8 +971,8 @@
         
         
         //disable buttons on submit
-        $("#submitLFGpost").attr("disabled", "disabled");
-        $("#cancelLFGpost").remove();
+        $("#submitLFGpost").attr("enabled", "false");
+        $("#cancelLFGpost").hide();
         
         $.ajax({
             type:"POST",
@@ -980,8 +993,7 @@
                     message: 'Post Submitted!'
                   }
                 );
-                $("#submitLFGpost").html('Submit');
-                $("#submitLFGpost").attr("disabled", "disabled");
+                
                 $('#submitPostLoading').hide();
                 loadPosts();
                 upgradeMDL();
