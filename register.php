@@ -21,7 +21,7 @@
         $confirmPassword = $_POST["confirmPassword"];
         $consoleID = $_POST["options"];
         
-        //TODO more error checking
+        
         //1. get membershipID and search by given username
          $getMembershipId = curl_init();
          //case insensitive PSN name search- THIS SPITS OUT AN ARRAY
@@ -32,10 +32,6 @@
          $getMembershipResponse = json_decode($getMembershipResults);
          
 
-        //  echo "Error status: ", $getMembershipResults;
-
-        //  echo "Error Response: ", $getMembershipResponse;
-         
          
          $activeMembershipID = $getMembershipResponse->Response[0]->membershipId;
          $displayName = $getMembershipResponse->Response[0]->displayName;
@@ -62,39 +58,39 @@
          $warlock = 2;
          
         //character in first slot
-        if($slot0 == $titan){
+        if($slot0character == $titan){
             $firstCharacterClass = "Titan";
         }
-        elseif($slot0 == $hunter){
+        elseif($slot0character == $hunter){
             $firstCharacterClass = "Hunter";
         }
-        elseif($slot0 == $warlock){
+        elseif($slot0character == $warlock){
             $firstCharacterClass = "Warlock";
         }
          
         //  echo "<p>Titan slot: ", $titanSlot;
          
         //  get second character
-        if($slot1 == $titan){
+        if($slot1character == $titan){
             $secondCharacterClass = "Titan";
         }
-        elseif($slot1 == $hunter){
+        elseif($slot1character == $hunter){
             $secondCharacterClass = "Hunter";
         }
-        elseif($slot1 == $warlock){
+        elseif($slot1character == $warlock){
             $secondCharacterClass = "Warlock";
         }
          
         //  echo "Hunter slot: ", $hunterSlot;
          
          //third character slot
-        if($slot2 == $titan){
+        if($slot2character == $titan){
             $thirdCharacterClass = "Titan";
         }
-        elseif($slot2 == $hunter){
+        elseif($slot2character == $hunter){
             $thirdCharacterClass = "Hunter";
         }
-        elseif($slot2 == $warlock){
+        elseif($slot2character == $warlock){
             $thirdCharacterClass = "Warlock";
         }
          
@@ -156,14 +152,14 @@
         }
         $result = $connection->query($query);
         if($result->num_rows > 0){
-            $errors["username"] = "Username already exists.";
+            $errors["username"] = "Bungie membershipID already registered!";
         }
         
         else{
                 
-                $query = "INSERT INTO accounts (username, password, consoleID, membershipID, titanID, hunterID, warlockID, 
+                $query = "INSERT INTO accounts (username, password, consoleID, membershipID,  
                     creation_date, last_update, last_login) 
-                    VALUES ('$displayName', '$hashed','$consoleID','$activeMembershipID','$activeTitanID', '$activeHunterID', '$activeWarlockID', NOW(),NOW(),NOW())";
+                    VALUES ('$displayName', '$hashed','$consoleID','$activeMembershipID', NOW(),NOW(),NOW())";
                 
                 // $_SESSION['user'] = array('uid' => $id, 'username' => $displayName, 'consoleID' => $consoleID, 'membershipID' => $membershipID, 
                 //     'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground', 'hunterID' => $activeHunterID, 
@@ -176,9 +172,6 @@
                     'secondCharacterID' => $secondCharacterID,'secondCharacter' => $secondCharacterClass,'secondCharacterEmblem' => $secondCharacterEmblem, 'secondCharacterBackground' => $secondCharacterBackground, 'secondLightLevel' => $secondCharacterLight, 
                     'thirdCharacterID' => $thirdCharacterID, 'thirdCharacter' => $thirdCharacterClass, 'thirdCharacterEmblem' => $thirdCharacterEmblem, 'thirdCharacterBackground' => $thirdCharacterBackground, 'thirdLightLevel' => $thirdCharacterLight, 
                     'grimoire' => $grimoire);
-                
-                //login paste below
-                
                 
                 // print_r($_SESSION);
                 header("location:home.php");

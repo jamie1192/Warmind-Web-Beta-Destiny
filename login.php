@@ -27,7 +27,7 @@
 
         //   echo $query;
         if(!$connection->query($query)){
-                    $errors["database"] = "Database error!";
+            $errors["database"] = "Database error!";
         }
         $result = $connection->query($query);
         if($result->num_rows > 0){
@@ -39,6 +39,20 @@
 
             $consoleID = $userdata["consoleID"];
             $activeMembershipID = $userdata["membershipID"];
+            
+            
+            $query = "UPDATE accounts
+                    SET last_login=NOW()
+                    WHERE username = '$username'";
+                    
+            if(!$connection->query($query)){
+                $errors["database"] = "Database error!";
+            }        
+            // "SELECT username, last_login FROM accounts WHERE username='$stored_username' UPDATE last_login='NOW()'";
+            // "UPDATE accounts SET last_login='NOW()' WHERE username = '$stored_username'";
+            // "UPDATE last_login SET `LAST_LOGIN` = now() WHERE `ACCOUNT_id` = `LoggedInUser`");
+            
+            // UPDATE table SET user_last_login='$date' WHERE user_name='$name' AND user_pass='$password'";"
             // $activeTitanID = $userdata["titanID"];
             // $activeTitanSlot = $userdata["titanSlot"];
             // $activeHunterID = $userdata["hunterID"];

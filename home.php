@@ -103,9 +103,11 @@
       <body>
           
           <!--submit post dialog-->
+        
             <dialog class="mdl-dialog postDialog">
                 <!--<h4 class="mdl-dialog__title">Submit LFG Post</h4>-->
-                <div class="mdl-dialog__title mdl-color--homeBackground" 
+                <!--mdl-color--homeBackground-->
+                <div class="mdl-dialog__title" 
                 style="padding: 24px 24px 24px;
                         font-size: 2.5rem;
                         color: white;">Submit LFG Post</div>
@@ -283,7 +285,7 @@
                 <div class="mdl-snackbar__text"></div>
                 <button class="mdl-snackbar__action" type="button"></button>
             </div> <!--End submit post dialog-->
-            
+        
             
             <!--Search player dialog-->
             <dialog class="mdl-dialog searchDialog">
@@ -397,8 +399,8 @@
                 <i class="material-icons mdl-color-text--white" role="presentation">person_add</i>LFG Feed</a>
             <?php 
             if(isset($_SESSION['user'])){
-                echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
-                    echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">chat </i>My Posts</a>";
+                // echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
+                    // echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">chat </i>My Posts</a>";
                 echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
                     echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">assessment </i>My Stats</a>";
             }?>
@@ -430,7 +432,7 @@
                     <div class="tab1container "><!--Tab 1-->
                     <img class="contentLoading" src="assets/Rasputin-25.png">
                         <!--<div class="mdl-grid">-->
-                           <template id="playerPosts">
+                           <template id="raidPosts">
                                 <div class="posts mdl-cell mdl-cell--1-offset-phone mdl-cell--6-col mdl-cell--2-offset-tablet">
                                 <!--<div class="posts mdl-cell mdl-cell--6--phone mdl-cell--6-col-tablet mdl-cell--4-desktop">-->
                                     <div class="postCard mdl-card mdl-card--primary mdl-shadow--2dp">
@@ -497,7 +499,7 @@
                                 </div> <!-- /posts mdl cell-6 -->
                             </template>
                         <!--template    -->
-                            <div class="postContainerTemplate mdl-grid">
+                            <div class="raidContainerTemplate allPostsTemplate mdl-grid">
                             
                             
                             </div>
@@ -642,29 +644,29 @@
                                             <span class="postDescriptionText"></span>
                                         </div>
                                         <span class="postAge"></span>
-                                        <button class="btn btn-primary getStats" type="button">Get Player Stats</button>
+                                        <!--<button class="btn btn-primary getStats" type="button">Get Player Stats</button>-->
                                     </div>
                                 
-                                <div class="stats-row whiteText"></div>
-                                    <template id="playerStats">
-                                            <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">
-                                            <thead>
-                                                <tr class="goldColour">
-                                                    <th>K/D Ratio</th>
-                                                    <th>Average Lifespan</th>
-                                                    <th>Win/Loss Ratio</th>
-                                                </tr>
-                                            </thead>
-                                                <tbody>
+                                <!--<div class="stats-row whiteText"></div>-->
+                                <!--    <template id="playerStats">-->
+                                <!--            <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">-->
+                                <!--            <thead>-->
+                                <!--                <tr class="goldColour">-->
+                                <!--                    <th>K/D Ratio</th>-->
+                                <!--                    <th>Average Lifespan</th>-->
+                                <!--                    <th>Win/Loss Ratio</th>-->
+                                <!--                </tr>-->
+                                <!--            </thead>-->
+                                <!--                <tbody>-->
                                                      <!--Row 1 -->
-                                                    <tr class="whiteText">
-                                                        <td class="playerKD"></td>
-                                                        <td class="playerAverageLifespan"></td>
-                                                        <td class="playerWinLossRatio"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                    </template>
+                                <!--                    <tr class="whiteText">-->
+                                <!--                        <td class="playerKD"></td>-->
+                                <!--                        <td class="playerAverageLifespan"></td>-->
+                                <!--                        <td class="playerWinLossRatio"></td>-->
+                                <!--                    </tr>-->
+                                <!--                </tbody>-->
+                                <!--            </table>-->
+                                <!--    </template>-->
                                 </div> <!-- /posts mdl cell-6 -->
                             </template>
 
@@ -765,7 +767,10 @@
     function loadPosts(){
         $('.contentLoading').show();
         // $('.contentLoading').attr("display", "");
-          $(".postContainerTemplate").empty();
+          $(".raidContainerTemplate").empty();
+          $(".pvpContainerTemplate").empty();
+          $(".strikesContainerTemplate").empty();
+          $(".otherContainerTemplate").empty();
             var datasource = "ajax/getPostsData.php";
             // $(".postContainerTemplate").empty();
             //make an ajax request
@@ -784,13 +789,13 @@
                     
                     
                     for(i=0;i<len;i++){
-                        var template = $("#playerPosts").html().trim();
-                        var clone = $(template);
+                        
                         //fill the data
                         var username = data[i].username;
                         var selectedCharacter = data[i].selectedCharacter;
                         var consoleID = data[i].consoleID;
                         var activity = data[i].activity;
+                        var activityType = data[i].activityType;
                         var description = data[i].description;
                         var emblemIcon = data[i].emblemIcon;
                         var emblemBackground = data[i].emblemBackground;
@@ -805,6 +810,9 @@
                         var grimoireImg = "./assets/grimoireIcon.png";
                         var buttonText = " Get Player Stats";
                         var postAge;
+                        
+                        var template = $('#'+activityType+'Posts').html().trim();
+                        var clone = $(template);
                         //TODO postTime = data[i].postTime;
                         // console.log("postTime: ", postTime);
                         // var a = new Date(Date.parse(postTime.replace('-','/','g')));
@@ -872,7 +880,7 @@
                         
                         $(clone).find(".hasMic").html(mic);
                         
-                        $(".postContainerTemplate").append(clone);
+                        $("."+activityType+"ContainerTemplate").append(clone);
                     }
                 }
             });
@@ -919,6 +927,7 @@
                         var postTimeD = data[i].ageD;
                         var postTimeH = data[i].ageH;
                         var postTimeM = data[i].ageM;
+                        var characterID = data[i].characterID;
                         
                         var lightLevelIcon = "&#10022  ";
                         var grimoireImg = "./assets/grimoireIcon.png";
@@ -987,6 +996,7 @@
                         $(clone).find(".getStats").attr("data-name", username);
                         $(clone).find(".getStats").attr("data-console", consoleID);
                         $(clone).find(".postAge").html(postAge);
+                        $(clone).find(".getStats").attr("data-characterID", characterID);
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         
                         $(clone).find(".hasMic").html(mic);
@@ -1103,10 +1113,10 @@
                         $(clone).find(".grimoireImage").attr("src", grimoireImg);
                         $(clone).find(".playerGrimoireOutput").html(grimoireScore);
                         
-                        $(clone).find(".getStats").attr("data-name", username);
-                        $(clone).find(".getStats").attr("data-console", consoleID);
+                        // $(clone).find(".getStats").attr("data-name", username);
+                        // $(clone).find(".getStats").attr("data-console", consoleID);
                         $(clone).find(".postAge").html(postAge);
-                        $(clone).find(".getStats").attr("data-character", selectedCharacter);
+                        // $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         
                         $(clone).find(".hasMic").html(mic);
                         
@@ -1242,9 +1252,16 @@
     //load posts from DB
     $(document).ready(function(){
         loadPosts();
-        loadPvpPosts();
-        loadStrikesPosts();
-        loadOtherPosts();
+        // loadPvpPosts();
+        // loadStrikesPosts();
+        // loadOtherPosts();
+        
+        var characterCount = "<?php echo $thirdCharacterID;?>";
+        console.log("charCount: ", characterCount);
+        if(characterCount == ""){
+            $("#hunterLabel").removeAttr('style').css("margin-left","63px");
+            $("#hunterLabel").css("margin-right","2px");
+        }
     });
           
     setInterval("upgradeMDL();", 100);
@@ -1354,166 +1371,125 @@
     
     //get player stats on LFG post
     $('.pvpContainerTemplate').on("click", ".getStats", clickHandler);
-    // document('.getStats').addEventListener('click', function(clickHandler) {
-    // var clickedButton = document.getElementsByClassName(".getStats");
-    // $(clickedButton).on("click", clickHandler);
-    // $(".btn").on("click", clickHandler);
+
     var clicks = 0;
     function clickHandler(e){
     
-        
-        
-    if($(e.target).attr("data-exists") == undefined){
-        e.target;
-        // var clickedBtn;
-        
-        var getName = $(e.target).data("name");
-        // var getCharacter = $(e.target).parents(".mdl-button").data("character");
-        var getCharacter = $(e.target).data("character");
-        var getConsole = $(e.target).data("console");
-        var datasource = "ajax/getPlayerStats.php";
-        
-        if(getName != undefined){
-            $(e.target).siblings('.statsLoading').show();
-            // $(clickedBtn).prop("disabled", true);
-            // $(clickedBtn).parents(".mdl-button").html('Retrieving Stats..');
-            clickedBtn =  $(e.target).parents(".getStats");
-            $(e.target).html("Retrieving Stats..");
+        if($(e.target).attr("data-exists") == undefined){
+            e.target;
+            // var clickedBtn;
+            
+            var getName = $(e.target).data("name");
+            // var getCharacter = $(e.target).parents(".mdl-button").data("character");
+            var getCharacter = $(e.target).data("character");
+            var getConsole = $(e.target).data("console");
+            var getCharacterID = $(e.target).data("characterid");
+            var datasource = "ajax/getPlayerStats.php";
+            
+            if(getName != undefined){
+                $(e.target).siblings('.statsLoading').show();
+                clickedBtn = $(e.target).parents(".getStats");
+                $(e.target).html("Retrieving Stats..");
+                $(e.target).attr("data-exists", "1");
+            }
+            else{
+                $(e.target).html("Error: Can't find player!");
+                $(e.target).removeClass("btn-primary");
+                $(e.target).addClass("btn-danger");
+                // $(e.target).attr("data-exists", null);
+            }
+    
+            //TODO get console from post and pass to php
+            var obj = {name: getName, character:getCharacter, console:getConsole, characterID: getCharacterID};
+            
+            //TODO how to get more than one value from LFG post (need character)
+                //   var playerName = {name:$("#playerStatsForm input").val(), characterName:$};
+                  
+                  $.ajax({
+                      data:obj, 
+                      datatype: 'json',
+                      url:datasource,
+                      type: 'POST',
+                      encode: true
+                  })
+                  .done(function(data){
+                    //if there is data
+                    //TODO removeChild after clicking hide stats
+                    $('.statsLoading').hide();
+                    $(e.target).html("Hide Stats");
+                    
+                    var jsonResponse = JSON.parse(data);
+                    // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
+                    if(typeof jsonResponse.Response.trialsOfOsiris.allTime === "undefined"){
+                        console.log("ERROR");
+                        $(e.target).html('Error: No stats found');
+                        $(e.target).removeClass("btn-primary");
+                        $(e.target).addClass("btn-danger");
+                        $(e.target).attr("data-exists", null);
+                        
+                    }
+                    else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio === "undefined"){
+                        console.log("ERROR");
+                        $(e.target).html('Error: No stats found');
+                        $(e.target).removeClass("btn-primary");
+                        $(e.target).addClass("btn-danger");
+                        $(e.target).attr("data-exists", null);
+                    }
+                    //ELSEIF if response != 1, throw error if trial stats not found-->
+                    else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan === "undefined"){
+                        console.log("ERROR");
+                        $(e.target).html('Error: No stats found');
+                        $(e.target).removeClass("btn-primary");
+                        $(e.target).addClass("btn-danger");
+                        $(e.target).attr("data-exists", null);
+                    }
+                    else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio === "undefined"){
+                        console.log("ERROR");
+                        $(e.target).html('Error: No stats found');
+                        $(e.target).removeClass("btn-primary");
+                        $(e.target).addClass("btn-danger");
+                        $(e.target).attr("data-exists", null);
+                    }
+                    else{
+                        clicks++;
+    
+                        var template = $("#playerStats").html().trim();
+                        var clone = $(template);
+                        //fill the data
+                        //console.log(data.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
+                        var playerKD = jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue;
+                        var averageLifespan = jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan.basic.displayValue;
+                        var winLossRatio = jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio.basic.displayValue;
+    
+                        $(clone).find(".playerKD").html(playerKD);
+                        $(clone).find(".playerAverageLifespan").html(averageLifespan);
+                        $(clone).find(".playerWinLossRatio").html(winLossRatio);
+    
+                        $(e.target).parents(".postCard").siblings(".stats-row").append(clone);
+    
+                    }
+                    
+                  })
+                  .fail(function(){
+                      alert("text");
+                  })
+                  timeout: 300;
+            
+    
+        }else if($(e.target).attr("data-exists") == 1){
+            
+            $(e.target).parents(".postCard").siblings(".stats-row").css("display", "none");
+            $(e.target).html("Show Player Stats");
+            $(e.target).attr("data-exists", "0");
+    
+        }else if($(e.target).attr("data-exists") == "0"){
+            $(e.target).html("Hide Stats");
+            $(e.target).parents(".postCard").siblings(".stats-row").css("display", "");
             $(e.target).attr("data-exists", "1");
         }
-        else{
-            // $(e.target).html("Error getting stats!");
-        }
-        
-        
-        // console.log("e target: ", e.target);
-        // console.log("playerName: ", getName);
-        // console.log("Character: ", getCharacter);    
-        
-        //TODO get console from post and pass to php
-        var obj = {name: getName, character:getCharacter, console:getConsole};
-        
-        //TODO how to get more than one value from LFG post (need character)
-            //   var playerName = {name:$("#playerStatsForm input").val(), characterName:$};
-              
-              
-              $.ajax({
-                  data:obj, 
-                  datatype: 'json',
-                  url:datasource,
-                  type: 'POST',
-                  encode: true
-              })
-              .done(function(data){
-                //   console.log(data);
-                //if there is data
-                //TODO removeChild after clicking hide stats
-                // upgradeMDL();
-                // componentHandler.upgradeDom(".mdl-button");
-                $('.statsLoading').hide();
-                $(e.target).html("Hide Stats");
-                
-                // $(".getStats").unbind("click", clickHandler);
-                
-                var jsonResponse = JSON.parse(data);
-                // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
-                if(typeof jsonResponse.Response.trialsOfOsiris.allTime === "undefined"){
-                    console.log("ERROR");
-                    $(e.target).html('Error: No stats found');
-                    $(e.target).removeClass("btn-primary");
-                    // $(e.target).addClass("getTrialsStatsError");
-                    $(e.target).addClass("btn-danger");
-                    $(e.target).attr("data-exists", null);
-                    
-                }
-                else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio === "undefined"){
-                    console.log("ERROR");
-                    $(e.target).html('Error: No stats found');
-                    $(e.target).removeClass("btn-primary");
-                    // $(e.target).addClass("getTrialsStatsError");
-                    $(e.target).addClass("btn-danger");
-                    $(e.target).attr("data-exists", null);
-                }
-                //ELSEIF if response != 1, throw error if trial stats not found-->
-                else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan === "undefined"){
-                    console.log("ERROR");
-                    $(e.target).html('Error: No stats found');
-                    $(e.target).removeClass("btn-primary");
-                    // $(e.target).addClass("getTrialsStatsError");
-                    $(e.target).addClass("btn-danger");
-                    $(e.target).attr("data-exists", null);
-                }
-                else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio === "undefined"){
-                    console.log("ERROR");
-                    $(e.target).html('Error: No stats found');
-                    $(e.target).removeClass("btn-primary");
-                    // $(e.target).addClass("getTrialsStatsError");
-                    $(e.target).addClass("btn-danger");
-                    $(e.target).attr("data-exists", null);
-                }
-                else{
-                    clicks++;
-                    // console.log(clicks);
-                    // $(this).prop("disabled", false);
-                    // $(clickedBtn).html('Hide Stats');
-                    
-                    var template = $("#playerStats").html().trim();
-                    var clone = $(template);
-                    //fill the data
-                    //console.log(data.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
-                    var playerKD = jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue;
-                    var averageLifespan = jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan.basic.displayValue;
-                    var winLossRatio = jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio.basic.displayValue;
-                    // console.log("playerKD: ", playerKD);
-                    // console.log("Avg Lifespan: ", averageLifespan);
-                    // console.log("Response code: ", jsonResponse.Response);
-                    
-                    $(clone).find(".playerKD").html(playerKD);
-                    $(clone).find(".playerAverageLifespan").html(averageLifespan);
-                    $(clone).find(".playerWinLossRatio").html(winLossRatio);
-                    // $(".stats-row").append(clone);
-                    // $(".stats-row").append(clone);
-                    // $(e.target).parent(".mdl-button").parent(".postCard").siblings(".stats-row").append(clone);
-                    // console.log("btn :", clickedBtn);
-                    $(e.target).parents(".postCard").siblings(".stats-row").append(clone);
-                    //$(e.target).parents(".mdl-button").siblings('.statsLoading').show();
-                }
-                
-              })
-              .fail(function(){
-                  alert("text");
-              })
-              timeout: 300;
-        
-        // $(".getStats").unbind("click", hideStatsClick);
-    
-        // function hideStatsClick(e){
-        //     console.log("Hide Test", e);
-        //     e.target;
-        // }
-        
-    }else if($(e.target).attr("data-exists") == 1){
-        
-        $(e.target).parents(".postCard").siblings(".stats-row").css("display", "none");
-        $(e.target).html("Show Player Stats");
-        // console.log("data = 1");
-        $(e.target).attr("data-exists", "0");
-        
-        
-    //     // $(e.target).parents(".mdl-button").parents(".postDescription").parents(".postCard").siblings(".stats-row").remove();
-    //     // $(e.target).parent().siblings(".stats-row").attr("display", "none");
-    //     $(e.target).parent(".mdl-button").parent(".postCard").siblings(".stats-row").attr("display", "none");
-    //     clicks--;
-    //     console.log("click- :", clicks);
-    //     $(".getStats").html('Get Player Stats');
-    }else if($(e.target).attr("data-exists") == "0"){
-        $(e.target).html("Hide Stats");
-        $(e.target).parents(".postCard").siblings(".stats-row").css("display", "");
-        $(e.target).attr("data-exists", "1");
-    }
       
       
-    }
+    } //clickHandler
     
     function showLoading() {
         console.log("showLoading fired");

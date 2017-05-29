@@ -2,7 +2,8 @@
     if($_SERVER["REQUEST_METHOD"]=="POST"){
         $posts = array();
         //get posts from database
-        $query="SELECT * FROM posts WHERE activityType = 'raid' ORDER BY postTime DESC";
+        // $query="SELECT * FROM posts WHERE activityType = 'raid' ORDER BY postTime DESC";
+        $query="SELECT * FROM posts ORDER BY postTime DESC";
         
         $result = $connection->query($query);
         
