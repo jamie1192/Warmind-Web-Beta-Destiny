@@ -2,8 +2,6 @@
 
     session_start();
     
-    echo "uid: ", $_SESSION['user']['uid'];
-    
     include("head.php");
     include("key.php");
      
@@ -475,7 +473,7 @@
                                             <span class="postDescriptionText"></span>
                                         </div>
                                         <span class="postAge"></span>
-                                        <button class="btn btn-primary getStats" type="button">Get Player Stats</button>
+                                        <button class="btn btn-primary getStats" type="button">Get Raid Stats</button>
                                     </div>
                                 
                                 <div class="stats-row whiteText"></div>
@@ -566,7 +564,7 @@
                                             <span class="postDescriptionText"></span>
                                         </div>
                                         <span class="postAge"></span>
-                                        <button class="btn btn-primary getStats" type="button">Get Player Stats</button>
+                                        <button class="btn btn-primary getStats" type="button">Get PVP Stats</button>
                                     </div>
                                 
                                 <div class="stats-row whiteText"></div>

@@ -161,8 +161,8 @@
                     creation_date, last_update, last_login) 
                     VALUES ('$displayName', '$hashed','$consoleID','$activeMembershipID', NOW(),NOW(),NOW())";
                 
-                // $uid = mysqli_insert_id();
-                $uid = $db->lastInsertId();
+                
+                // $uid = $db->lastInsertId();
                 // $_SESSION['user'] = array('uid' => $id, 'username' => $displayName, 'consoleID' => $consoleID, 'membershipID' => $membershipID, 
                 //     'titanID' => $activeTitanID, 'titanSlot' => $titanSlot, 'titanEmblem' => $titanEmblem, 'titanBackground', 'hunterID' => $activeHunterID, 
                 //     'hunterSlot' => $activeHunterSlot, 
@@ -171,18 +171,21 @@
                 
                 
                 // print_r($_SESSION);
-                header("location:home.php");
+                
                 // exit();
 
                 if(!$connection->query($query)){
                     $errors["database"] = "Database error!";
                 }
+                $uid = mysqli_insert_id($connection);
                 session_start();
                 $_SESSION['user'] = array('uid' => $uid, 'username' => $displayName, 'consoleID' => $consoleID, 'membershipID' => $activeMembershipID, 
                     'firstCharacterID' => $firstCharacterID, 'firstCharacter' => $firstCharacterClass,'firstCharacterEmblem' => $firstCharacterEmblem, 'firstCharacterBackground' => $firstCharacterBackground, 'firstLightLevel' => $firstCharacterLight, 
                     'secondCharacterID' => $secondCharacterID,'secondCharacter' => $secondCharacterClass,'secondCharacterEmblem' => $secondCharacterEmblem, 'secondCharacterBackground' => $secondCharacterBackground, 'secondLightLevel' => $secondCharacterLight, 
                     'thirdCharacterID' => $thirdCharacterID, 'thirdCharacter' => $thirdCharacterClass, 'thirdCharacterEmblem' => $thirdCharacterEmblem, 'thirdCharacterBackground' => $thirdCharacterBackground, 'thirdLightLevel' => $thirdCharacterLight, 
                     'grimoire' => $grimoire);
+                    
+                    header("location:home.php");
             }
         }
     }
