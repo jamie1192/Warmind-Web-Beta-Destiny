@@ -2,6 +2,8 @@
 
     session_start();
     
+    echo "uid: ", $_SESSION['user']['uid'];
+    
     include("head.php");
     include("key.php");
      
@@ -477,21 +479,21 @@
                                     </div>
                                 
                                 <div class="stats-row whiteText"></div>
-                                    <template id="playerStats">
+                                    <template id="raidStats">
                                             <table class="mdl-data-table mdl-js-data-table mdl-shadow--4dp trialsStatsRow postColour">
                                             <thead>
                                                 <tr class="goldColour">
-                                                    <th>K/D Ratio</th>
-                                                    <th>Average Lifespan</th>
-                                                    <th>Win/Loss Ratio</th>
+                                                    <th>Fastest Completion</th>
+                                                    <th>Completions</th>
+                                                    <th>Total Time Played</th>
                                                 </tr>
                                             </thead>
                                                 <tbody>
                                                      <!--Row 1 -->
                                                     <tr class="whiteText">
-                                                        <td class="playerKD"></td>
-                                                        <td class="playerAverageLifespan"></td>
-                                                        <td class="playerWinLossRatio"></td>
+                                                        <td class="fastestCompletion"></td>
+                                                        <td class="completionCount"></td>
+                                                        <td class="totalTime"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -763,7 +765,7 @@
   
   <script async>
     
-    //load raid posts
+    //load all posts, sort into tabs
     function loadPosts(){
         $('.contentLoading').show();
         // $('.contentLoading').attr("display", "");
@@ -793,6 +795,8 @@
                         //fill the data
                         var username = data[i].username;
                         var selectedCharacter = data[i].selectedCharacter;
+                        var membershipID = data[i].membershipID;
+                        var characterID = data[i].characterID;
                         var consoleID = data[i].consoleID;
                         var activity = data[i].activity;
                         var activityType = data[i].activityType;
@@ -876,7 +880,11 @@
                         $(clone).find(".getStats").attr("data-name", username);
                         $(clone).find(".getStats").attr("data-console", consoleID);
                         $(clone).find(".postAge").html(postAge);
+                        $(clone).find(".getStats").attr("data-activity", activity);
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
+                        $(clone).find(".getStats").attr("data-characterID", characterID);
+                        $(clone).find(".getStats").attr("data-membership-id", membershipID);
+                        // $(clone).find(".getStats").attr("data-membershipID", )
                         
                         $(clone).find(".hasMic").html(mic);
                         
@@ -887,367 +895,6 @@
             // componentHandler.upgradeDom();
           
         }
-    
-    //load pvp posts
-    function loadPvpPosts(){
-        $('.pvpContentLoading').show();
-        // $('.contentLoading').attr("display", "");
-          $(".pvpContainerTemplate").empty();
-            var datasource = "ajax/getPvpPosts.php";
-            // $(".postContainerTemplate").empty();
-            //make an ajax request
-            $.ajax({
-                url:datasource,
-                dataType:'json',
-                type:'POST',
-                encode:true
-            })
-            .done(function(data){
-                $('.pvpContentLoading').hide();
-                //if there is data
-                if(data.length > 0){
-                    var len = data.length;
-                    console.log(len);
-                    
-                    
-                    for(i=0;i<len;i++){
-                        var template = $("#pvpPosts").html().trim();
-                        var clone = $(template);
-                        //fill the data
-                        var username = data[i].username;
-                        var selectedCharacter = data[i].selectedCharacter;
-                        var consoleID = data[i].consoleID;
-                        var activity = data[i].activity;
-                        var description = data[i].description;
-                        var emblemIcon = data[i].emblemIcon;
-                        var emblemBackground = data[i].emblemBackground;
-                        var lightLevel = data[i].lightLevel;
-                        var grimoireScore = data[i].grimoireScore;
-                        var hasMic = data[i].hasMic;
-                        var postTimeD = data[i].ageD;
-                        var postTimeH = data[i].ageH;
-                        var postTimeM = data[i].ageM;
-                        var characterID = data[i].characterID;
-                        
-                        var lightLevelIcon = "&#10022  ";
-                        var grimoireImg = "./assets/grimoireIcon.png";
-                        var buttonText = " Get Player Stats";
-                        var postAge;
-                        //TODO postTime = data[i].postTime;
-                        // console.log("postTime: ", postTime);
-                        // var a = new Date(Date.parse(postTime.replace('-','/','g')));
-                        if(postTimeD <= 0){
-                            if(postTimeH <= 0){
-                                if(postTimeM <= 0){
-                                    postAge = "Just Now";
-                                }
-                                else if(postTimeM == 1){
-                                    postAge = postTimeM + " min ago";
-                                }
-                                else{
-                                    postAge = postTimeM + " mins ago";
-                                }
-                            }
-                            else if(postTimeH == 1){
-                                postAge = postTimeH + " hour ago"; 
-                            }
-                            else{
-                                postAge = postTimeH + " hours ago";
-                            }
-                        }
-                        else if(postTimeD == 1){
-                            postAge = postTimeD + " day ago";
-                        }
-                        else{
-                            postAge = postTimeD + " days ago";
-                        }
-                        // console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
-                       
-                        //TODO consoleID -> icon
-                        if(consoleID == 1){
-                          consoleChoice = "assets/xboxLogo.png"; //xbox icon
-                        }
-                        else if(consoleID == 2){
-                          consoleChoice = "assets/psLogo.png"; //PS icon
-                        }
-                        
-                        if(hasMic){
-                          //var mic = "mic icon path"
-                          var mic = "mic";
-                        }
-                        else{
-                            var mic = "mic_off";
-                        }
-                
-                
-                        $(clone).find(".playerUsernameOutput").html(username);
-                        $(clone).find(".playerClassOutput").html(selectedCharacter);
-                        //console icon insert
-                        $(clone).find(".consoleIcon").attr("src", consoleChoice);
-                        $(clone).find(".postActivityText").html(activity);
-                        $(clone).find(".postDescriptionText").html(description);
-                        $(clone).find(".emblemIconImg").attr("src", emblemIcon);
-                        $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
-                        $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
-                        
-                        $(clone).find(".grimoireImage").attr("src", grimoireImg);
-                        $(clone).find(".playerGrimoireOutput").html(grimoireScore);
-                        
-                        $(clone).find(".getStats").attr("data-name", username);
-                        $(clone).find(".getStats").attr("data-console", consoleID);
-                        $(clone).find(".postAge").html(postAge);
-                        $(clone).find(".getStats").attr("data-characterID", characterID);
-                        $(clone).find(".getStats").attr("data-character", selectedCharacter);
-                        
-                        $(clone).find(".hasMic").html(mic);
-                        
-                        $(".pvpContainerTemplate").append(clone);
-                    }
-                }
-            });
-            // componentHandler.upgradeDom();
-          
-        }
-    
-    //load strikes posts
-    function loadStrikesPosts(){
-        $('.strikesContentLoading').show();
-        // $('.contentLoading').attr("display", "");
-          $(".strikesContainerTemplate").empty();
-            var datasource = "ajax/getStrikesPosts.php";
-            // $(".postContainerTemplate").empty();
-            //make an ajax request
-            $.ajax({
-                url:datasource,
-                dataType:'json',
-                type:'POST',
-                encode:true
-            })
-            .done(function(data){
-                $('.strikesContentLoading').hide();
-                //if there is data
-                if(data.length > 0){
-                    var len = data.length;
-                    console.log(len);
-                    
-                    
-                    for(i=0;i<len;i++){
-                        var template = $("#strikesPosts").html().trim();
-                        var clone = $(template);
-                        //fill the data
-                        var username = data[i].username;
-                        var selectedCharacter = data[i].selectedCharacter;
-                        var consoleID = data[i].consoleID;
-                        var activity = data[i].activity;
-                        var description = data[i].description;
-                        var emblemIcon = data[i].emblemIcon;
-                        var emblemBackground = data[i].emblemBackground;
-                        var lightLevel = data[i].lightLevel;
-                        var grimoireScore = data[i].grimoireScore;
-                        var hasMic = data[i].hasMic;
-                        var postTimeD = data[i].ageD;
-                        var postTimeH = data[i].ageH;
-                        var postTimeM = data[i].ageM;
-                        
-                        var lightLevelIcon = "&#10022  ";
-                        var grimoireImg = "./assets/grimoireIcon.png";
-                        var buttonText = " Get Player Stats";
-                        var postAge;
-                        //TODO postTime = data[i].postTime;
-                        // console.log("postTime: ", postTime);
-                        // var a = new Date(Date.parse(postTime.replace('-','/','g')));
-                        if(postTimeD <= 0){
-                            if(postTimeH <= 0){
-                                if(postTimeM <= 0){
-                                    postAge = "Just Now";
-                                }
-                                else if(postTimeM == 1){
-                                    postAge = postTimeM + " min ago";
-                                }
-                                else{
-                                    postAge = postTimeM + " mins ago";
-                                }
-                            }
-                            else if(postTimeH == 1){
-                                postAge = postTimeH + " hour ago"; 
-                            }
-                            else{
-                                postAge = postTimeH + " hours ago";
-                            }
-                        }
-                        else if(postTimeD == 1){
-                            postAge = postTimeD + " day ago";
-                        }
-                        else{
-                            postAge = postTimeD + " days ago";
-                        }
-                        // console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
-                       
-                        //TODO consoleID -> icon
-                        if(consoleID == 1){
-                          consoleChoice = "assets/xboxLogo.png"; //xbox icon
-                        }
-                        else if(consoleID == 2){
-                          consoleChoice = "assets/psLogo.png"; //PS icon
-                        }
-                        
-                        if(hasMic){
-                          //var mic = "mic icon path"
-                          var mic = "mic";
-                        }
-                        else{
-                            var mic = "mic_off";
-                        }
-                
-                
-                        $(clone).find(".playerUsernameOutput").html(username);
-                        $(clone).find(".playerClassOutput").html(selectedCharacter);
-                        //console icon insert
-                        $(clone).find(".consoleIcon").attr("src", consoleChoice);
-                        $(clone).find(".postActivityText").html(activity);
-                        $(clone).find(".postDescriptionText").html(description);
-                        $(clone).find(".emblemIconImg").attr("src", emblemIcon);
-                        $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
-                        $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
-                        
-                        $(clone).find(".grimoireImage").attr("src", grimoireImg);
-                        $(clone).find(".playerGrimoireOutput").html(grimoireScore);
-                        
-                        // $(clone).find(".getStats").attr("data-name", username);
-                        // $(clone).find(".getStats").attr("data-console", consoleID);
-                        $(clone).find(".postAge").html(postAge);
-                        // $(clone).find(".getStats").attr("data-character", selectedCharacter);
-                        
-                        $(clone).find(".hasMic").html(mic);
-                        
-                        $(".strikesContainerTemplate").append(clone);
-                    }
-                }
-            });
-            // componentHandler.upgradeDom();
-          
-        }
-    
-    
-    //load all other posts
-    function loadOtherPosts(){
-        $('.otherContentLoading').show();
-        // $('.contentLoading').attr("display", "");
-          $(".otherContainerTemplate").empty();
-            var datasource = "ajax/getOtherPosts.php";
-            // $(".postContainerTemplate").empty();
-            //make an ajax request
-            $.ajax({
-                url:datasource,
-                dataType:'json',
-                type:'POST',
-                encode:true
-            })
-            .done(function(data){
-                $('.otherContentLoading').hide();
-                //if there is data
-                if(data.length > 0){
-                    var len = data.length;
-                    console.log(len);
-                    
-                    
-                    for(i=0;i<len;i++){
-                        var template = $("#otherPosts").html().trim();
-                        var clone = $(template);
-                        //fill the data
-                        var username = data[i].username;
-                        var selectedCharacter = data[i].selectedCharacter;
-                        var consoleID = data[i].consoleID;
-                        var activity = data[i].activity;
-                        var description = data[i].description;
-                        var emblemIcon = data[i].emblemIcon;
-                        var emblemBackground = data[i].emblemBackground;
-                        var lightLevel = data[i].lightLevel;
-                        var grimoireScore = data[i].grimoireScore;
-                        var hasMic = data[i].hasMic;
-                        var postTimeD = data[i].ageD;
-                        var postTimeH = data[i].ageH;
-                        var postTimeM = data[i].ageM;
-                        
-                        var lightLevelIcon = "&#10022  ";
-                        var grimoireImg = "./assets/grimoireIcon.png";
-                        var buttonText = " Get Player Stats";
-                        var postAge;
-                        //TODO postTime = data[i].postTime;
-                        // console.log("postTime: ", postTime);
-                        // var a = new Date(Date.parse(postTime.replace('-','/','g')));
-                        if(postTimeD <= 0){
-                            if(postTimeH <= 0){
-                                if(postTimeM <= 0){
-                                    postAge = "Just Now";
-                                }
-                                else if(postTimeM == 1){
-                                    postAge = postTimeM + " min ago";
-                                }
-                                else{
-                                    postAge = postTimeM + " mins ago";
-                                }
-                            }
-                            else if(postTimeH == 1){
-                                postAge = postTimeH + " hour ago"; 
-                            }
-                            else{
-                                postAge = postTimeH + " hours ago";
-                            }
-                        }
-                        else if(postTimeD == 1){
-                            postAge = postTimeD + " day ago";
-                        }
-                        else{
-                            postAge = postTimeD + " days ago";
-                        }
-                        // console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
-                       
-                        //TODO consoleID -> icon
-                        if(consoleID == 1){
-                          consoleChoice = "assets/xboxLogo.png"; //xbox icon
-                        }
-                        else if(consoleID == 2){
-                          consoleChoice = "assets/psLogo.png"; //PS icon
-                        }
-                        
-                        if(hasMic){
-                          //var mic = "mic icon path"
-                          var mic = "mic";
-                        }
-                        else{
-                            var mic = "mic_off";
-                        }
-                
-                
-                        $(clone).find(".playerUsernameOutput").html(username);
-                        $(clone).find(".playerClassOutput").html(selectedCharacter);
-                        //console icon insert
-                        $(clone).find(".consoleIcon").attr("src", consoleChoice);
-                        $(clone).find(".postActivityText").html(activity);
-                        $(clone).find(".postDescriptionText").html(description);
-                        $(clone).find(".emblemIconImg").attr("src", emblemIcon);
-                        $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
-                        $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
-                        
-                        $(clone).find(".grimoireImage").attr("src", grimoireImg);
-                        $(clone).find(".playerGrimoireOutput").html(grimoireScore);
-                        
-                        // $(clone).find(".getStats").attr("data-name", username);
-                        // $(clone).find(".getStats").attr("data-console", consoleID);
-                        $(clone).find(".postAge").html(postAge);
-                        // $(clone).find(".getStats").attr("data-character", selectedCharacter);
-                        
-                        $(clone).find(".hasMic").html(mic);
-                        
-                        $(".otherContainerTemplate").append(clone);
-                    }
-                }
-            });
-            // componentHandler.upgradeDom();
-          
-        }
-    
     
     //load posts from DB
     $(document).ready(function(){
@@ -1369,11 +1016,11 @@
     
     //end login dialog
     
-    //get player stats on LFG post
-    $('.pvpContainerTemplate').on("click", ".getStats", clickHandler);
+    //get trials stats on LFG post TODO crucible/iron banana
+    $('.pvpContainerTemplate').on("click", ".getStats", clickHandler2);
 
     var clicks = 0;
-    function clickHandler(e){
+    function clickHandler2(e){
     
         if($(e.target).attr("data-exists") == undefined){
             e.target;
@@ -1491,6 +1138,146 @@
       
     } //clickHandler
     
+    //Raid stats
+    $('.raidContainerTemplate').on("click", ".getStats", clickHandler);
+
+    var raidClicks = 0;
+    function clickHandler(e){
+    
+        if($(e.target).attr("data-exists") == undefined){
+            e.target;
+            
+            console.log(e.target);
+            // var clickedBtn;
+            
+            var getName = $(e.target).data("name");
+            var getCharacter = $(e.target).data("character");
+            var getConsole = $(e.target).data("console");
+            var getCharacterID = $(e.target).data("characterid");
+            var getActivity = $(e.target).data("activity");
+            var getMembershipID = $(e.target).data("membership-id");
+
+            var datasource = "./ajax/getRaidStats.php";
+            
+            if(getName != undefined){
+                $(e.target).siblings('.statsLoading').show();
+                clickedBtn = $(e.target).parents(".getStats");
+                $(e.target).html("Retrieving Stats..");
+                $(e.target).attr("data-exists", "1");
+            }
+            else{
+                $(e.target).html("Error: Can't find player!");
+                $(e.target).removeClass("btn-primary");
+                $(e.target).addClass("btn-danger");
+                // $(e.target).attr("data-exists", null);
+            }
+    
+            //TODO get console from post and pass to php
+            var obj = {name: getName, character:getCharacter, console:getConsole,
+            characterID: getCharacterID, activity: getActivity, membershipID: getMembershipID};
+            
+            //TODO how to get more than one value from LFG post (need character)
+                //   var playerName = {name:$("#playerStatsForm input").val(), characterName:$};
+                  
+                  $.ajax({
+                      data:obj, 
+                      datatype: 'json',
+                      url:datasource,
+                      type: 'POST',
+                      encode: true
+                  })
+                  .done(function(data2){
+                    //if there is data
+                    //TODO removeChild after clicking hide stats
+                    $('.statsLoading').hide();
+                    $(e.target).html("Hide Stats");
+                    
+                    // console.log("data array: ", data2);
+                    var jsonResponse2 = JSON.parse(data2);
+                    // console.log(jsonResponse2);
+                    // console.log("data array: ", data2);
+                    // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
+                    if(typeof jsonResponse2.completions === "undefined"){
+                        console.log("ERROR");
+                        $(e.target).html('Error: No stats found');
+                        $(e.target).removeClass("btn-primary");
+                        $(e.target).addClass("btn-danger");
+                        $(e.target).attr("data-exists", null);
+                        
+                    }
+                    else if(typeof jsonResponse2.fastest === "undefined"){
+                        console.log("ERROR");
+                        $(e.target).html('Error: No stats found');
+                        $(e.target).removeClass("btn-primary");
+                        $(e.target).addClass("btn-danger");
+                        $(e.target).attr("data-exists", null);
+                    }
+                    //ELSEIF if response != 1, throw error if trial stats not found-->
+                    else if(typeof jsonResponse2.totalTime === "undefined"){
+                        console.log("ERROR");
+                        $(e.target).html('Error: No stats found');
+                        $(e.target).removeClass("btn-primary");
+                        $(e.target).addClass("btn-danger");
+                        $(e.target).attr("data-exists", null);
+                    }
+                    // else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio === "undefined"){
+                    //     console.log("ERROR");
+                    //     $(e.target).html('Error: No stats found');
+                    //     $(e.target).removeClass("btn-primary");
+                    //     $(e.target).addClass("btn-danger");
+                    //     $(e.target).attr("data-exists", null);
+                    // }
+                    else{
+                        raidClicks++;
+    
+                        var template = $("#raidStats").html().trim();
+                        var clone = $(template);
+                        //fill the data
+                        //console.log(data.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
+                        // var fastestCompletion = jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue;
+                        // var completionCount = jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan.basic.displayValue;
+                        // var totalTime = jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio.basic.displayValue;
+                        
+                        var fastestCompletion = jsonResponse2.fastest;
+                        console.log("fast: ", fastestCompletion);
+                        var completionCount = jsonResponse2.completions;
+                        var totalTime = jsonResponse2.totalTime;
+    
+                        $(clone).find(".fastestCompletion").html(fastestCompletion);
+                        $(clone).find(".completionCount").html(completionCount);
+                        $(clone).find(".totalTime").html(totalTime);
+                        
+                        // <td class="fastestCompletion"></td>
+                        // <td class="completionCount"></td>
+                        // <td class="totalTime"></td>
+    
+                        $(e.target).parents(".postCard").siblings(".stats-row").append(clone);
+    
+                    }
+                    
+                  })
+                  .fail(function(){
+                      alert("failed request");
+                  })
+                  timeout: 300;
+            
+    
+        }else if($(e.target).attr("data-exists") == 1){
+            
+            $(e.target).parents(".postCard").siblings(".stats-row").css("display", "none");
+            $(e.target).html("Show Player Stats");
+            $(e.target).attr("data-exists", "0");
+    
+        }else if($(e.target).attr("data-exists") == "0"){
+            $(e.target).html("Hide Stats");
+            $(e.target).parents(".postCard").siblings(".stats-row").css("display", "");
+            $(e.target).attr("data-exists", "1");
+        }
+      
+      
+    } //clickHandler
+    
+    
     function showLoading() {
         console.log("showLoading fired");
         // remove existing loaders
@@ -1550,9 +1337,9 @@
                 
                 $('#submitPostLoading').hide();
                 loadPosts();
-                loadPvpPosts();
-                loadStrikesPosts();
-                loadOtherPosts();
+                // loadPvpPosts();
+                // loadStrikesPosts();
+                // loadOtherPosts();
                 upgradeMDL();
             })
             .fail(function(){

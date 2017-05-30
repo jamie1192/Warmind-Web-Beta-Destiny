@@ -117,7 +117,7 @@
         
         //if no errors
         
-        if(count($errors)==0){
+        if(count($errors)==0){ 
             $activitySelection = filter_var($activitySelection, FILTER_SANITIZE_STRING);
             $description = filter_var($description, FILTER_SANITIZE_STRING);
             $emblemIconPath = filter_var($emblemIconPath, FILTER_SANITIZE_URL);
@@ -125,9 +125,9 @@
             
             //
             // echo "act var: ", $activityType;
-            $query = "INSERT INTO posts (uid, username, selectedCharacter, characterID, consoleID, activity, activityType, description, emblemIcon, emblemBackground, lightLevel, grimoireScore, hasMic, postTime) 
-                    VALUES ('$sessionID', '$sessionUsername', '$className', '$characterID', '$sessionConsoleID', '$activitySelection', '$activityType', '$description', '$bungieURL$emblemIconPath','$bungieURL$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() ) 
-                    ON DUPLICATE KEY UPDATE selectedCharacter='$className', characterID='$characterID', activity='$activitySelection', activityType='$activityType', description='$description', 
+            $query = "INSERT INTO posts (uid, username, membershipID, selectedCharacter, characterID, consoleID, activity, activityType, description, emblemIcon, emblemBackground, lightLevel, grimoireScore, hasMic, postTime) 
+                    VALUES ('$sessionID', '$sessionUsername', '$sessionMembershipID', '$className', '$characterID', '$sessionConsoleID', '$activitySelection', '$activityType', '$description', '$bungieURL$emblemIconPath','$bungieURL$emblemBackgroundPath', '$lightLevel', '$grimoire', '$hasMicrophone', NOW() ) 
+                    ON DUPLICATE KEY UPDATE selectedCharacter='$className', membershipID='$sessionMembershipID', characterID='$characterID', activity='$activitySelection', activityType='$activityType', description='$description', 
                     emblemIcon='$bungieURL$emblemIconPath', emblemBackground='$bungieURL$emblemBackgroundPath', lightLevel='$lightLevel', grimoireScore='$grimoire', hasMic='$micOutput', postTime=NOW()";
                     
                     // print_r($query);
