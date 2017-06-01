@@ -773,14 +773,12 @@
     //load all posts, sort into tabs
     function loadPosts(){
         $('.contentLoading').show();
-        // $('.contentLoading').attr("display", "");
-          $(".raidContainerTemplate").empty();
-          $(".pvpContainerTemplate").empty();
-          $(".strikesContainerTemplate").empty();
-          $(".otherContainerTemplate").empty();
-            var datasource = "ajax/getPostsData.php";
-            // $(".postContainerTemplate").empty();
-            //make an ajax request
+        $(".raidContainerTemplate").empty();
+        $(".pvpContainerTemplate").empty();
+        $(".strikesContainerTemplate").empty();
+        $(".otherContainerTemplate").empty();
+        var datasource = "ajax/getPostsData.php";
+
             $.ajax({
                 url:datasource,
                 dataType:'json',
@@ -797,7 +795,7 @@
                     
                     for(i=0;i<len;i++){
                         
-                        //fill the data
+                        //load LFG posts from db
                         var username = data[i].username;
                         var selectedCharacter = data[i].selectedCharacter;
                         var membershipID = data[i].membershipID;
@@ -820,6 +818,8 @@
                         var grimoireImg = "./assets/grimoireIcon.png";
                         var buttonText = " Get Player Stats";
                         var postAge;
+                        
+                        //TODO xbox direct message
                         
                         //sorts all PvP posts into correct tab
                         if (((activity.toLowerCase().indexOf("crucible") >= 0) || (activity.toLowerCase().indexOf("iron") >= 0) || 
@@ -857,7 +857,7 @@
                         }
                         // console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
                        
-                        //TODO consoleID -> icon
+
                         if(consoleID == 1){
                           consoleChoice = "assets/xboxLogo.png"; //xbox icon
                         }
@@ -876,7 +876,7 @@
                 
                         $(clone).find(".playerUsernameOutput").html(username);
                         $(clone).find(".playerClassOutput").html(selectedCharacter);
-                        //console icon insert
+
                         $(clone).find(".consoleIcon").attr("src", consoleChoice);
                         $(clone).find(".postActivityText").html(activity);
                         $(clone).find(".postDescriptionText").html(description);
@@ -916,8 +916,6 @@
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         $(clone).find(".getStats").attr("data-characterID", characterID);
                         $(clone).find(".getStats").attr("data-membership-id", membershipID);
-                        
-                        // $(clone).find(".getStats").attr("data-membershipID", )
                         
                         $(clone).find(".hasMic").html(mic);
                         
@@ -1012,7 +1010,7 @@
     });
     
     
-    
+    //Crucible/Trials/Iron Banana stats
     $('.pvpContainerTemplate').on("click", ".getStats", clickHandler2);
 
     var clicks = 0;
@@ -1043,12 +1041,9 @@
                 // $(e.target).attr("data-exists", null);
             }
     
-            //TODO get console from post and pass to php
+
             var obj = {name: getName, character:getCharacter, console:getConsole,
             characterID: getCharacterID, activity: getActivity, membershipID: getMembershipID};
-            
-            //TODO how to get more than one value from LFG post (need character)
-                //   var playerName = {name:$("#playerStatsForm input").val(), characterName:$};
                   
                   $.ajax({
                       data:obj, 
@@ -1151,6 +1146,7 @@
     } //clickHandler
     
     //Raid stats
+    //TODO extra tableRow for account-wide stats(?)
     $('.raidContainerTemplate').on("click", ".getStats", clickHandler);
 
     var raidClicks = 0;
@@ -1159,8 +1155,6 @@
         if($(e.target).attr("data-exists") == undefined){
             e.target;
             
-            console.log(e.target);
-            // var clickedBtn;
             
             var getName = $(e.target).data("name");
             var getCharacter = $(e.target).data("character");
@@ -1181,16 +1175,12 @@
                 $(e.target).html("Error: Can't find player!");
                 $(e.target).removeClass("btn-primary");
                 $(e.target).addClass("btn-danger");
-                // $(e.target).attr("data-exists", null);
             }
     
-            //TODO get console from post and pass to php
+            
             var obj = {name: getName, character:getCharacter, console:getConsole,
             characterID: getCharacterID, activity: getActivity, membershipID: getMembershipID};
-            
-            //TODO how to get more than one value from LFG post (need character)
-                //   var playerName = {name:$("#playerStatsForm input").val(), characterName:$};
-                  
+
                   $.ajax({
                       data:obj, 
                       datatype: 'json',
@@ -1200,16 +1190,12 @@
                       encode: true
                   })
                   .done(function(data2){
-                    //if there is data
-                    //TODO removeChild after clicking hide stats
                     $('.statsLoading').hide();
                     $(e.target).html("Hide Stats");
                     
-                    // console.log("data array: ", data2);
+
                     var jsonResponse2 = JSON.parse(data2);
-                    // console.log(jsonResponse2);
-                    // console.log("data array: ", data2);
-                    // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
+
                     if(typeof jsonResponse2.completions === "undefined"){
                         console.log("ERROR");
                         $(e.target).html('Error: No stats found');
@@ -1225,7 +1211,6 @@
                         $(e.target).addClass("btn-danger");
                         $(e.target).attr("data-exists", null);
                     }
-                    //ELSEIF if response != 1, throw error if trial stats not found-->
                     else if(typeof jsonResponse2.totalTime === "undefined"){
                         console.log("ERROR");
                         $(e.target).html('Error: No stats found');
@@ -1233,24 +1218,12 @@
                         $(e.target).addClass("btn-danger");
                         $(e.target).attr("data-exists", null);
                     }
-                    // else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio === "undefined"){
-                    //     console.log("ERROR");
-                    //     $(e.target).html('Error: No stats found');
-                    //     $(e.target).removeClass("btn-primary");
-                    //     $(e.target).addClass("btn-danger");
-                    //     $(e.target).attr("data-exists", null);
-                    // }
                     else{
                         raidClicks++;
     
                         var template = $("#raidStats").html().trim();
                         var clone = $(template);
-                        //fill the data
-                        //console.log(data.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
-                        // var fastestCompletion = jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue;
-                        // var completionCount = jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan.basic.displayValue;
-                        // var totalTime = jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio.basic.displayValue;
-                        
+ 
                         var fastestCompletion = jsonResponse2.fastest;
                         console.log("fast: ", fastestCompletion);
                         var completionCount = jsonResponse2.completions;
@@ -1259,10 +1232,7 @@
                         $(clone).find(".fastestCompletion").html(fastestCompletion);
                         $(clone).find(".completionCount").html(completionCount);
                         $(clone).find(".totalTime").html(totalTime);
-                        
-                        // <td class="fastestCompletion"></td>
-                        // <td class="completionCount"></td>
-                        // <td class="totalTime"></td>
+
     
                         $(e.target).parents(".postCard").siblings(".stats-row").append(clone);
     
@@ -1277,8 +1247,6 @@
                         $(e.target).addClass("btn-danger");
                         $(e.target).attr("data-exists", null);
                   })
-                  })
-                  timeout: 300;
             
     
         }else if($(e.target).attr("data-exists") == 1){
@@ -1294,7 +1262,7 @@
         }
       
       
-    } //clickHandler
+    } //clickHandler, raidContainerTemplate
     
     
     
@@ -1340,13 +1308,11 @@
         $.ajax({
             type:"POST",
             url: submitPHP,
+            timeout: 8000,
             data: $("#submitPostForm").serialize()
         })
             .done(function(data){
-                // var selected = $(':selected', this);
-                // console.log(selected);
-                // alert(data);
-                // alert(selected.closest('optgroup').attr('label'));
+ 
                 $('#submitPostLoading').show();
                 dialog.close();
                 
@@ -1357,9 +1323,6 @@
                 
                 $('#submitPostLoading').hide();
                 loadPosts();
-                // loadPvpPosts();
-                // loadStrikesPosts();
-                // loadOtherPosts();
                 upgradeMDL();
             })
             .fail(function(){
