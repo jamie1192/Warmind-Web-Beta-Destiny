@@ -173,3 +173,42 @@
 [30-May-2017 13:17:44 UTC] PHP Fatal error:  Maximum execution time of 300 seconds exceeded in /home/ubuntu/workspace/ajax/getRaidStats.php on line 100
 [30-May-2017 13:17:44 UTC] PHP Stack trace:
 [30-May-2017 13:17:44 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getRaidStats.php:0
+[01-Jun-2017 08:58:30 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 08:58:30 UTC] PHP Stack trace:
+[01-Jun-2017 08:58:30 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 09:01:13 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 09:01:13 UTC] PHP Stack trace:
+[01-Jun-2017 09:01:13 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 10:31:12 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 10:31:12 UTC] PHP Stack trace:
+[01-Jun-2017 10:31:12 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 10:31:57 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 10:31:57 UTC] PHP Stack trace:
+[01-Jun-2017 10:31:57 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 10:37:07 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 10:37:07 UTC] PHP Stack trace:
+[01-Jun-2017 10:37:07 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 10:39:49 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 10:39:49 UTC] PHP Stack trace:
+[01-Jun-2017 10:39:49 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 10:42:26 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 10:42:26 UTC] PHP Stack trace:
+[01-Jun-2017 10:42:26 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 10:43:52 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 10:43:52 UTC] PHP Stack trace:
+[01-Jun-2017 10:43:52 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 10:45:27 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 10:45:27 UTC] PHP Stack trace:
+[01-Jun-2017 10:45:27 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 10:47:42 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 10:47:42 UTC] PHP Stack trace:
+[01-Jun-2017 10:47:42 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 10:47:56 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/getPlayerStats.php on line 49
+[01-Jun-2017 10:47:56 UTC] PHP Stack trace:
+[01-Jun-2017 10:47:56 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/getPlayerStats.php:0
+[01-Jun-2017 10:50:18 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/timTest.php on line 49
+[01-Jun-2017 10:50:18 UTC] PHP Stack trace:
+[01-Jun-2017 10:50:18 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/timTest.php:0
+[01-Jun-2017 10:50:42 UTC] PHP Fatal error:  Cannot access empty property in /home/ubuntu/workspace/ajax/timTest.php on line 49
+[01-Jun-2017 10:50:42 UTC] PHP Stack trace:
+[01-Jun-2017 10:50:42 UTC] PHP   1. {main}() /home/ubuntu/workspace/ajax/timTest.php:0

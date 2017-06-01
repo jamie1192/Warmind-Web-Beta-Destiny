@@ -83,6 +83,18 @@
             $activityType = "other";
             // echo 'other';
         }
+        else if(strpos($activityStr, 'Iron') !== false){
+            $activityType = "Iron pvp";
+            // echo 'other';
+        }
+        else if(strpos($activityStr, 'Crucible') !== false){
+            $activityType = "Crucible pvp";
+            // echo 'other';
+        }
+        else if(strpos($activityStr, 'Trials') !== false){
+            $activityType = "Trials pvp";
+            // echo 'other';
+        }
         
         
         

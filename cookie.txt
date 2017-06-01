@@ -5,4 +5,4 @@
 #HttpOnly_.bungie.net	TRUE	/	FALSE	1527644773	__cfduid	d38e272bcb9be1fc01642ce4c9d8241031496108773
 www.bungie.net	FALSE	/	FALSE	1590803176	bungled	4478458408018605547
 #HttpOnly_www.bungie.net	FALSE	/	FALSE	1811641576	bungledid	B3tnimwfj75DlHCDYSu9X2nX7H6p/abUCAAA
-www.bungie.net	FALSE	/	FALSE	1496147258	sto-id-sg_www.bungie.net	OKALHPAK
+www.bungie.net	FALSE	/	FALSE	1496158298	sto-id-sg_www.bungie.net	OKALHPAK

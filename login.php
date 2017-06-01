@@ -1,12 +1,14 @@
 <?php 
+    // session_start();
     
     include("database.php");
     include("head.php");
+    include("homeNav.php");
 
     include("key.php");
 
     
-    session_start();
+    
     
     if(isset($_SESSION['user'])){
         header("location:home.php");  

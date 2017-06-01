@@ -40,9 +40,14 @@
     
     //jew hunter
     // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/2/4611686018439307322/2305843009271315861/?definitions=true');
-    curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Advisors/V2/');
+    // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Advisors/V2/');
     
+    //full account wide aggregate stats for all activities
+    // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/Account/2/4611686018439307322/');
     // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Manifest/raid/1733556769/');
+    
+    //Iron Banana stats
+    curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/2/4611686018428678434/2305843009241542501/?modes=IronBanner');
     
     // https://www.bungie.net/Platform/Destiny/Stats/AggregateActivityStats/2/4611686018428911554/2305843009259744176/
     // 'https://www.bungie.net/Platform/Destiny/Stats/'.$consoleID.'/'.$membershipID.'/'.$characterId.'/?modes=TrialsOfOsiris');

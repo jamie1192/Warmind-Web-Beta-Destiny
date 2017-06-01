@@ -100,7 +100,7 @@
 
  <html>
      <!--PASTE STARTS HERE-->
-      <body>
+        <body>
           
           <!--submit post dialog-->
         
@@ -173,6 +173,7 @@
                                             <option value="Wrath of the Machine - Normal (Siege Engine)">Normal (Siege Engine)</option>
                                             <option value="Wrath of the Machine - Normal (Aksis Ph 2)">Normal (Aksis Ph 2)</option>
                                             <option value="Wrath of the Machine - Normal (Aksis Ph 1)">Normal (Aksis Ph 1)</option>
+                                        </optgroup>    
                                         <optgroup label="Raid - King's Fall">
                                             <option value="King's Fall - Heroic (Fresh)">Heroic (Fresh)</option>
                                             <option value="King's Fall - Heroic (Oryx)">Heroic (Oryx)</option>
@@ -222,12 +223,18 @@
                                             <option value="Raid - Checkpoint Share">Checkpoint Share</option>
                                             <option value="Raid - Exploration">Exploration</option>
                                         </optgroup>
-                                        </optgroup>
-                                        <optgroup label="PvP">
+                                        
+                                        <optgroup label="Trials of Osiris">
                                             <option value="Trials of Osiris (Casual/Bounty)">Trials of Osiris (Casual/Bounty)</option>
                                             <option value="Trials of Osiris (Competitive)">Trials of Osiris (Competitive)</option>
+                                        </optgroup>
+                                        <optgroup label="Iron Banner">
                                             <option value="Iron Banner">Iron Banner</option>
+                                        </optgroup>
+                                        
+                                        <optgroup label="Crucible">
                                             <option value="Crucible - Private Match">Private Match</option>
+                                            <option value="Crucible - Public Matchmaking">Public Match</option>
                                         </optgroup>
                                         <optgroup label="Strike Playlist">
                                             <option value="Strike Playlist - SIVA Crisis Heroic">SIVA Crisis Heroic</option>
@@ -473,7 +480,7 @@
                                             <span class="postDescriptionText"></span>
                                         </div>
                                         <span class="postAge"></span>
-                                        <button class="btn btn-primary getStats" type="button">Get Raid Stats</button>
+                                        <button class="btn btn-primary getStats" type="button"></button>
                                     </div>
                                 
                                 <div class="stats-row whiteText"></div>
@@ -564,7 +571,7 @@
                                             <span class="postDescriptionText"></span>
                                         </div>
                                         <span class="postAge"></span>
-                                        <button class="btn btn-primary getStats" type="button">Get PVP Stats</button>
+                                        <button class="btn btn-primary getStats" type="button"></button>
                                     </div>
                                 
                                 <div class="stats-row whiteText"></div>
@@ -798,6 +805,7 @@
                         var consoleID = data[i].consoleID;
                         var activity = data[i].activity;
                         var activityType = data[i].activityType;
+                        var gameMode = data[i].activityType;
                         var description = data[i].description;
                         var emblemIcon = data[i].emblemIcon;
                         var emblemBackground = data[i].emblemBackground;
@@ -813,11 +821,15 @@
                         var buttonText = " Get Player Stats";
                         var postAge;
                         
+                        //sorts all PvP posts into correct tab
+                        if (((activity.toLowerCase().indexOf("crucible") >= 0) || (activity.toLowerCase().indexOf("iron") >= 0) || 
+                        (activity.toLowerCase().indexOf("trials") >= 0))){
+                            activityType = "pvp";
+                        }
+                        
                         var template = $('#'+activityType+'Posts').html().trim();
                         var clone = $(template);
-                        //TODO postTime = data[i].postTime;
-                        // console.log("postTime: ", postTime);
-                        // var a = new Date(Date.parse(postTime.replace('-','/','g')));
+
                         if(postTimeD <= 0){
                             if(postTimeH <= 0){
                                 if(postTimeM <= 0){
@@ -874,14 +886,37 @@
                         
                         $(clone).find(".grimoireImage").attr("src", grimoireImg);
                         $(clone).find(".playerGrimoireOutput").html(grimoireScore);
+                        $(clone).find(".postAge").html(postAge);
+                        
+                        //button data for getting stats
+                        var buttonText = "Player";
+                        if (gameMode.toLowerCase().indexOf("crucible") >= 0){
+                            buttonText = "Crucible"
+                            $(clone).find(".getStats").html('Get '+buttonText+' Stats');
+                        } 
+                        else if(gameMode.toLowerCase().indexOf("iron") >= 0){
+                            buttonText = "Iron Banner";
+                            $(clone).find(".getStats").html("Get "+buttonText+" Stats");
+                        } 
+                        else if(gameMode.toLowerCase().indexOf("trials") >= 0){
+                            buttonText = "Trials";
+                            $(clone).find(".getStats").html("Get "+buttonText+" Stats");
+                        }
+                        else if(gameMode.toLowerCase().indexOf("raid") >= 0){
+                            buttonText = "Raid";
+                            $(clone).find(".getStats").html("Get "+buttonText+" Stats");
+                        }
+                        else{
+                            $(clone).find(".getStats").html("Get "+buttonText+" Stats");
+                        }
                         
                         $(clone).find(".getStats").attr("data-name", username);
                         $(clone).find(".getStats").attr("data-console", consoleID);
-                        $(clone).find(".postAge").html(postAge);
                         $(clone).find(".getStats").attr("data-activity", activity);
                         $(clone).find(".getStats").attr("data-character", selectedCharacter);
                         $(clone).find(".getStats").attr("data-characterID", characterID);
                         $(clone).find(".getStats").attr("data-membership-id", membershipID);
+                        
                         // $(clone).find(".getStats").attr("data-membershipID", )
                         
                         $(clone).find(".hasMic").html(mic);
@@ -897,12 +932,9 @@
     //load posts from DB
     $(document).ready(function(){
         loadPosts();
-        // loadPvpPosts();
-        // loadStrikesPosts();
-        // loadOtherPosts();
         
         var characterCount = "<?php echo $thirdCharacterID;?>";
-        console.log("charCount: ", characterCount);
+        
         if(characterCount == ""){
             $("#hunterLabel").removeAttr('style').css("margin-left","63px");
             $("#hunterLabel").css("margin-right","2px");
@@ -914,15 +946,12 @@
         componentHandler.upgradeDom();
         componentHandler.upgradeAllRegistered();
     }
-        // });
+
     
     
     //hide submit loader
     $('#submitPostLoading').hide();
     
-    //Login dialog
-    // var dialog = document.querySelector('dialog');
-    // var showDialogButton = document.querySelector('#login-dialog');
 
     
     if ($('#submit-dialog').length){
@@ -956,42 +985,12 @@
         });
     }
     
-    //other
-    // $('#activity-1').click(function(){
-    //   $('.other').show(); 
-    //   $('.raid').hide();
-    //   $('.PvP').hide();
-    //   $('#PvP').val('');
-    //   $('.strikes').hide();
-    // });
-    
+  
     $('#activitySelection').on('change', function (){
         var label = $(this.options[this.selectedIndex]).closest('optgroup').prop('label');
         console.log(label);
         $('#dropdownSelection').attr("value", label);
     });
-    
-    // //strikes
-    // $('#activity-2').click(function(){
-    //   $('.other').hide(); 
-    //   $('.raid').hide();
-    //   $('.PvP').hide();
-    //   $('.strikes').show();
-    // });
-    // //PvP
-    // $('#activity-3').click(function(){
-    //   $('.other').hide(); 
-    //   $('.raid').hide();
-    //   $('.PvP').show();
-    //   $('.strikes').hide();
-    // });
-    // //Raids
-    // $('#activity-4').click(function(){
-    //     $('.Raid').show();
-    //     $('.other').hide(); 
-    //     $('.PvP').hide();
-    //     $('.strikes').hide();
-    // });
     
     
     //Submit LFG character radio select
@@ -1012,24 +1011,24 @@
 
     });
     
-    //end login dialog
     
-    //get trials stats on LFG post TODO crucible/iron banana
+    
     $('.pvpContainerTemplate').on("click", ".getStats", clickHandler2);
 
     var clicks = 0;
     function clickHandler2(e){
     
+    var getActivity = $(e.target).data("activity");
         if($(e.target).attr("data-exists") == undefined){
             e.target;
-            // var clickedBtn;
             
             var getName = $(e.target).data("name");
-            // var getCharacter = $(e.target).parents(".mdl-button").data("character");
             var getCharacter = $(e.target).data("character");
             var getConsole = $(e.target).data("console");
             var getCharacterID = $(e.target).data("characterid");
-            var datasource = "ajax/getPlayerStats.php";
+            var getActivity = $(e.target).data("activity");
+            var getMembershipID = $(e.target).data("membership-id");
+            var datasource = "./ajax/getPlayerStats.php";
             
             if(getName != undefined){
                 $(e.target).siblings('.statsLoading').show();
@@ -1045,7 +1044,8 @@
             }
     
             //TODO get console from post and pass to php
-            var obj = {name: getName, character:getCharacter, console:getConsole, characterID: getCharacterID};
+            var obj = {name: getName, character:getCharacter, console:getConsole,
+            characterID: getCharacterID, activity: getActivity, membershipID: getMembershipID};
             
             //TODO how to get more than one value from LFG post (need character)
                 //   var playerName = {name:$("#playerStatsForm input").val(), characterName:$};
@@ -1053,19 +1053,40 @@
                   $.ajax({
                       data:obj, 
                       datatype: 'json',
+                      timeout: 6000,
                       url:datasource,
                       type: 'POST',
                       encode: true
                   })
                   .done(function(data){
                     //if there is data
-                    //TODO removeChild after clicking hide stats
+
                     $('.statsLoading').hide();
-                    $(e.target).html("Hide Stats");
+                    if (getActivity.toLowerCase().indexOf("crucible") >= 0){
+                            buttonText = "Crucible"
+                        } 
+                        else if(getActivity.toLowerCase().indexOf("iron") >= 0){
+                            buttonText = "Iron Banner";
+                        } 
+                        else if(getActivity.toLowerCase().indexOf("trials") >= 0){
+                            buttonText = "Trials";
+                        }
+                        else if(getActivity.toLowerCase().indexOf("raid") >= 0){
+                            buttonText = "Raid";
+                        }
+                        else{
+                            buttonText = "";
+                        }
+                    $(e.target).html("Hide "+buttonText+" Stats");
                     
+                    // alert(data);
                     var jsonResponse = JSON.parse(data);
-                    // console.log(test.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
-                    if(typeof jsonResponse.Response.trialsOfOsiris.allTime === "undefined"){
+
+                    var kdRatio = jsonResponse.kdRatio;
+                    var averageLifeSpan = jsonResponse.avgLifeSpan;
+                    var winLossRatio = jsonResponse.winLossRatio;
+ 
+                    if(kdRatio == null){
                         console.log("ERROR");
                         $(e.target).html('Error: No stats found');
                         $(e.target).removeClass("btn-primary");
@@ -1073,22 +1094,15 @@
                         $(e.target).attr("data-exists", null);
                         
                     }
-                    else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio === "undefined"){
+                    else if(averageLifeSpan == null){
                         console.log("ERROR");
                         $(e.target).html('Error: No stats found');
                         $(e.target).removeClass("btn-primary");
                         $(e.target).addClass("btn-danger");
                         $(e.target).attr("data-exists", null);
+                        
                     }
-                    //ELSEIF if response != 1, throw error if trial stats not found-->
-                    else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan === "undefined"){
-                        console.log("ERROR");
-                        $(e.target).html('Error: No stats found');
-                        $(e.target).removeClass("btn-primary");
-                        $(e.target).addClass("btn-danger");
-                        $(e.target).attr("data-exists", null);
-                    }
-                    else if(typeof jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio === "undefined"){
+                    else if(winLossRatio == null){
                         console.log("ERROR");
                         $(e.target).html('Error: No stats found');
                         $(e.target).removeClass("btn-primary");
@@ -1100,35 +1114,35 @@
     
                         var template = $("#playerStats").html().trim();
                         var clone = $(template);
-                        //fill the data
-                        //console.log(data.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue);
-                        var playerKD = jsonResponse.Response.trialsOfOsiris.allTime.killsDeathsRatio.basic.displayValue;
-                        var averageLifespan = jsonResponse.Response.trialsOfOsiris.allTime.averageLifespan.basic.displayValue;
-                        var winLossRatio = jsonResponse.Response.trialsOfOsiris.allTime.winLossRatio.basic.displayValue;
-    
-                        $(clone).find(".playerKD").html(playerKD);
-                        $(clone).find(".playerAverageLifespan").html(averageLifespan);
+
+                        //output retrieved stats
+                        console.log("lifespan: ", averageLifeSpan);
+                        $(clone).find(".playerKD").html(kdRatio);
+                        $(clone).find(".playerAverageLifespan").html(averageLifeSpan);
                         $(clone).find(".playerWinLossRatio").html(winLossRatio);
     
                         $(e.target).parents(".postCard").siblings(".stats-row").append(clone);
-    
                     }
                     
                   })
                   .fail(function(){
-                      alert("text");
+                        console.log("ERROR- timeout");
+                        $('.statsLoading').hide();
+                        $(e.target).html('Error: Timed Out');
+                        $(e.target).removeClass("btn-primary");
+                        $(e.target).addClass("btn-danger");
+                        $(e.target).attr("data-exists", null);
                   })
-                  timeout: 300;
             
     
         }else if($(e.target).attr("data-exists") == 1){
             
             $(e.target).parents(".postCard").siblings(".stats-row").css("display", "none");
-            $(e.target).html("Show Player Stats");
+            $(e.target).html("Show "+buttonText+" Stats");
             $(e.target).attr("data-exists", "0");
     
         }else if($(e.target).attr("data-exists") == "0"){
-            $(e.target).html("Hide Stats");
+            $(e.target).html("Hide "+buttonText+" Stats");
             $(e.target).parents(".postCard").siblings(".stats-row").css("display", "");
             $(e.target).attr("data-exists", "1");
         }
@@ -1180,6 +1194,7 @@
                   $.ajax({
                       data:obj, 
                       datatype: 'json',
+                      timeout: 6000,
                       url:datasource,
                       type: 'POST',
                       encode: true
@@ -1255,7 +1270,13 @@
                     
                   })
                   .fail(function(){
-                      alert("failed request");
+                      console.log("ERROR- timeout");
+                        $('.statsLoading').hide();
+                        $(e.target).html('Error: Timed Out');
+                        $(e.target).removeClass("btn-primary");
+                        $(e.target).addClass("btn-danger");
+                        $(e.target).attr("data-exists", null);
+                  })
                   })
                   timeout: 300;
             
@@ -1263,7 +1284,7 @@
         }else if($(e.target).attr("data-exists") == 1){
             
             $(e.target).parents(".postCard").siblings(".stats-row").css("display", "none");
-            $(e.target).html("Show Player Stats");
+            $(e.target).html("Show Raid Stats");
             $(e.target).attr("data-exists", "0");
     
         }else if($(e.target).attr("data-exists") == "0"){
@@ -1274,6 +1295,7 @@
       
       
     } //clickHandler
+    
     
     
     function showLoading() {

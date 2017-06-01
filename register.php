@@ -6,6 +6,7 @@
     include("database.php");
     include("key.php");
     include("head.php");
+    include("homeHeader.php");
     
     
     

@@ -4,10 +4,10 @@
 
     $playerName = $_POST['name'];
     $selectedCharacter = $_POST['character'];
-    $consoleID = $_POST['console'];
-    $activity = $_POST['activity'];
-    $membershipID = $_POST['membershipID'];
-    $characterID = $_POST['characterID'];
+    $consoleID = 2;
+    $activity = "Iron";
+    $membershipID = 4611686018428678434;
+    $characterID = 2305843009241542501;
 
      
      
@@ -22,7 +22,7 @@
         $statsMode = "TrialsOfOsiris";
     }
     
-    // echo "statsmode: ", $statsMode;
+    echo "statsmode: ", $statsMode;
      
  $accountSummary = curl_init();
 
@@ -43,7 +43,7 @@
         $modeSlot = "trialsOfOsiris";
     }
     
-    // echo "modeslot: ", $modeSlot;
+    echo "modeslot: ", $modeSlot;
  
     
     $ibKDRatio = $json2->Response->$modeSlot->allTime->killsDeathsRatio->basic->displayValue;
