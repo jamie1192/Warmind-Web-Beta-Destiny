@@ -75,6 +75,7 @@
         $result = curl_exec($ch);
         $json = json_decode($result);
          
+         
          //INSERT CHARACTER SELECTION ALGORITHM TO GET ALL 3 CHARACTER ID's
          $slot0character = $json->Response->data->characters[0]->characterBase->classType; //wheels = 1, jew = 0
         //  echo "<p>slot 0, json: ", $slot0;
@@ -233,7 +234,8 @@
                             <!--login button-->
                             <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
                                 <!--<div class="mdl-dialog__actions mdl-dialog__actions--full-width">-->
-                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary " type="submit" name="submit">Login</button>
+                                <img class="submitLoginLoading" id="submitRegisterLoading" src="assets/Rasputin-25px.png">
+                                <button id="loginBtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary " type="submit" name="submit">Login</button>
                                 <!--</div>-->
                                 <!--or divider-->
                                 <div class="mdl-dialog__actions  mdl-dialog__actions--full-width">
@@ -245,7 +247,7 @@
                                 <!--<div class="mdl-dialog__actions mdl-dialog__actions--full-width">-->
                                 <!--<form action="register.php">-->
                                     <!--<div class="mdl-layout-spacer"></div>-->
-                                    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-dialog__actions--full-width" href="register.php">Sign Up</a>
+                                    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-dialog__actions--full-width noWhite" href="register.php">Sign Up</a>
                                     <!--<a href="register.php"></a>-->
                                 <!--</form>-->
                                 <!--</div>-->
@@ -260,5 +262,26 @@
      <!--</div>-->
     </body>
 </html>
+
+<script>
+    function showLoginLoading() {
+        $("#submitRegisterLoading").show();
+    }
+    
+    function hideLoginLoading() {
+        $("#submitRegisterLoading").hide();
+    }
+    
+    $(document).ready(function(){
+        hideLoginLoading();
+    });
+    
+    
+    $("#login-form").submit(function(e){
+        showLoginLoading();
+        $("#loginBtn").html('Please wait..');
+    });
+    
+</script>
 
 

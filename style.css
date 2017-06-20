@@ -14,9 +14,48 @@
     .headerLoggedUser{
         margin-left:12px;
     }
+    
+    .mdl-textfield .mdl-js-textfield .mdl-textfield--floating-label .is-upgraded .is-focused{
+        color: #ffd700;
+    }
 
     .cancelButton{
         color: #ccc;
+    }
+    
+    /*Bootstrap overrides*/
+    .btn-primary{
+        color:black !important;
+        background-color: #ffd700 !important;
+    }
+    
+    .btn-primary:hover{
+        background-color: #b89b00;
+    }
+    
+    .btn-primary:focus,.btn-primary:active {
+       outline: none !important;
+    }
+    
+    a:focus, a:hover {
+        color: #fff !important;
+        text-decoration: none !important;
+    }
+    
+    .noWhite:hover {
+    color: #ffd700 !important;
+    text-decoration: none !important;
+}
+    
+    
+    
+    /*Radio button override*/
+    .mdl-radio.is-checked .mdl-radio__inner-circle{
+        background: #ffd700;
+    }
+    
+    .mdl-radio.is-checked .mdl-radio__outer-circle{
+        border: 2px solid #ffd700;
     }
     
     .headerLogo{
@@ -51,6 +90,28 @@
       /*display: none;*/
       bottom: 60px;
       right: 155px;
+      position: absolute;
+      -webkit-animation: flickerAnimation 1s infinite;
+      -moz-animation: flickerAnimation 1s infinite;
+      -o-animation: flickerAnimation 1s infinite;
+      animation: flickerAnimation 1s infinite;
+  }
+  
+  .submitRegisterLoading{
+      height: 30px;
+      right: 110px;
+      bottom: 50px;
+      position: absolute;
+      -webkit-animation: flickerAnimation 1s infinite;
+      -moz-animation: flickerAnimation 1s infinite;
+      -o-animation: flickerAnimation 1s infinite;
+      animation: flickerAnimation 1s infinite;
+  }
+  
+  .submitLoginLoading{
+      height: 30px;
+      right: 110px;
+      bottom: 160px;
       position: absolute;
       -webkit-animation: flickerAnimation 1s infinite;
       -moz-animation: flickerAnimation 1s infinite;
@@ -235,6 +296,7 @@
   .searchDialog{
       width:350px;
       height: 300px;
+      background-color: #2a333e;
   }
   
   .hasMicToggle{

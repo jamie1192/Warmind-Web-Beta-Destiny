@@ -6,7 +6,7 @@
     include("database.php");
     include("key.php");
     include("head.php");
-    include("homeHeader.php");
+    include("homeNav.php");
     
     
     
@@ -32,7 +32,7 @@
          $getMembershipResults = curl_exec($getMembershipId);
          $getMembershipResponse = json_decode($getMembershipResults);
          
-
+         
          
          $activeMembershipID = $getMembershipResponse->Response[0]->membershipId;
          $displayName = $getMembershipResponse->Response[0]->displayName;
@@ -134,7 +134,7 @@
                 $errors["password"] = "Password mismatch.";
             }
             
-            print_r($errors);
+            // print_r($errors);
             
             if(count($errors)==0){
                 $username = filter_var($username, FILTER_SANITIZE_STRING);
@@ -265,7 +265,8 @@
                                 
                                 <!--Sign Up button-->
                                 <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
-                                    <button class="mdl-button close mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-dialog__actions--full-width" type="submit" name="submit">Sign Up</button>
+                                    <img class="submitRegisterLoading" id="submitRegisterLoading" src="assets/Rasputin-25px.png">
+                                    <button id="submitRegisterBtn" class="mdl-button close mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-dialog__actions--full-width" type="submit" name="submit">Sign Up</button>
                                 </div>
                             </form>
                         <!--</div>-->
@@ -276,3 +277,24 @@
         </div>
     </body>
 </html>
+
+<script>
+    
+    function showRegisterLoading() {
+        $("#submitRegisterLoading").show();
+    }
+    
+    function hideRegisterLoading() {
+        $("#submitRegisterLoading").hide();
+    }
+    
+    $(document).ready(function(){
+        hideRegisterLoading();
+    });
+    
+    
+    $("#register-form").submit(function(e){
+        showRegisterLoading();
+        $("#submitRegisterBtn").html('Please wait..');
+    });
+</script>

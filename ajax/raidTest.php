@@ -12,8 +12,8 @@
     
     $membershipID = 4611686018437514161;
     
-    echo $membershipID;
-    echo $characterID;
+    // echo $membershipID;
+    // echo $characterID;
     //ben
     // $membershipID = "4611686018439307322";
     
@@ -27,8 +27,8 @@
             if (strpos($activity, 'Heroic') !== false) {
                 $hashToGet = $wotmH;
                 // $hashToGet = $vogN;
-                echo "asda";
-                echo $hashToGet;
+                // echo "asda";
+                // echo $hashToGet;
             }
             else{
                 $hashToGet = $wotmN;
@@ -88,7 +88,13 @@
     
     //ALL TIME STATS HERE
     //  curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/'.$consoleID.'/'.$membershipID.'/'.$characterId.'/?modes=TrialsOfOsiris');
-    curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/AggregateActivityStats/2/4611686018437514161/2305843009251928979/');
+    // curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/AggregateActivityStats/2/4611686018437514161/2305843009251928979/');
+    curl_setopt($accountSummary, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/Stats/2/4611686018437514161/2305843009251928979/?modes=AllPvP');
+    
+
+
+
+
     curl_setopt($accountSummary, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($accountSummary, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
     $getAccountSummary = curl_exec($accountSummary);
@@ -131,3 +137,7 @@
     // // echo $getAccountSummary;
 
 ?>
+
+<html>
+    <iframe src='//gifs.com/embed/rocket-league-oYLnBB' frameborder='0' scrolling='no' width='494px' height='360px' style='-webkit-backface-visibility: hidden;-webkit-transform: scale(1);' ></iframe>
+</html>

@@ -1,78 +1,111 @@
 <?php
 
-    session_start();
+    include("./../key.php");
     
-    include("head.php");
-    include("key.php");
-     
-//      $xboxName2 = "DrearFlounder88";
-     
-    $sessionUsername = $_SESSION['user']['username'];
-    $sessionConsoleID = $_SESSION['user']['consoleID'];
-    $sessionMembershipID = $_SESSION['user']['membershipID'];
-    // $sessionTitanSlot = $_SESSION['user']['titanSlot'];
-    // $sessionHunterSlot = $_SESSION['user']['hunterSlot'];
-    // $sessionWarlockSlot = $_SESSION['user']['warlockSlot'];
-    
-    $firstCharacterID = $_SESSION['user']['firstCharacterID'];
-    $secondCharacterID = $_SESSION['user']['secondCharacterID'];
-    $thirdCharacterID = $_SESSION['user']['thirdCharacterID'];
-    // echo $firstCharacterID;
-    
-    $sessionFirstCharacter = $_SESSION['user']['firstCharacter'];
-    $sessionSecondCharacter = $_SESSION['user']['secondCharacter'];
-    $sessionThirdCharacter = $_SESSION['user']['thirdCharacter'];
-    
-    $firstCharacterEmblem = $_SESSION['user']['firstCharacterEmblem'];
-    $secondCharacterEmblem = $_SESSION['user']['secondCharacterEmblem'];
-    $thirdCharacterEmblem = $_SESSION['user']['thirdCharacterEmblem'];
-    
-    $firstCharacterBackground = $_SESSION['user']['firstCharacterBackground'];
-    $secondCharacterBackground = $_SESSION['user']['secondCharacterBackground'];
-    $thirdCharacterBackground = $_SESSION['user']['thirdCharacterBackground'];
-     
-    //  echo "first: ", $firstCharacterEmblem;
-
-    $bungieURL = "https://bungie.net";
- 
-//  GET EMBLEMS FOR LOGGED IN USER
-
-    $getEmblems = curl_init();
-    curl_setopt($getEmblems, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/'.$sessionConsoleID.'/Account/'.$sessionMembershipID.'/Summary/');
-    curl_setopt($getEmblems, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($getEmblems, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
-    $getEmblemsJSON = curl_exec($getEmblems);
-    $getEmblemsResult = json_decode($getEmblemsJSON);
-
-// END GET EMBLEMS
- 
- 
- 
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        
+        $characterName = $_POST['characterName'];
+        $consoleID = $_POST['consoleID'];
+        
+        $getMembershipId = curl_init();
+         //case insensitive PSN name search- THIS SPITS OUT AN ARRAY
+         curl_setopt($getMembershipId, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/'.$consoleID.'/'.$characterName.'/');
+         curl_setopt($getMembershipId, CURLOPT_RETURNTRANSFER, true);
+         curl_setopt($getMembershipId, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
+         $getMembershipResults = curl_exec($getMembershipId);
+         $getMembershipResponse = json_decode($getMembershipResults);
+         
+         
+         
+         $activeMembershipID = $getMembershipResponse->Response[0]->membershipId;
+         $displayName = $getMembershipResponse->Response[0]->displayName;
+         
+         //2. Character summary to get all 3 character info
+         
+         $ch = curl_init();
+         curl_setopt($ch, CURLOPT_URL, 'https://www.bungie.net/Platform/Destiny/'.$consoleID.'/Account/'.$activeMembershipID.'/Summary/');
+         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('X-API-Key: ' . $apiKey));
+         $result = curl_exec($ch);
+         $json = json_decode($result);
+         
+        //INSERT CHARACTER SELECTION ALGORITHM TO GET ALL 3 CHARACTER ID's
+         $slot0character = $json->Response->data->characters[0]->characterBase->classType; //wheels = 1, jew = 0
+        //  echo "<p>slot 0, json: ", $slot0;
+         $slot1character = $json->Response->data->characters[1]->characterBase->classType; //wheels = 0, jew = 1
+        //  echo "<p>slot 1, json: ", $slot1;
+         $slot2character = $json->Response->data->characters[2]->characterBase->classType; //wheels = 2, jew = 2
+        //  echo "<p>slot 2, json: ", $slot2;
+         
+         $titan = 0;
+         $hunter = 1;
+         $warlock = 2;
+         
+        //character in first slot
+        if($slot0character == $titan){
+            $firstCharacterClass = "Titan";
+        }
+        elseif($slot0character == $hunter){
+            $firstCharacterClass = "Hunter";
+        }
+        elseif($slot0character == $warlock){
+            $firstCharacterClass = "Warlock";
+        }
+         
+        //  echo "<p>Titan slot: ", $titanSlot;
+         
+        //  get second character
+        if($slot1character == $titan){
+            $secondCharacterClass = "Titan";
+        }
+        elseif($slot1character == $hunter){
+            $secondCharacterClass = "Hunter";
+        }
+        elseif($slot1character == $warlock){
+            $secondCharacterClass = "Warlock";
+        }
+         
+        //  echo "Hunter slot: ", $hunterSlot;
+         
+         //third character slot
+        if($slot2character == $titan){
+            $thirdCharacterClass = "Titan";
+        }
+        elseif($slot2character == $hunter){
+            $thirdCharacterClass = "Hunter";
+        }
+        elseif($slot2character == $warlock){
+            $thirdCharacterClass = "Warlock";
+        }
+         
+        //  echo "Warlock slot: ", $warlockSlot;
+        
+        $firstCharacterID = $json->Response->data->characters[0]->characterBase->characterId;
+        $secondCharacterID = $json->Response->data->characters[1]->characterBase->characterId;
+        $thirdCharacterID = $json->Response->data->characters[2]->characterBase->characterId;
+         
+        //emblems
+        $firstCharacterEmblem = $json->Response->data->characters[0]->emblemPath;
+        $secondCharacterEmblem = $json->Response->data->characters[1]->emblemPath;
+        $thirdCharacterEmblem = $json->Response->data->characters[2]->emblemPath;
         
         
- 
- $completeEmblemIcon = "$bungieURL$emblemPath";
- $completeEmblemBackground = "$bungieURL$emblemBackgroundPath";
- 
- // echo "<p>emblem: ", $completeEmblemIcon;
- // echo "<p>background: ", $completeEmblemBackground;
- 
+        $firstCharacterBackground = $json->Response->data->characters[0]->backgroundPath;
+        $secondCharacterBackground = $json->Response->data->characters[1]->backgroundPath;
+        $thirdCharacterBackground = $json->Response->data->characters[2]->backgroundPath;
+         
+         //ends here
+         
+         //light level, grimoire
+        $firstCharacterLight = $json->Response->data->characters[0]->characterBase->powerLevel;
+        $secondCharacterLight = $json->Response->data->characters[1]->characterBase->powerLevel;
+        $thirdCharacterLight = $json->Response->data->characters[2]->characterBase->powerLevel;
+        $grimoire = $json->Response->data->characters[0]->characterBase->grimoireScore;
 
-//  $trialsKDRatio = $json2->Response->trialsOfOsiris->allTime->killsDeathsRatio->basic->displayValue;
-//  $trialsTotalKills = $json2->Response->trialsOfOsiris->allTime->kills->basic->displayValue;
-//  $trialsAverageKillsPerGame = $json2->Response->trialsOfOsiris->allTime->kills->pga->displayValue;
-//  $trialsTotalDeaths = $json2->Response->trialsOfOsiris->allTime->deaths->basic->displayValue;
-//  $trialsAverageDeathsPerGame = $json2->Response->trialsOfOsiris->allTime->deaths->pga->displayValue;
-//  $trialsAverageLifespan = $json2->Response->trialsOfOsiris->allTime->averageLifespan->basic->displayValue;
-//  $trialsWinLossRatio = $json2->Response->trialsOfOsiris->allTime->winLossRatio->basic->displayValue;
-//  $trialsLongestKillSpree = $json2->Response->trialsOfOsiris->allTime->longestKillSpree->basic->displayValue;
- 
- 
- 
-//  $urlMissing2 = "https://bungie.net";
- 
+    }
 
 ?>
+
 
 <!DOCTYPE html>
 <head>
@@ -302,7 +335,7 @@
                         font-size: 2.5rem;
                         color: white;">Search Player</div>
                     <div class="mdl-dialog__content">
-                        <form id="submitSearchForm" method="post" action="#">
+                        <form id="submitPostForm" method="post" action="#">
                             
 
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -408,17 +441,17 @@
             if(isset($_SESSION['user'])){
                 // echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
                     // echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">chat </i>My Posts</a>";
-                // echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
-                //     echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">assessment </i>My Stats</a>";
+                echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
+                    echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">assessment </i>My Stats</a>";
             }?>
-            <!--<a class="mdl-navigation__link mdl-color-text--white" id="search-dialog" href="#">-->
-            <!--    <i class="material-icons mdl-color-text--white" role="presentation">search</i>Search Player</a>-->
+            <a class="mdl-navigation__link mdl-color-text--white" id="search-dialog" href="#">
+                <i class="material-icons mdl-color-text--white" role="presentation">search</i>Search Player</a>
             <!--</div>-->
             <div class="mdl-layout-spacer"></div>
             <?php 
             if(isset($_SESSION['user'])){
-                // echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
-                // echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">settings</i>Account</a>";
+                echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"#\">";
+                echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">settings</i>Account</a>";
                 
                 echo "<a class=\"mdl-navigation__link mdl-color-text--white\" href=\"logout.php\">";
                 echo "<i class=\"material-icons mdl-color-text--white\" role=\"presentation\">power_settings_new</i>Log Out</a>";
@@ -767,636 +800,5 @@
             </section>
         </main>
     </div>
-  
-  <script async>
-    
-    //load all posts, sort into tabs
-    function loadPosts(){
-        $('.contentLoading').show();
-        $(".raidContainerTemplate").empty();
-        $(".pvpContainerTemplate").empty();
-        $(".strikesContainerTemplate").empty();
-        $(".otherContainerTemplate").empty();
-        var datasource = "ajax/getPostsData.php";
-
-            $.ajax({
-                url:datasource,
-                dataType:'json',
-                type:'POST',
-                encode:true
-            })
-            .done(function(data){
-                $('.contentLoading').hide();
-                //if there is data
-                if(data.length > 0){
-                    var len = data.length;
-                    console.log(len);
-                    
-                    
-                    for(i=0;i<len;i++){
-                        
-                        //load LFG posts from db
-                        var username = data[i].username;
-                        var selectedCharacter = data[i].selectedCharacter;
-                        var membershipID = data[i].membershipID;
-                        var characterID = data[i].characterID;
-                        var consoleID = data[i].consoleID;
-                        var activity = data[i].activity;
-                        var activityType = data[i].activityType;
-                        var gameMode = data[i].activityType;
-                        var description = data[i].description;
-                        var emblemIcon = data[i].emblemIcon;
-                        var emblemBackground = data[i].emblemBackground;
-                        var lightLevel = data[i].lightLevel;
-                        var grimoireScore = data[i].grimoireScore;
-                        var hasMic = data[i].hasMic;
-                        var postTimeD = data[i].ageD;
-                        var postTimeH = data[i].ageH;
-                        var postTimeM = data[i].ageM;
-                        
-                        var lightLevelIcon = "&#10022  ";
-                        var grimoireImg = "./assets/grimoireIcon.png";
-                        var buttonText = " Get Player Stats";
-                        var postAge;
-                        
-                        //TODO xbox direct message
-                        
-                        //sorts all PvP posts into correct tab
-                        if (((activity.toLowerCase().indexOf("crucible") >= 0) || (activity.toLowerCase().indexOf("iron") >= 0) || 
-                        (activity.toLowerCase().indexOf("trials") >= 0))){
-                            activityType = "pvp";
-                        }
-                        
-                        var template = $('#'+activityType+'Posts').html().trim();
-                        var clone = $(template);
-
-                        if(postTimeD <= 0){
-                            if(postTimeH <= 0){
-                                if(postTimeM <= 0){
-                                    postAge = "Just Now";
-                                }
-                                else if(postTimeM == 1){
-                                    postAge = postTimeM + " min ago";
-                                }
-                                else{
-                                    postAge = postTimeM + " mins ago";
-                                }
-                            }
-                            else if(postTimeH == 1){
-                                postAge = postTimeH + " hour ago"; 
-                            }
-                            else{
-                                postAge = postTimeH + " hours ago";
-                            }
-                        }
-                        else if(postTimeD == 1){
-                            postAge = postTimeD + " day ago";
-                        }
-                        else{
-                            postAge = postTimeD + " days ago";
-                        }
-                        // console.log("Row ", i, " D: ", postTimeD, " H: ",postTimeH, " M: ", postTimeM);
-                       
-
-                        if(consoleID == 1){
-                          consoleChoice = "assets/xboxLogo.png"; //xbox icon
-                        }
-                        else if(consoleID == 2){
-                          consoleChoice = "assets/psLogo.png"; //PS icon
-                        }
-                        
-                        if(hasMic){
-                          //var mic = "mic icon path"
-                          var mic = "mic";
-                        }
-                        else{
-                            var mic = "mic_off";
-                        }
-                
-                
-                        $(clone).find(".playerUsernameOutput").html(username);
-                        $(clone).find(".playerClassOutput").html(selectedCharacter);
-
-                        $(clone).find(".consoleIcon").attr("src", consoleChoice);
-                        $(clone).find(".postActivityText").html(activity);
-                        $(clone).find(".postDescriptionText").html(description);
-                        $(clone).find(".emblemIconImg").attr("src", emblemIcon);
-                        $(clone).find(".emblemBackgroundImg").attr("src", emblemBackground);
-                        $(clone).find(".playerLightLevel").html(lightLevelIcon+lightLevel);
-                        
-                        $(clone).find(".grimoireImage").attr("src", grimoireImg);
-                        $(clone).find(".playerGrimoireOutput").html(grimoireScore);
-                        $(clone).find(".postAge").html(postAge);
-                        
-                        //button data for getting stats
-                        var buttonText = "Player";
-                        if (gameMode.toLowerCase().indexOf("crucible") >= 0){
-                            buttonText = "Crucible"
-                            $(clone).find(".getStats").html('Get '+buttonText+' Stats');
-                        } 
-                        else if(gameMode.toLowerCase().indexOf("iron") >= 0){
-                            buttonText = "Iron Banner";
-                            $(clone).find(".getStats").html("Get "+buttonText+" Stats");
-                        } 
-                        else if(gameMode.toLowerCase().indexOf("trials") >= 0){
-                            buttonText = "Trials";
-                            $(clone).find(".getStats").html("Get "+buttonText+" Stats");
-                        }
-                        else if(gameMode.toLowerCase().indexOf("raid") >= 0){
-                            buttonText = "Raid";
-                            $(clone).find(".getStats").html("Get "+buttonText+" Stats");
-                        }
-                        else{
-                            $(clone).find(".getStats").html("Get "+buttonText+" Stats");
-                        }
-                        
-                        $(clone).find(".getStats").attr("data-name", username);
-                        $(clone).find(".getStats").attr("data-console", consoleID);
-                        $(clone).find(".getStats").attr("data-activity", activity);
-                        $(clone).find(".getStats").attr("data-character", selectedCharacter);
-                        $(clone).find(".getStats").attr("data-characterID", characterID);
-                        $(clone).find(".getStats").attr("data-membership-id", membershipID);
-                        
-                        $(clone).find(".hasMic").html(mic);
-                        
-                        $("."+activityType+"ContainerTemplate").append(clone);
-                    }
-                }
-            });
-            // componentHandler.upgradeDom();
-          
-        }
-    
-    //load posts from DB
-    $(document).ready(function(){
-        loadPosts();
-        
-        var characterCount = "<?php echo $thirdCharacterID;?>";
-        
-        if(characterCount == ""){
-            $("#hunterLabel").removeAttr('style').css("margin-left","63px");
-            $("#hunterLabel").css("margin-right","2px");
-        }
-    });
-          
-    setInterval("upgradeMDL();", 100);
-    function upgradeMDL() {
-        componentHandler.upgradeDom();
-        componentHandler.upgradeAllRegistered();
-    }
-
-    
-    
-    //hide submit loader
-    $('#submitPostLoading').hide();
-    
-
-    
-    if ($('#submit-dialog').length){
-        var dialog = document.querySelector('.postDialog');
-        var showDialogButton = document.querySelector('#submit-dialog');
-        if (!dialog.showModal) {
-          dialogPolyfill.registerDialog(dialog);
-        }
-        showDialogButton.addEventListener('click', function() {
-          dialog.showModal();
-            $("#submitLFGpost").html('Submit');
-            $("#submitLFGpost").attr("enabled", "true");
-            $("#cancelLFGpost").show();
-        });
-        dialog.querySelector('.closeDialog').addEventListener('click', function() {
-          dialog.close();
-        });
-    }
-    
-    if ($('#search-dialog').length){
-        var dialog2 = document.querySelector('.searchDialog');
-        var showDialogButton2 = document.querySelector('#search-dialog');
-        if (!dialog2.showModal) {
-          dialogPolyfill.registerDialog(dialog2);
-        }
-        showDialogButton2.addEventListener('click', function() {
-          dialog2.showModal();
-        });
-        dialog2.querySelector('.closeSearchDialog').addEventListener('click', function() {
-          dialog2.close();
-        });
-    }
-    
-  
-    $('#activitySelection').on('change', function (){
-        var label = $(this.options[this.selectedIndex]).closest('optgroup').prop('label');
-        console.log(label);
-        $('#dropdownSelection').attr("value", label);
-    });
-    
-    
-    //Submit LFG character radio select
-    $('#firstCharacter').click(function(){
-        $('#lfgCharacterClass').attr("value", '<?php echo $sessionFirstCharacter;?>');
-        $('#getCharacterID').attr("value", '<?php echo $firstCharacterID;?>');
-    });
-    
-    $('#secondCharacter').click(function(){
-        $('#lfgCharacterClass').attr("value", '<?php echo $sessionSecondCharacter;?>');
-        $('#getCharacterID').attr("value", '<?php echo $secondCharacterID;?>');
-    
-    });
-    
-    $('#thirdCharacter').click(function(){
-        $('#lfgCharacterClass').attr("value", '<?php echo $sessionThirdCharacter;?>');
-        $('#getCharacterID').attr("value", '<?php echo $thirdCharacterID;?>');
-
-    });
-    
-    
-    //Crucible/Trials/Iron Banana stats
-    $('.pvpContainerTemplate').on("click", ".getStats", clickHandler2);
-
-    var clicks = 0;
-    function clickHandler2(e){
-    
-    var getActivity = $(e.target).data("activity");
-        if($(e.target).attr("data-exists") == undefined){
-            e.target;
-            
-            var getName = $(e.target).data("name");
-            var getCharacter = $(e.target).data("character");
-            var getConsole = $(e.target).data("console");
-            var getCharacterID = $(e.target).data("characterid");
-            var getActivity = $(e.target).data("activity");
-            var getMembershipID = $(e.target).data("membership-id");
-            var datasource = "./ajax/getPlayerStats.php";
-            
-            if(getName != undefined){
-                $(e.target).siblings('.statsLoading').show();
-                clickedBtn = $(e.target).parents(".getStats");
-                $(e.target).html("Retrieving Stats..");
-                $(e.target).attr("data-exists", "1");
-            }
-            else{
-                $(e.target).html("Error: Can't find player!");
-                $(e.target).removeClass("btn-primary");
-                $(e.target).addClass("btn-danger");
-                // $(e.target).attr("data-exists", null);
-            }
-    
-
-            var obj = {name: getName, character:getCharacter, console:getConsole,
-            characterID: getCharacterID, activity: getActivity, membershipID: getMembershipID};
-                  
-                  $.ajax({
-                      data:obj, 
-                      datatype: 'json',
-                      timeout: 6000,
-                      url:datasource,
-                      type: 'POST',
-                      encode: true
-                  })
-                  .done(function(data){
-                    //if there is data
-
-                    $('.statsLoading').hide();
-                    if (getActivity.toLowerCase().indexOf("crucible") >= 0){
-                            buttonText = "Crucible"
-                        } 
-                        else if(getActivity.toLowerCase().indexOf("iron") >= 0){
-                            buttonText = "Iron Banner";
-                        } 
-                        else if(getActivity.toLowerCase().indexOf("trials") >= 0){
-                            buttonText = "Trials";
-                        }
-                        else if(getActivity.toLowerCase().indexOf("raid") >= 0){
-                            buttonText = "Raid";
-                        }
-                        else{
-                            buttonText = "";
-                        }
-                    $(e.target).html("Hide "+buttonText+" Stats");
-                    
-                    // alert(data);
-                    var jsonResponse = JSON.parse(data);
-
-                    var kdRatio = jsonResponse.kdRatio;
-                    var averageLifeSpan = jsonResponse.avgLifeSpan;
-                    var winLossRatio = jsonResponse.winLossRatio;
- 
-                    if(kdRatio == null){
-                        console.log("ERROR");
-                        $(e.target).html('Error: No stats found');
-                        $(e.target).removeClass("btn-primary");
-                        $(e.target).addClass("btn-danger");
-                        $(e.target).attr("data-exists", null);
-                        
-                    }
-                    else if(averageLifeSpan == null){
-                        console.log("ERROR");
-                        $(e.target).html('Error: No stats found');
-                        $(e.target).removeClass("btn-primary");
-                        $(e.target).addClass("btn-danger");
-                        $(e.target).attr("data-exists", null);
-                        
-                    }
-                    else if(winLossRatio == null){
-                        console.log("ERROR");
-                        $(e.target).html('Error: No stats found');
-                        $(e.target).removeClass("btn-primary");
-                        $(e.target).addClass("btn-danger");
-                        $(e.target).attr("data-exists", null);
-                    }
-                    else{
-                        clicks++;
-    
-                        var template = $("#playerStats").html().trim();
-                        var clone = $(template);
-
-                        //output retrieved stats
-                        console.log("lifespan: ", averageLifeSpan);
-                        $(clone).find(".playerKD").html(kdRatio);
-                        $(clone).find(".playerAverageLifespan").html(averageLifeSpan);
-                        $(clone).find(".playerWinLossRatio").html(winLossRatio);
-    
-                        $(e.target).parents(".postCard").siblings(".stats-row").append(clone);
-                    }
-                    
-                  })
-                  .fail(function(){
-                        console.log("ERROR- timeout");
-                        $('.statsLoading').hide();
-                        $(e.target).html('Error: Timed Out');
-                        $(e.target).removeClass("btn-primary");
-                        $(e.target).addClass("btn-danger");
-                        $(e.target).attr("data-exists", null);
-                  })
-            
-    
-        }else if($(e.target).attr("data-exists") == 1){
-            
-            $(e.target).parents(".postCard").siblings(".stats-row").css("display", "none");
-            $(e.target).html("Show "+buttonText+" Stats");
-            $(e.target).attr("data-exists", "0");
-    
-        }else if($(e.target).attr("data-exists") == "0"){
-            $(e.target).html("Hide "+buttonText+" Stats");
-            $(e.target).parents(".postCard").siblings(".stats-row").css("display", "");
-            $(e.target).attr("data-exists", "1");
-        }
-      
-      
-    } //clickHandler
-    
-    //Raid stats
-    //TODO extra tableRow for account-wide stats(?)
-    $('.raidContainerTemplate').on("click", ".getStats", clickHandler);
-
-    var raidClicks = 0;
-    function clickHandler(e){
-    
-        if($(e.target).attr("data-exists") == undefined){
-            e.target;
-            
-            
-            var getName = $(e.target).data("name");
-            var getCharacter = $(e.target).data("character");
-            var getConsole = $(e.target).data("console");
-            var getCharacterID = $(e.target).data("characterid");
-            var getActivity = $(e.target).data("activity");
-            var getMembershipID = $(e.target).data("membership-id");
-
-            var datasource = "./ajax/getRaidStats.php";
-            
-            if(getName != undefined){
-                $(e.target).siblings('.statsLoading').show();
-                clickedBtn = $(e.target).parents(".getStats");
-                $(e.target).html("Retrieving Stats..");
-                $(e.target).attr("data-exists", "1");
-            }
-            else{
-                $(e.target).html("Error: Can't find player!");
-                $(e.target).removeClass("btn-primary");
-                $(e.target).addClass("btn-danger");
-            }
-    
-            
-            var obj = {name: getName, character:getCharacter, console:getConsole,
-            characterID: getCharacterID, activity: getActivity, membershipID: getMembershipID};
-
-                  $.ajax({
-                      data:obj, 
-                      datatype: 'json',
-                      timeout: 6000,
-                      url:datasource,
-                      type: 'POST',
-                      encode: true
-                  })
-                  .done(function(data2){
-                    $('.statsLoading').hide();
-                    $(e.target).html("Hide Stats");
-                    
-
-                    var jsonResponse2 = JSON.parse(data2);
-
-                    if(typeof jsonResponse2.completions === "undefined"){
-                        console.log("ERROR");
-                        $(e.target).html('Error: No stats found');
-                        $(e.target).removeClass("btn-primary");
-                        $(e.target).addClass("btn-danger");
-                        $(e.target).attr("data-exists", null);
-                        
-                    }
-                    else if(typeof jsonResponse2.fastest === "undefined"){
-                        console.log("ERROR");
-                        $(e.target).html('Error: No stats found');
-                        $(e.target).removeClass("btn-primary");
-                        $(e.target).addClass("btn-danger");
-                        $(e.target).attr("data-exists", null);
-                    }
-                    else if(typeof jsonResponse2.totalTime === "undefined"){
-                        console.log("ERROR");
-                        $(e.target).html('Error: No stats found');
-                        $(e.target).removeClass("btn-primary");
-                        $(e.target).addClass("btn-danger");
-                        $(e.target).attr("data-exists", null);
-                    }
-                    else{
-                        raidClicks++;
-    
-                        var template = $("#raidStats").html().trim();
-                        var clone = $(template);
- 
-                        var fastestCompletion = jsonResponse2.fastest;
-                        console.log("fast: ", fastestCompletion);
-                        var completionCount = jsonResponse2.completions;
-                        var totalTime = jsonResponse2.totalTime;
-    
-                        $(clone).find(".fastestCompletion").html(fastestCompletion);
-                        $(clone).find(".completionCount").html(completionCount);
-                        $(clone).find(".totalTime").html(totalTime);
-
-    
-                        $(e.target).parents(".postCard").siblings(".stats-row").append(clone);
-    
-                    }
-                    
-                  })
-                  .fail(function(){
-                      console.log("ERROR- timeout");
-                        $('.statsLoading').hide();
-                        $(e.target).html('Error: Timed Out');
-                        $(e.target).removeClass("btn-primary");
-                        $(e.target).addClass("btn-danger");
-                        $(e.target).attr("data-exists", null);
-                  })
-            
-    
-        }else if($(e.target).attr("data-exists") == 1){
-            
-            $(e.target).parents(".postCard").siblings(".stats-row").css("display", "none");
-            $(e.target).html("Show Raid Stats");
-            $(e.target).attr("data-exists", "0");
-    
-        }else if($(e.target).attr("data-exists") == "0"){
-            $(e.target).html("Hide Stats");
-            $(e.target).parents(".postCard").siblings(".stats-row").css("display", "");
-            $(e.target).attr("data-exists", "1");
-        }
-      
-      
-    } //clickHandler, raidContainerTemplate
-    
-    
-    
-    function showLoading() {
-        console.log("showLoading fired");
-        // remove existing loaders
-        $('.loading-container').remove();
-        $('<div id="orrsLoader" class="loading-container"><div><div class="mdl-spinner mdl-js-spinner is-active"></div></div></div>').appendTo("body");
-    
-        componentHandler.upgradeElements($('.mdl-spinner').get());
-        setTimeout(function () {
-            $('#orrsLoader').css({opacity: 1});
-        }, 1);
-    }
-    
-    function hideLoading() {
-    $('#orrsLoader').css({opacity: 0});
-    setTimeout(function () {
-        $('#orrsLoader').remove();
-    }, 400);
-}
-    
-  
-    //Submit LFG Post
-    $("#submitPostForm").submit(function(e){
-        
-        showLoading();
-        setTimeout(function () {
-            hideLoading();
-        }, 3000);
-        
-        $('#submitPostLoading').show();
-        // <button id='btnAddProfile' type='button'>Add</button>
-        $("#submitLFGpost").html('Submitting');
-        
-        var submitPHP = "ajax/submitNewPost.php";
-        
-        
-        //disable buttons on submit
-        $("#submitLFGpost").attr("enabled", "false");
-        $("#cancelLFGpost").hide();
-        
-        $.ajax({
-            type:"POST",
-            url: submitPHP,
-            timeout: 8000,
-            data: $("#submitPostForm").serialize()
-        })
-            .done(function(data){
- 
-                $('#submitPostLoading').show();
-                dialog.close();
-                
-                var notification = document.querySelector('.mdl-js-snackbar');
-                notification.MaterialSnackbar.showSnackbar({
-                    message: 'Post Submitted!'
-                });
-                
-                $('#submitPostLoading').hide();
-                loadPosts();
-                upgradeMDL();
-            })
-            .fail(function(){
-                $("#submitLFGpost").html('Error submitting post!');
-            });
-            
-            
-            
-        // );
-        
-        e.preventDefault();
-    });
-    
-    //Submit player search
-      $("#submitSearchForm").submit(function(e){
-        
-        // showLoading();
-        setTimeout(function () {
-            hideLoading();
-        }, 3000);
-        
-        $('#submitPostLoading').show();
-        // <button id='btnAddProfile' type='button'>Add</button>
-        $("#submitLFGpost").html('Submitting');
-        
-        var submitPHP = "ajax/searchResults.php";
-        
-        
-        //disable buttons on submit
-        $("#submitLFGpost").attr("enabled", "false");
-        $("#cancelLFGpost").hide();
-        
-        $.ajax({
-            type:"POST",
-            url: submitPHP,
-            timeout: 8000,
-            data: $("#submitSearchForm").serialize()
-        })
-            .done(function(data){
- 
-                $('#submitPostLoading').show();
-                dialog.close();
-                
-                var notification = document.querySelector('.mdl-js-snackbar');
-                notification.MaterialSnackbar.showSnackbar({
-                    message: 'Found Player!'
-                });
-                
-                $('#submitPostLoading').hide();
-                loadPosts();
-                upgradeMDL();
-            })
-            .fail(function(){
-                $("#submitLFGpost").html('Error submitting post!');
-            });
-            
-            
-            
-        // );
-        
-        e.preventDefault();
-    });
-     
-      
-    
-    
-  </script>
-  
-  
-  
-<!--ENDS HERE-->
-
-
-    
- </body>
- 
-</html>
+  </body>
+  </html>
